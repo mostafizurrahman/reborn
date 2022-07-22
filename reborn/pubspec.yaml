@@ -111,7 +111,7 @@ flutter_icons:
   #  ios: true
   ios: true
   android: true
-  image_path: "lib/assets/reborn_logo.png"
+  image_path: "lib/assets/reborn_logo.jpg"
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 ##REPLACE CODE BLOC of better_player DataSourceUtils.java as follow
