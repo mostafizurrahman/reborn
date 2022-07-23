@@ -1,6 +1,13 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
+
+enum ThemeType {
+    dark, light, system
+}
+
+
 
 class CCAppTheme {
     static BorderRadius get borderRadius => const BorderRadius.all(Radius.circular(10));
@@ -25,4 +32,13 @@ class CCAppTheme {
         ],
     );
     static Color get primaryColor => Colors.blueAccent.shade200;
+
+    static final _rebornTheme = CCAppTheme._internal();
+    factory CCAppTheme() {
+        return _rebornTheme;
+    }
+    CCAppTheme._internal();
+    final BehaviorSubject<ThemeType> _themeBehaviour = BehaviorSubject.seeded(ThemeType.light);
 }
+
+final rebornTheme = CCAppTheme();
