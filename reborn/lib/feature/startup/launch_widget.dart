@@ -126,7 +126,9 @@ class _LaunchState extends ThemeState<LaunchWidget> {
     final pageDataList = StaticData.getPageData();
     final _index = _snapshot.data ?? 0;
     if (_index == pageDataList.length - 1 ) {
-      Future.delayed(const Duration(seconds: 1), () => _launchBloc.add(ReadContactEvent()));
+
+      return  _getProceedButton("PROCEED ", Icons.arrow_circle_right,
+          onTapInk: _openContactHome);
     }
     final dimension = (screenData.width - padding * 2 - 36 - 36) /
         (pageDataList.length * 1.5);
