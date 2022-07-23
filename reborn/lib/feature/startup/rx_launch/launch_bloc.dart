@@ -60,8 +60,8 @@ class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
     emit(LoadingContactState());
     await Future.delayed(const Duration(seconds: 1));
 
-    await contactService.getContactList();
-    await sqlDatabase.finish();
+    // await contactService.getContactList();
+    // await sqlDatabase.finish();
     emit(ReadContactState());
   }
 }

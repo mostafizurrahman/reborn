@@ -15,8 +15,8 @@ class RecentBloc extends Bloc<RecentEvent, RecentState> {
   Future<void> _onUpdateRecentContact(
       final RecentUpdateEvent event, final Emitter<RecentState> emit) async {
     emit(RecentShimmerState());
-    await contactService.updateRecent(
-        contact: event.contact, id: event.recentID);
+    // await contactService.updateRecent(
+    //     contact: event.contact, id: event.recentID);
     emit(UpdateRecentState());
   }
 }

@@ -1,11 +1,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:reborn/utility/data_manager.dart';
 import 'package:rxdart/rxdart.dart';
 
-enum ThemeType {
-    dark, light, system
-}
+import 'app_enum.dart';
 
 
 
@@ -38,7 +37,19 @@ class CCAppTheme {
         return _rebornTheme;
     }
     CCAppTheme._internal();
-    final BehaviorSubject<ThemeType> _themeBehaviour = BehaviorSubject.seeded(ThemeType.light);
+    final BehaviorSubject<ThemeType> _themeBehaviour = BehaviorSubject();
+
+    Future<void> switchTheme({required final int? themeValue}) async {
+        final int _themeCode = themeValue ?? await dataManager.getTheme();
+        if (_themeCode != -1) {
+            final type = ThemeValueType.initType(_themeCode);
+            _themeBehaviour.sink.add(type);
+        } else {
+            _themeBehaviour.sink.add(ThemeType.light);
+        }
+        await dataManager.saveTheme(_themeCode);
+    }
+
 }
 
 final rebornTheme = CCAppTheme();

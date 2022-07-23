@@ -2,9 +2,7 @@
 
 
 
-import 'package:reborn/feature/home/rx_secret/secret_states.dart';
 import 'package:reborn/utility/app_enum.dart';
-import 'package:contacts_service/contacts_service.dart';
 
 import '../../data_model/base/base_event.dart';
 import '../../data_model/entity/service_entity.dart';
@@ -18,18 +16,18 @@ class SecretInitEvent extends SecretEvent {
 }
 
 class SecretAddEvent extends SecretEvent {
-  final Contact secretContact;
+  final dynamic secretContact;
   SecretAddEvent({required this.secretContact});
 }
 
 class SecretRemoveEvent extends SecretEvent {
   final SecretRemoveType removeType;
-  final Contact secretContact;
+  final dynamic secretContact;
   SecretRemoveEvent({required this.secretContact, required this.removeType});
 }
 
 class SecretContactTapEvent extends SecretEvent {
-  final Contact secretContact;
+  final dynamic secretContact;
   SecretContactTapEvent({required this.secretContact});
 }
 

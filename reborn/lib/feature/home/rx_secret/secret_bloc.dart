@@ -8,11 +8,11 @@ class SecretBloc extends Bloc<SecretEvent, SecretState> {
     on<SecretInitEvent>((event, emit) => emit(SecretInitState()));
     on<SecretAddEvent>(_onAddSecretContact);
     on<SecretRemoveEvent>(_onRemoveSecretContact);
-    on<SecretContactTapEvent>(
-      (event, emit) => emit(
-        SecretContactTapState(secretContact: event.secretContact),
-      ),
-    );
+    // on<SecretContactTapEvent>(
+    //   (event, emit) => emit(
+    //     SecretContactTapState(secretContact: event.secretContact),
+    //   ),
+    // );
     on<SecretHomeTapEvent>(
       (event, emit) {
         emit(SecretHomeTapState(secretTapType: event.secretTapType, isSecret: event.isSecret));
@@ -22,24 +22,24 @@ class SecretBloc extends Bloc<SecretEvent, SecretState> {
 
   Future<void> _onAddSecretContact(
       final SecretAddEvent event, final Emitter<SecretState> emit) async {
-    await sqlDatabase.saveContact(contact: event.secretContact, isSecret: true);
-    emit(
-      SecretAddState(
-        secretList: sqlDatabase.secretList,
-        secretContact: event.secretContact,
-      ),
-    );
+    // await sqlDatabase.saveContact(contact: event.secretContact, isSecret: true);
+    // emit(
+    //   SecretAddState(
+    //     secretList: sqlDatabase.secretList,
+    //     secretContact: event.secretContact,
+    //   ),
+    // );
   }
 
   Future<void> _onRemoveSecretContact(
       final SecretRemoveEvent event, final Emitter<SecretState> emit) async {
-    await sqlDatabase.removeSecret(contact: event.secretContact, removeType: event.removeType);
-    emit(
-      SecretRemoveState(
-        secretList: sqlDatabase.secretList,
-        secretContact: event.secretContact,
-        removeType: event.removeType,
-      ),
-    );
+    // await sqlDatabase.removeSecret(contact: event.secretContact, removeType: event.removeType);
+    // emit(
+    //   SecretRemoveState(
+    //     secretList: sqlDatabase.secretList,
+    //     secretContact: event.secretContact,
+    //     removeType: event.removeType,
+    //   ),
+    // );
   }
 }

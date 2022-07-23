@@ -133,6 +133,14 @@ class DataManager {
   Future<String> getLanguageCode() async {
     return await _getStringValue(WKey.localeKey);
   }
+
+  Future<int> getTheme() async {
+    return await _getIntValue(WKey.themeKey);
+  }
+
+  Future<void> saveTheme(final int themeValue) async {
+    await _setIntValue(WKey.themeKey, themeValue);
+  }
 }
 
 DataManager dataManager = DataManager();

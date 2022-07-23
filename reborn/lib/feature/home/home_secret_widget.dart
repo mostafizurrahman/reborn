@@ -5,7 +5,6 @@ import 'package:reborn/feature/home/rx_secret/secret_events.dart';
 import 'package:reborn/utility/app_enum.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../utility/image_ext.dart';
@@ -26,7 +25,7 @@ class HomePrivateWidget extends HomeSecretWidget {
   @override
   TextStyle get header2 => CCAppTheme.txtHL2;
   @override
-  List<Contact> get contacts => sqlDatabase.privateList;
+  List<dynamic> get contacts => [];//sqlDatabase.privateList;
   @override
   String get secretTitle => "PRIVATE";
   @override
@@ -68,7 +67,7 @@ class HomeSecretWidget extends StatelessWidget {
         decoration: iconShadow.copyWith(color: Colors.pinkAccent),
         child: ImageExt.get("icons/ic_incognito.png", dimension: 40),
       );
-  List<Contact> get contacts => sqlDatabase.secretList;
+  List<dynamic> get contacts => [];//sqlDatabase.secretList;
   String get secretTitle => "SECRET";
   String get lowerTitle => "Secret";
   String get contactDescription => "Your privacy protected secret contacts.";
@@ -104,7 +103,7 @@ class HomeSecretWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final contactList = sqlDatabase.secretList;
+    final contactList = [];//sqlDatabase.secretList;
     final _widget = _getContent();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),

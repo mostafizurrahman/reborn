@@ -4,7 +4,6 @@ import 'package:reborn/feature/data_model/entity/recent_entity.dart';
 import 'package:reborn/feature/home/rx_recent/recent_events.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/image_ext.dart';
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import '../data_model/entity/service_entity.dart';

@@ -30,12 +30,10 @@ class LaunchWidget extends StatefulWidget {
 class _LaunchState extends ThemeState<LaunchWidget> {
   final _launchBloc = LaunchBloc();
   final BehaviorSubject<int> _pageBehaviour = BehaviorSubject();
-  late final StreamSubscription blocSubscription;
   @override
   void initState() {
     super.initState();
     _launchBloc.add(ContactPermissionEvent());
-    // blocSubscription = launchBloc.stream.listen(_onL)
   }
 
   @override
@@ -77,26 +75,6 @@ class _LaunchState extends ThemeState<LaunchWidget> {
   }
 
   Widget _getLaunchBloc(BuildContext _context, LaunchState state) {
-    if (state is LoadingLaunchState) {
-      return _loadingWidget;
-    }
-    if (state is ContactPermissionState) {
-      if (state.permissionStatus == PermissionStatus.granted) {
-        _launchBloc.add(ReadContactEvent());
-      } else {
-        _launchBloc.add(PermissionRequestEvent());
-        return _loadingWidget;
-      }
-    }
-    if (state is PermissionRequestState) {
-      if (state.permissionStatus != PermissionStatus.granted) {
-        return _getProceedButton("OPEN  PERMISSION", Icons.settings,
-            onTapInk: _openPermissionSettings);
-      }
-    }
-    if (state is LoadingContactState) {
-      return _getProceedButton("UPDATING CONTACT", Icons.person_sharp);
-    }
     if (state is ReadContactState) {
       return _getProceedButton("PROCEED ", Icons.arrow_circle_right,
           onTapInk: _openContactHome);
@@ -133,9 +111,6 @@ class _LaunchState extends ThemeState<LaunchWidget> {
     Navigator.pushReplacementNamed(context, AppRoutes.home);
   }
 
-  void _openPermissionSettings() {
-    openAppSettings();
-  }
 
   void _onIndexTapped(final int index) {
     debugPrint("tap index on $index");
@@ -171,15 +146,8 @@ class _LaunchState extends ThemeState<LaunchWidget> {
     );
   }
 
-  Widget get _loadingWidget {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
-  }
-
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _pageBehaviour.close();
   }

@@ -1,7 +1,6 @@
 import 'package:reborn/feature/data_model/contact_service.dart';
 import 'package:reborn/feature/data_model/entity/service_entity.dart';
 import 'package:reborn/utility/app_enum.dart';
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 
 import '../home/home_tab_widget.dart';
@@ -99,7 +98,7 @@ class StaticData {
       serviceID: idAdditionContacts,
       displayOrder: 1,
       contactList: contactService.recentList.entries
-          .map<Contact>((e) => e.value)
+          .map<dynamic>((e) => e.value)
           .toList(), //List<Contact>.from(contactService.recentList.values.map((e) => null)),
     );
     final ServiceEntity recentlyAdded = ServiceEntity<RecentEntity>(

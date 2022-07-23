@@ -1,7 +1,6 @@
 
 import 'package:reborn/feature/data_model/base/base_state.dart';
 import 'package:reborn/feature/data_model/entity/service_entity.dart';
-import 'package:contacts_service/contacts_service.dart';
 
 class RecentState extends CCBaseState {
 

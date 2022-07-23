@@ -51,6 +51,7 @@ class DataFormatter{
 
 class WKey {
 
+  static String get themeKey => "theme_key";
   static String get regDataKey => "registration_data";
   static String get resetUserNameKey => "reset_username";
   static String get uploadProfilePictureKey => "profile_picture_key";
