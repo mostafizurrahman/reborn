@@ -9,6 +9,12 @@ import 'app_enum.dart';
 
 
 class CCAppTheme {
+    static Color get pinkLightColor => const Color(0xFFEA80FC);
+    static Color get periwinkleLightColor => const Color(0xFFADEEE2);
+    static Color get pinkDarkColor => const Color(0xFF7827E6);
+    static Color get periwinkleDarkColor => const Color(0xFF9A9CEA);
+    static const String pinkDark = "7827E6", pinkMD = "8D39EC", pinkML = "AA4FF6", pinkLight = "EA80FC";
+    static const String periwinkleDark = "9A9CEA", periwinkleMD = "A2B9EE", periwinkleML = "A2DCEE", periwinkleLight = "ADEEE2";
     static BorderRadius get borderRadius => const BorderRadius.all(Radius.circular(10));
     static TextStyle get txt => const TextStyle(fontSize: 12.0, fontFamily: 'sf_light');
     static TextStyle get txt1 => const TextStyle(fontSize: 14.0, fontFamily: 'sf_light');

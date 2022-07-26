@@ -3,7 +3,7 @@
 
 class UserInfo {
 
-  String userName = "";
+  String userName = "mostafizur.rahman";
   String displayName = "Mostafizur";
 
 }

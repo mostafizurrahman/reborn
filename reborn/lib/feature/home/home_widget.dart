@@ -19,7 +19,9 @@ import '../menu/app_bar_widget.dart';
 import '../widget/base_widget/theme_state.dart';
 import '../widget/service_widget.dart';
 import 'home_grid_widget.dart';
+import 'rx_reborn_name/reborn_name_bloc.dart';
 import 'rx_secret/secret_bloc.dart';
+import 'widgets/home_reborn_name_view.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
@@ -33,15 +35,16 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeState extends ThemeState<HomeWidget> {
   late final BehaviorSubject<List<TabBarData>> _navigationTabBehaviour;
-  final RecentBloc recentBloc = RecentBloc();
-  final SecretBloc secretBloc = SecretBloc();
+  // final RecentBloc recentBloc = RecentBloc();
+  // final SecretBloc secretBloc = SecretBloc();
+  final RebornNameBloc _rebornNameBloc = RebornNameBloc();
 
   @override
   void initState() {
     super.initState();
     final _tabBarData = StaticData.getTabBarData(_onTabBarItemTap);
     _navigationTabBehaviour = BehaviorSubject<List<TabBarData>>.seeded(_tabBarData);
-    secretBloc.stream.listen(_onSecretStateChanged);
+
   }
 
   void _onSecretStateChanged(final SecretState state) {
@@ -61,53 +64,68 @@ class _HomeState extends ThemeState<HomeWidget> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<RecentBloc>(
-          create: (BuildContext context) => recentBloc,
-        ),
-        BlocProvider<SecretBloc>(
-          create: (BuildContext context) => secretBloc,
+        BlocProvider<RebornNameBloc>(
+          create: (BuildContext context) => _rebornNameBloc,
         ),
       ],
       child: Scaffold(
-        appBar: MenuBar(
-          name: "CONTACTS",
-        ),
-        bottomNavigationBar: StreamBuilder(
+
+        floatingActionButton: StreamBuilder(
           builder: _getNavigationBar,
           stream: _navigationTabBehaviour,
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         drawer: const MenuWidget(),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BlocBuilder(builder: _getRecentBlocWidget, bloc: recentBloc),
-                BlocBuilder(builder: _getSecretContactWidget, bloc: secretBloc),
-                BlocBuilder(builder: _getPrivateContactWidget, bloc: secretBloc),
-                HomeGridWidget(onGridTap: _onUtilityTap),
-                const SizedBox(height: 24),
-              ],
+        body: Container(
+          decoration: const BoxDecoration(
+            color: Colors.grey,
+            image: DecorationImage(
+              image: AssetImage("lib/assets/background.jpg"),
+              fit: BoxFit.cover,
             ),
           ),
-        ),
+          child: Container(
+            width: screenData.width,
+            height: screenData.height,
+            color: Colors.grey.shade300.withAlpha(100),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    HomeRebornNameView(),
+                    // BlocBuilder(builder: _getRecentBlocWidget, bloc: recentBloc),
+                    // BlocBuilder(builder: _getSecretContactWidget, bloc: secretBloc),
+                    // BlocBuilder(builder: _getPrivateContactWidget, bloc: secretBloc),
+                    // HomeGridWidget(onGridTap: _onUtilityTap),
+                    const SizedBox(height: 24),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        )
+
+
+
       ),
     );
   }
 
   void _onUtilityTap(final String routPath) {}
 
-  Widget _getSecretContactWidget(final BuildContext context, final SecretState state) {
-    return HomeSecretWidget(secretBloc: secretBloc);
-  }
-
-  Widget _getPrivateContactWidget(final BuildContext context, final SecretState state) {
-    return HomePrivateWidget(secretBloc: secretBloc);
-  }
-
-  Widget _getRecentBlocWidget(final BuildContext context, final RecentState state) {
-    return HomeRecentWidget(recentBloc: recentBloc);
-  }
+  // Widget _getSecretContactWidget(final BuildContext context, final SecretState state) {
+  //   // return HomeSecretWidget(secretBloc: secretBloc);
+  // }
+  //
+  // Widget _getPrivateContactWidget(final BuildContext context, final SecretState state) {
+  //   // return HomePrivateWidget(secretBloc: secretBloc);
+  // }
+  //
+  // Widget _getRecentBlocWidget(final BuildContext context, final RecentState state) {
+  //   // return HomeRecentWidget(recentBloc: recentBloc);
+  // }
 
   void _onTabBarItemTap(final String tabID) {
     final _list = _navigationTabBehaviour.value;
@@ -126,7 +144,7 @@ class _HomeState extends ThemeState<HomeWidget> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    recentBloc.close();
-    secretBloc.close();
+    // recentBloc.close();
+    // secretBloc.close();
   }
 }

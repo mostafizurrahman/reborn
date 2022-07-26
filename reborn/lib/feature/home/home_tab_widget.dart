@@ -22,11 +22,15 @@ class HomeTabWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SizedBox(
-        height: 80,
-        width: screenData.width,
-        child: Row(children: _getTapItemList()),
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+      child: Material(
+        color: Colors.transparent,
+        child: SizedBox(
+          height: 80,
+          width: screenData.width,
+          child: Row(children: _getTapItemList()),
+        ),
       ),
     );
   }
@@ -39,11 +43,11 @@ class HomeTabWidget extends StatelessWidget {
         width: _width,
         child: Material(
           color:
-              _tabData.isSelected ? Colors.grey.shade300 : Colors.grey.shade200,
+              _tabData.isSelected ? Colors.grey.shade500.withAlpha(130) : Colors.grey.shade200.withAlpha(80),
           child: Ink(
             child: InkWell(
-              focusColor: Colors.blue,
-              splashColor: Colors.blueAccent,
+              focusColor: CCAppTheme.pinkLightColor,
+              splashColor: CCAppTheme.periwinkleDarkColor,
               onTap: () => _tabData.onTap(_tabData.tabID),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -53,7 +57,7 @@ class HomeTabWidget extends StatelessWidget {
                   const SizedBox(height: 12),
                   Icon(_tabData.iconData,
                       color: _tabData.isSelected
-                          ? Colors.blueAccent
+                          ? CCAppTheme.pinkDarkColor
                           : Colors.black,
                       size: 22),
                   const SizedBox(height: 12),
