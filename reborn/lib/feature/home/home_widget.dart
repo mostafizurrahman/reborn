@@ -20,6 +20,7 @@ import '../widget/base_widget/theme_state.dart';
 import '../widget/service_widget.dart';
 import 'home_grid_widget.dart';
 import 'rx_reborn_name/reborn_name_bloc.dart';
+import 'rx_reborn_name/reborn_name_states.dart';
 import 'rx_secret/secret_bloc.dart';
 import 'widgets/home_reborn_name_view.dart';
 
@@ -64,9 +65,7 @@ class _HomeState extends ThemeState<HomeWidget> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<RebornNameBloc>(
-          create: (BuildContext context) => _rebornNameBloc,
-        ),
+        BlocProvider<RebornNameBloc>.value(value: _rebornNameBloc),
       ],
       child: Scaffold(
 
@@ -94,7 +93,7 @@ class _HomeState extends ThemeState<HomeWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    HomeRebornNameView(),
+                    BlocBuilder(builder: _onBuildNameBloc, bloc: _rebornNameBloc),
                     // BlocBuilder(builder: _getRecentBlocWidget, bloc: recentBloc),
                     // BlocBuilder(builder: _getSecretContactWidget, bloc: secretBloc),
                     // BlocBuilder(builder: _getPrivateContactWidget, bloc: secretBloc),
@@ -105,12 +104,13 @@ class _HomeState extends ThemeState<HomeWidget> {
               ),
             ),
           ),
-        )
-
-
-
+        ),
       ),
     );
+  }
+
+  Widget _onBuildNameBloc(final BuildContext context, final RebornNameState state) {
+    return const HomeRebornNameView();
   }
 
   void _onUtilityTap(final String routPath) {}
