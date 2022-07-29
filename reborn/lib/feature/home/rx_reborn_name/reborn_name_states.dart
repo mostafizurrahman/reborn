@@ -1,11 +1,16 @@
 import '../../data_model/base/base_state.dart';
 
-class RebornNameState extends CCBaseState {
+class RebornFilterState extends CCBaseState {
 
 }
 
 
-class SetRebornNameState extends RebornNameState {
-  final String name;
-  SetRebornNameState({required this.name});
+class RebornGridFilterState extends RebornFilterState {
+  final String gridFilterID;
+  RebornGridFilterState({required this.gridFilterID});
+}
+
+class RebornListFilterState extends RebornFilterState {
+  final String listFilterID;
+  RebornListFilterState({required this.listFilterID});
 }

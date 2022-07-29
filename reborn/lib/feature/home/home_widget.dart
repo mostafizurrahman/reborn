@@ -22,7 +22,7 @@ import 'home_grid_widget.dart';
 import 'rx_reborn_name/reborn_name_bloc.dart';
 import 'rx_reborn_name/reborn_name_states.dart';
 import 'rx_secret/secret_bloc.dart';
-import 'widgets/home_reborn_name_view.dart';
+import 'widgets/reborn_filter_view.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class _HomeState extends ThemeState<HomeWidget> {
   late final BehaviorSubject<List<TabBarData>> _navigationTabBehaviour;
   // final RecentBloc recentBloc = RecentBloc();
   // final SecretBloc secretBloc = SecretBloc();
-  final RebornNameBloc _rebornNameBloc = RebornNameBloc();
+  final RebornFilterBloc _rebornNameBloc = RebornFilterBloc();
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _HomeState extends ThemeState<HomeWidget> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<RebornNameBloc>.value(value: _rebornNameBloc),
+        BlocProvider<RebornFilterBloc>.value(value: _rebornNameBloc),
       ],
       child: Scaffold(
 
@@ -86,14 +86,14 @@ class _HomeState extends ThemeState<HomeWidget> {
           child: Container(
             width: screenData.width,
             height: screenData.height,
-            color: Colors.grey.shade300.withAlpha(100),
+            color: Colors.grey.shade100.withAlpha(200),
             child: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    BlocBuilder(builder: _onBuildNameBloc, bloc: _rebornNameBloc),
+                    BlocBuilder(builder: _onBuildFilterBloc, bloc: _rebornNameBloc),
                     // BlocBuilder(builder: _getRecentBlocWidget, bloc: recentBloc),
                     // BlocBuilder(builder: _getSecretContactWidget, bloc: secretBloc),
                     // BlocBuilder(builder: _getPrivateContactWidget, bloc: secretBloc),
@@ -109,8 +109,8 @@ class _HomeState extends ThemeState<HomeWidget> {
     );
   }
 
-  Widget _onBuildNameBloc(final BuildContext context, final RebornNameState state) {
-    return const HomeRebornNameView();
+  Widget _onBuildFilterBloc(final BuildContext context, final RebornFilterState state) {
+    return const RebornFilterView();
   }
 
   void _onUtilityTap(final String routPath) {}

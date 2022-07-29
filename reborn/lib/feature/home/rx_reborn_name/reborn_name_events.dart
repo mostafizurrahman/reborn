@@ -1,11 +1,16 @@
 import '../../data_model/base/base_event.dart';
 
-class RebornNameEvent extends CCBaseEvent {
+class RebornFitlerEvent extends CCBaseEvent {
 
 }
 
 
-class SetRebornNameEvent extends RebornNameEvent {
-  final String name;
-  SetRebornNameEvent({required this.name});
+class FilterGridRebornEvent extends RebornFitlerEvent {
+  final String girdFilterID;
+  FilterGridRebornEvent({required this.girdFilterID});
+}
+
+class FilterListRebornEvent extends RebornFitlerEvent {
+  final String listFilterID;
+  FilterListRebornEvent({required this.listFilterID});
 }
