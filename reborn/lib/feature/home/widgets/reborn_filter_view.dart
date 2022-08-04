@@ -28,16 +28,17 @@ class RebornHomeFilterState extends State<RebornFilterView> {
   @override
   Widget build(BuildContext context) {
     final filterBloc = BlocProvider.of<RebornFilterBloc>(context);
-    final height = screenData.height * 0.6;
+    const double height = 324;
     return Material(
       color: Colors.transparent,
       child: SizedBox(
         width: screenData.width,
         height: height,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SizedBox(
-              height: height * 0.15,
+              height: 80,
               width: screenData.width,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,14 +65,6 @@ class RebornHomeFilterState extends State<RebornFilterView> {
               builder: _onBuildGridFilter,
               bloc: filterBloc,
             ),
-            Text("How are you feeling?", style: CCAppTheme.txtHL2),
-            RIButton(
-                onTap: () {
-                  final bloc = BlocProvider.of<RebornFilterBloc>(context);
-                  //show dialog for set feelings...
-                },
-                iconData: Icons.stream,
-                radius: 30),
           ],
         ),
       ),

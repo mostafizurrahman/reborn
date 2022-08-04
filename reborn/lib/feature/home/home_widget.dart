@@ -5,6 +5,7 @@ import 'package:reborn/feature/home/home_tab_widget.dart';
 import 'package:reborn/feature/home/rx_recent/recent_bloc.dart';
 import 'package:reborn/feature/home/rx_recent/recent_states.dart';
 import 'package:reborn/feature/home/rx_secret/secret_states.dart';
+import 'package:reborn/feature/home/widgets/sub_filter_view.dart';
 import 'package:reborn/feature/menu/menu_widget.dart';
 import 'package:reborn/feature/widget/widget_properties.dart';
 import 'package:reborn/routing/app_route.dart';
@@ -91,9 +92,13 @@ class _HomeState extends ThemeState<HomeWidget> {
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
 
                     BlocBuilder(builder: _onBuildFilterBloc, bloc: _rebornNameBloc),
+                    const SizedBox(height: 12),
+                    BlocBuilder(builder: _onBuildSubfilterBloc, bloc: _rebornNameBloc),
+                    // BlocBuilder(builder: _onBuildFilterBloc, bloc: _rebornNameBloc),
                     // BlocBuilder(builder: _getRecentBlocWidget, bloc: recentBloc),
                     // BlocBuilder(builder: _getSecretContactWidget, bloc: secretBloc),
                     // BlocBuilder(builder: _getPrivateContactWidget, bloc: secretBloc),
@@ -111,6 +116,10 @@ class _HomeState extends ThemeState<HomeWidget> {
 
   Widget _onBuildFilterBloc(final BuildContext context, final RebornFilterState state) {
     return const RebornFilterView();
+  }
+
+  Widget _onBuildSubfilterBloc(final BuildContext context, final RebornFilterState state) {
+    return const SubFilterView();
   }
 
   void _onUtilityTap(final String routPath) {}

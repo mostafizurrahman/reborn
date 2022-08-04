@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:reborn/feature/data_model/contact_service.dart';
 import 'package:reborn/feature/data_model/entity/service_entity.dart';
 import 'package:reborn/utility/app_enum.dart';
@@ -128,6 +129,22 @@ class StaticData {
 
     return [favoriteServiceEntity, recentlyAdded, serviceEntity];
   }
+
+  static List<SubFilterData> get subfilterList {
+    return [
+      SubFilterData(displayName: "Duration", subFilterID: "filter_duration_id", iconName: CupertinoIcons.timer),
+      SubFilterData(displayName: "Coaches", subFilterID: "filter_coach_id", iconName: CupertinoIcons.rectangle_stack_person_crop),
+      SubFilterData(displayName: "Gender", subFilterID: "filter_gender_id", iconName: Icons.person_outline),
+      SubFilterData(displayName: "Country", subFilterID: "filter_country_id", iconName: Icons.flag_outlined),
+    ];
+  }
+}
+
+class SubFilterData {
+  final String subFilterID;
+  final String displayName;
+  final IconData iconName;
+  SubFilterData({required this.subFilterID, required this.displayName, required this.iconName});
 }
 
 class ArgsKey {
