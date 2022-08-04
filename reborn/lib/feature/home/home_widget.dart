@@ -106,6 +106,7 @@ class _HomeState extends ThemeState<HomeWidget> {
                     Divider(color: CCAppTheme.periwinkleDarkColor),
                     const SizedBox(height: 32),
                     ..._getContentList(),
+                    const SizedBox(height: 120),
                   ],
                 ),
               ),
@@ -151,67 +152,71 @@ class _HomeState extends ThemeState<HomeWidget> {
         child: ListView.builder(
             itemBuilder: (context, index) {
               final data = _category.rebornMeditationList[index];
-              return Container(
-                padding: const EdgeInsets.all(4),
-                width: screenData.width * 0.75,
-                height: screenData.width * 0.75,
+              return Padding(
+                padding: EdgeInsets.only(right: 24, bottom: 6, top: 6),
+                child: Container(
+
+                width: screenData.width * 0.75 - 12,
+                height: screenData.width * 0.6 - 15,
                 decoration: CCAppTheme.shadowNoBorder,
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(6)),
-                  child: Material(
-                    child: Ink(
-                      child: InkWell(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            _category.rebornMeditationList.first.isPremiumMeditation
-                                ? Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [Icon(Icons.lock_outline_rounded)],
-                                  )
-                                : const SizedBox(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.favorite),
-                                const SizedBox(width: 12),
-                                Text(data.meditationList.first.meditationType)
-                              ],
-                            ),
-                            Text(_category.categoryTitle, style: CCAppTheme.txtHL1),
-                            SizedBox(height: screenData.width * 0.3),
-                            Container(
-                              width: screenData.width * 0.75,
-                              child: Row(
+                    borderRadius: const BorderRadius.all(Radius.circular(6)),
+                    child: Material(
+                      child: Ink(
+                        child: InkWell(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              _category.rebornMeditationList.first.isPremiumMeditation
+                                  ? Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: const [Icon(Icons.lock_outline_rounded)],
+                              )
+                                  : const SizedBox(),
+                              Expanded(child: SizedBox()),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(8),
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                      child: CachedNetworkImage(
-                                          imageUrl: author.authorImage,
-                                          width: 44,
-                                          height: 44,
-                                          fit: BoxFit.contain),
-                                    ),
-                                  ),
-                                  SizedBox(width: 12),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(author.authorName,
-                                          style: CCAppTheme.txtHL1
-                                              .copyWith(overflow: TextOverflow.fade)),
-                                      SizedBox(height: 8),
-                                      Text(author.authorDescription.substring(0, 12)+"...", style: CCAppTheme.txtHL3.copyWith(color: CCAppTheme.pinkDarkColor, overflow: TextOverflow.clip),),
-                                    ],
-                                  ),
+                                  Icon(Icons.favorite, color: CCAppTheme.periwinkleLightColor),
+                                  const SizedBox(width: 12),
+                                  Text(data.meditationList.first.meditationType)
                                 ],
                               ),
-                              color: Colors.grey.shade300,
-                            ),
-                          ],
+                              Text(_category.categoryTitle, style: CCAppTheme.txtHL1),
+                              SizedBox(height: screenData.width * 0.3),
+                              Container(
+                                width: screenData.width * 0.75,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(8),
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                        child: CachedNetworkImage(
+                                            imageUrl: author.authorImage,
+                                            width: 44,
+                                            height: 44,
+                                            fit: BoxFit.contain),
+                                      ),
+                                    ),
+                                    SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(author.authorName,
+                                            style: CCAppTheme.txtHL1
+                                                .copyWith(overflow: TextOverflow.fade)),
+                                        SizedBox(height: 8),
+                                        Text(author.authorDescription.substring(0, 12)+"...", style: CCAppTheme.txtHL3.copyWith(color: CCAppTheme.pinkDarkColor, overflow: TextOverflow.clip),),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                color: Colors.grey.shade300,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

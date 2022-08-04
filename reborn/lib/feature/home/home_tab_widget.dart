@@ -1,6 +1,6 @@
 import 'package:reborn/utility/screen_data.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:ui' as ui;
 import '../../utility/app_theme_data.dart';
 
 class TabBarData {
@@ -23,13 +23,16 @@ class HomeTabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-      child: Material(
-        color: Colors.transparent,
-        child: SizedBox(
-          height: 80,
-          width: screenData.width,
-          child: Row(children: _getTapItemList()),
+        borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+        child: BackdropFilter(
+          filter: ui.ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+          child: Material(
+          color: Colors.transparent,
+          child: SizedBox(
+            height: 80,
+            width: screenData.width,
+            child: Row(children: _getTapItemList()),
+          ),
         ),
       ),
     );
@@ -43,7 +46,7 @@ class HomeTabWidget extends StatelessWidget {
         width: _width,
         child: Material(
           color:
-              _tabData.isSelected ? Colors.grey.shade500.withAlpha(130) : Colors.grey.shade200.withAlpha(80),
+              _tabData.isSelected ? Colors.grey.shade600.withAlpha(200) : Colors.grey.shade500.withAlpha(140),
           child: Ink(
             child: InkWell(
               focusColor: CCAppTheme.pinkLightColor,
