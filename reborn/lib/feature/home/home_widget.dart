@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:reborn/feature/data_model/entity/service_entity.dart';
 import 'package:reborn/feature/home/home_recent_widget.dart';
 import 'package:reborn/feature/home/home_secret_widget.dart';
@@ -47,7 +48,6 @@ class _HomeState extends ThemeState<HomeWidget> {
     super.initState();
     final _tabBarData = StaticData.getTabBarData(_onTabBarItemTap);
     _navigationTabBehaviour = BehaviorSubject<List<TabBarData>>.seeded(_tabBarData);
-
   }
 
   void _onSecretStateChanged(final SecretState state) {
@@ -70,7 +70,6 @@ class _HomeState extends ThemeState<HomeWidget> {
         BlocProvider<RebornFilterBloc>.value(value: _rebornNameBloc),
       ],
       child: Scaffold(
-
         floatingActionButton: StreamBuilder(
           builder: _getNavigationBar,
           stream: _navigationTabBehaviour,
@@ -95,7 +94,6 @@ class _HomeState extends ThemeState<HomeWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-
                     BlocBuilder(builder: _onBuildFilterBloc, bloc: _rebornNameBloc),
                     const SizedBox(height: 12),
                     BlocBuilder(builder: _onBuildSubfilterBloc, bloc: _rebornNameBloc),
@@ -141,10 +139,98 @@ class _HomeState extends ThemeState<HomeWidget> {
   // }
 
   List<Widget> _getContentList() {
+    final categories = StaticData.categoryList;
     List<Widget> list = [];
 
-    for(int i = 0; i < 10; i++) {
-
+    for (int i = 0; i < categories.length; i++) {
+      final _category = categories[i];
+      final author = _category.rebornMeditationList.first.authorList.first;
+      final _widget = SizedBox(
+        width: screenData.width,
+        height: 330,
+        child: ListView.builder(
+            itemBuilder: (context, index) {
+              final data = _category.rebornMeditationList[index];
+              return Container(
+                padding: const EdgeInsets.all(4),
+                width: screenData.width * 0.75,
+                height: screenData.width * 0.75,
+                decoration: CCAppTheme.shadowNoBorder,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(6)),
+                  child: Material(
+                    child: Ink(
+                      child: InkWell(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            _category.rebornMeditationList.first.isPremiumMeditation
+                                ? Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [Icon(Icons.lock_outline_rounded)],
+                                  )
+                                : const SizedBox(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.favorite),
+                                const SizedBox(width: 12),
+                                Text(data.meditationList.first.meditationType)
+                              ],
+                            ),
+                            Text(_category.categoryTitle, style: CCAppTheme.txtHL1),
+                            SizedBox(height: screenData.width * 0.3),
+                            Container(
+                              width: screenData.width * 0.75,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                      child: CachedNetworkImage(
+                                          imageUrl: author.authorImage,
+                                          width: 44,
+                                          height: 44,
+                                          fit: BoxFit.contain),
+                                    ),
+                                  ),
+                                  SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(author.authorName,
+                                          style: CCAppTheme.txtHL1
+                                              .copyWith(overflow: TextOverflow.fade)),
+                                      SizedBox(height: 8),
+                                      Text(author.authorDescription.substring(0, 12)+"...", style: CCAppTheme.txtHL3.copyWith(color: CCAppTheme.pinkDarkColor, overflow: TextOverflow.clip),),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              color: Colors.grey.shade300,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+            itemCount: _category.rebornMeditationList.length,
+            scrollDirection: Axis.horizontal),
+      );
+      list.add(SizedBox(height: 24));
+      list.add(Padding(
+        padding: EdgeInsets.only(left: 24, top: 8, bottom: 6),
+        child: Text(_category.categoryTitle, style: CCAppTheme.txtHL1.copyWith(color: CCAppTheme.pinkDarkColor),),
+      ));
+      list.add(Padding(
+        padding: EdgeInsets.only(left: 24),
+        child: _widget,
+      ));
     }
 
     return list;

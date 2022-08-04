@@ -219,7 +219,9 @@ class MeditationCategoryData {
   final List<String> subFilterList; //subfilter_id
   final List<RebornMeditation> rebornMeditationList;
   MeditationCategoryData(
-      {required this.categoryID,
+
+      {
+        required this.categoryID,
       required this.categoryTitle,
       required this.subFilterList,
       required this.rebornMeditationList});
@@ -230,6 +232,9 @@ class RebornMeditation {
   final String meditationID;
   final List<RebornMeditationData> meditationList;
   final List<AudioAuthor> authorList;
+
+
+
   RebornMeditation(
       {required this.meditationID,
       required this.meditationList,
