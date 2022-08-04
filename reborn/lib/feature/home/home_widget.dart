@@ -9,6 +9,7 @@ import 'package:reborn/feature/home/widgets/sub_filter_view.dart';
 import 'package:reborn/feature/menu/menu_widget.dart';
 import 'package:reborn/feature/widget/widget_properties.dart';
 import 'package:reborn/routing/app_route.dart';
+import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -103,7 +104,10 @@ class _HomeState extends ThemeState<HomeWidget> {
                     // BlocBuilder(builder: _getSecretContactWidget, bloc: secretBloc),
                     // BlocBuilder(builder: _getPrivateContactWidget, bloc: secretBloc),
                     // HomeGridWidget(onGridTap: _onUtilityTap),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 12),
+                    Divider(color: CCAppTheme.periwinkleDarkColor),
+                    const SizedBox(height: 32),
+                    ..._getContentList(),
                   ],
                 ),
               ),
@@ -135,6 +139,16 @@ class _HomeState extends ThemeState<HomeWidget> {
   // Widget _getRecentBlocWidget(final BuildContext context, final RecentState state) {
   //   // return HomeRecentWidget(recentBloc: recentBloc);
   // }
+
+  List<Widget> _getContentList() {
+    List<Widget> list = [];
+
+    for(int i = 0; i < 10; i++) {
+
+    }
+
+    return list;
+  }
 
   void _onTabBarItemTap(final String tabID) {
     final _list = _navigationTabBehaviour.value;

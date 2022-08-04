@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:reborn/feature/data_model/contact_service.dart';
 import 'package:reborn/feature/data_model/entity/service_entity.dart';
@@ -132,11 +134,71 @@ class StaticData {
 
   static List<SubFilterData> get subfilterList {
     return [
-      SubFilterData(displayName: "Duration", subFilterID: "filter_duration_id", iconName: CupertinoIcons.timer),
-      SubFilterData(displayName: "Coaches", subFilterID: "filter_coach_id", iconName: CupertinoIcons.rectangle_stack_person_crop),
-      SubFilterData(displayName: "Gender", subFilterID: "filter_gender_id", iconName: Icons.person_outline),
-      SubFilterData(displayName: "Country", subFilterID: "filter_country_id", iconName: Icons.flag_outlined),
+      SubFilterData(
+          displayName: "Duration",
+          subFilterID: "filter_duration_id",
+          iconName: CupertinoIcons.timer),
+      SubFilterData(
+          displayName: "Coaches",
+          subFilterID: "filter_coach_id",
+          iconName: CupertinoIcons.rectangle_stack_person_crop),
+      SubFilterData(
+          displayName: "Gender", subFilterID: "filter_gender_id", iconName: Icons.person_outline),
+      SubFilterData(
+          displayName: "Country", subFilterID: "filter_country_id", iconName: Icons.flag_outlined),
     ];
+  }
+
+  static AudioAuthor get audioAuthor {
+    return AudioAuthor(
+        authorEmail: "abc@yahoo.com", authorName: "Katie Krimitsos", authorId: "xaya...r");
+  }
+
+  static RebornMeditationData get rebornMeditationData {
+    return RebornMeditationData(
+      audioAuthor: audioAuthor,
+      meditationID: "meditation",
+      meditationTitle: "Reborn yourself",
+      duration: "4:29 Min",
+      isPremiumContent: false,
+      meditationCoverImage:
+          "https://theproductivewoman.com/wp-content/uploads/2017/05/Katie-59c.jpg",
+      meditationThumbImage:
+          "https://4feo872yrq891mrmgs21v589-wpengine.netdna-ssl.com/wp-content/uploads/2022/03/Katie-Krimitsos2-scaled-e1646244833157.jpeg",
+      meditationType: "Work Wellness",
+    );
+  }
+
+  static List<RebornMeditationData> get rebornMeditationList {
+    var rng = Random();
+    return List.generate(2 + rng.nextInt(6), (index) => rebornMeditationData);
+  }
+
+  static RebornMeditation get rebornMeditation {
+    return RebornMeditation(
+      meditationID: "aasd_asd",
+      authorList: [audioAuthor, audioAuthor],
+      isPremiumMeditation: true,
+      meditationList: rebornMeditationList,
+    );
+  }
+
+  static List<MeditationCategoryData> get categoryList {
+    var rng = Random();
+    List<String> titles = [
+      "Focus and Productivity",
+      "Self Awareness at Work",
+      "Deep Sleep Meditation",
+      "Popular",
+      "Made For Your"
+    ];
+    return List.generate(
+        12,
+        (index) => MeditationCategoryData(
+            categoryID: "${index}_category",
+            categoryTitle: titles[index % titles.length],
+            rebornMeditationList: List.generate(2 + rng.nextInt(7), (index) => rebornMeditation),
+            subFilterList: ["filter_gender_id", "filter_country_id", "filter_coach_id"]));
   }
 }
 
@@ -149,4 +211,68 @@ class SubFilterData {
 
 class ArgsKey {
   static String get secretType => "secret_type";
+}
+
+class MeditationCategoryData {
+  final String categoryID;
+  final String categoryTitle;
+  final List<String> subFilterList; //subfilter_id
+  final List<RebornMeditation> rebornMeditationList;
+  MeditationCategoryData(
+      {required this.categoryID,
+      required this.categoryTitle,
+      required this.subFilterList,
+      required this.rebornMeditationList});
+}
+
+class RebornMeditation {
+  final bool isPremiumMeditation;
+  final String meditationID;
+  final List<RebornMeditationData> meditationList;
+  final List<AudioAuthor> authorList;
+  RebornMeditation(
+      {required this.meditationID,
+      required this.meditationList,
+      required this.authorList,
+      required this.isPremiumMeditation});
+}
+
+class RebornMeditationData {
+  final String meditationID;
+  final String meditationTitle;
+  final String meditationType;
+  final String duration;
+  final String meditationCoverImage;
+  final String meditationThumbImage;
+
+  final bool isPremiumContent;
+  final AudioAuthor audioAuthor;
+  RebornMeditationData(
+      {required this.audioAuthor,
+      required this.meditationID,
+      required this.meditationTitle,
+      required this.meditationType,
+      required this.duration,
+      required this.meditationCoverImage,
+      required this.meditationThumbImage,
+      required this.isPremiumContent});
+}
+
+class AudioAuthor {
+  final String authorId;
+  final String authorName;
+  final String authorEmail;
+  final String authorImage;
+  final String authorDescription;
+  final String authorQualification;
+  final int authorAge;
+  AudioAuthor(
+      {required this.authorId,
+      required this.authorName,
+      required this.authorEmail,
+      this.authorImage = "https://theproductivewoman.com/wp-content/uploads/2018/10/Katie-32.jpg",
+      this.authorDescription =
+          "Mama, Adventurer, Podcaster. Listen to daily guided meditation here 🎧👇🏽💗",
+      this.authorQualification = "Creator of the Women’s Meditation Network.",
+      this.authorAge = 39});
 }

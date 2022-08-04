@@ -33,7 +33,6 @@ class SubFilterView extends StatelessWidget {
                       Icon(element.iconName, color: CCAppTheme.pinkLightColor),
                       const SizedBox(width: 8),
                       Text(element.displayName, style: CCAppTheme.txt2),
-                      const SizedBox(width: 8),
                     ],
                   ),
                 ),
