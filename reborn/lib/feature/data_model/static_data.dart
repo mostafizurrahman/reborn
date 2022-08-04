@@ -155,6 +155,12 @@ class StaticData {
   }
 
   static RebornMeditationData get rebornMeditationData {
+    var rng = Random();
+    final images = ["https://wallpaperaccess.com/full/5117569.jpg",
+    "https://images.unsplash.com/photo-1609154767012-331529e7d73b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80",
+    "https://media.istockphoto.com/photos/autumn-tree-picture-id474517002?k=20&m=474517002&s=612x612&w=0&h=K9GFM6NphMwPBe5C9cTDRwbfGhASH1M2FP6OsxoZMe4=",
+    "https://media.istockphoto.com/photos/morning-in-the-field-picture-id184342766?b=1&k=20&m=184342766&s=170667a&w=0&h=a9LAA3eFjPgokvPQVmSttWOkP_6fCyNZlK2PQuh4rrw=",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx25vr8cSjz7hb8AY1QExa6WTo1gLNPQmrICS8cqASaTbqX9gbRSMu6dGsIAUTqkKAY5Q&usqp=CAU"];
     return RebornMeditationData(
       audioAuthor: audioAuthor,
       meditationID: "meditation",
@@ -162,9 +168,9 @@ class StaticData {
       duration: "4:29 Min",
       isPremiumContent: false,
       meditationCoverImage:
-          "https://theproductivewoman.com/wp-content/uploads/2017/05/Katie-59c.jpg",
+          images[rng.nextInt(5)],
       meditationThumbImage:
-          "https://4feo872yrq891mrmgs21v589-wpengine.netdna-ssl.com/wp-content/uploads/2022/03/Katie-Krimitsos2-scaled-e1646244833157.jpeg",
+      "https://theproductivewoman.com/wp-content/uploads/2017/05/Katie-59c.jpg",
       meditationType: "Work Wellness",
     );
   }
@@ -275,7 +281,7 @@ class AudioAuthor {
       {required this.authorId,
       required this.authorName,
       required this.authorEmail,
-      this.authorImage = "https://theproductivewoman.com/wp-content/uploads/2018/10/Katie-32.jpg",
+      this.authorImage = "https://theproductivewoman.com/wp-content/uploads/2017/05/Katie-59c.jpg",
       this.authorDescription =
           "Mama, Adventurer, Podcaster. Listen to daily guided meditation here 🎧👇🏽💗",
       this.authorQualification = "Creator of the Women’s Meditation Network.",

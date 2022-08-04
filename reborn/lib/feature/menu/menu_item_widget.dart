@@ -44,7 +44,7 @@ class MenuData {
       menuID: "id_orders",
       route: AppRoutes.orders,
       iconName: 'ic_orders',
-      titleKey: 'order',
+      titleKey: 'Subscription',
     ),
     MenuData(
       menuID: "id_account",
