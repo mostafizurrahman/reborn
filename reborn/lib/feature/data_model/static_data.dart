@@ -22,74 +22,63 @@ class PageData {
 }
 
 class StaticData {
-
-  static List<SecretTapType> get parentTypes => [SecretTapType.tapParent, SecretTapType.tapParentPrivate];
+  static List<SecretTapType> get parentTypes =>
+      [SecretTapType.tapParent, SecretTapType.tapParentPrivate];
   static List<SecretTapType> get secretTypes => [SecretTapType.tapParent, SecretTapType.tapRight];
 
   static String get idFavoriteContacts => "id_favorite_contacts";
   static String get idDeletedContacts => "recent_deleted_contacts";
   static String get idAdditionContacts => "recent_added_contacts";
 
-  static List<TabBarData> getTabBarData(
-          final Function(String) _onTabBarItemTap) =>
-      [
+  static List<TabBarData> getTabBarData(final Function(String) _onTabBarItemTap) => [
         TabBarData(
-            iconData: Icons.star,
-            tabID: "0_t_fav",
-            name: "Favorite",
-            onTap: _onTabBarItemTap)
+            iconData: Icons.star, tabID: "0_t_fav", name: "Favorite", onTap: _onTabBarItemTap)
           ..isSelected = false,
         TabBarData(
-            iconData: Icons.timelapse,
-            tabID: "1_t_recent",
-            name: "Recent",
-            onTap: _onTabBarItemTap)
+            iconData: Icons.timelapse, tabID: "1_t_recent", name: "Sleep", onTap: _onTabBarItemTap)
           ..isSelected = false,
         TabBarData(
-            iconData: Icons.home,
-            tabID: "2_t_contact",
-            name: "Home",
-            onTap: _onTabBarItemTap)
+            iconData: Icons.stream, tabID: "2_t_contact", name: "Reborn", onTap: _onTabBarItemTap)
           ..isSelected = true,
         TabBarData(
-            iconData: Icons.qr_code,
+            iconData: Icons.account_circle_outlined,
             tabID: "3_t_qr",
-            name: "ScanQR",
+            name: "Coaches",
             onTap: _onTabBarItemTap)
           ..isSelected = false,
         TabBarData(
-            iconData: Icons.share_outlined,
+            iconData: Icons.person_outline,
             tabID: "4_t_add",
-            name: "Transfer",
+            name: "Profile",
             onTap: _onTabBarItemTap)
           ..isSelected = false,
       ];
 
   static List<PageData> getPageData() {
     final _pageData0 = PageData(
-        title: "SECRET  CONTACTS",
-        imagePath: "startup/contacts.jpg",
-        iconPath: "startup/contacts.png",
+        title: "LIVE & PEACE",
+        imagePath: "startup/backup.jpg",
+        iconPath: "reborn_circle.png",
         subTitle:
-            "You may want to keep some contacts private, so that they do not appear in the original phone contact list. We provide such contact privacy!");
+            "Feelings are much like waves, we can't stop them from coming but we can choose which ones to surf.");
     final _pageData1 = PageData(
-        title: "SHARE  CONTACTS",
-        iconPath: "startup/transfer.png",
+        title: "INNER  PEACE",
+        iconPath: "reborn_circle.png",
         imagePath: "startup/transfer.jpg",
         subTitle:
-            "Share contacts among your personal devices. You may send/receive contacts to other person as well.");
+            "If you are depressed you are living in the past if you are anxious you are living in the future, if you are at peace, you are living in the present.");
     final _pageData2 = PageData(
-        iconPath: "startup/backup.png",
-        title: "BACKUP  CONTACTS",
-        imagePath: "startup/backup.jpg",
+        iconPath: "reborn_circle.png",
+        title: "CONFIDENCE",
+        imagePath: "startup/contacts.jpg",
         subTitle:
-            "Backup your contacts so that remain forever, even you changes you mobile phone! Just login and sync the backup from cloud storage!");
+            "Self confidence is a super power. Once you start to believe in yourself, magic starts happening.");
     final _pageData3 = PageData(
-        iconPath: "startup/manager.png",
-        title: "CONTACT  MANAGER",
+        iconPath: "reborn_circle.png",
+        title: "REBORN",
         imagePath: "startup/manager.jpg",
         subTitle:
-            "You are here because of the duplication contacts drive you crazy during an emergency! We are here to sort things easy for you. Recent saved contacts, remove, merge duplicates, favorites, many more options - explore yourself!");
+            "Reborn yourself by living in peace, gaining your inner-self! Nothing remains as it was. If you know this, you can begin again, with pure joy in the uprooting");
     return [_pageData0, _pageData1, _pageData2, _pageData3];
   }
 
@@ -143,5 +132,4 @@ class StaticData {
 
 class ArgsKey {
   static String get secretType => "secret_type";
-
 }

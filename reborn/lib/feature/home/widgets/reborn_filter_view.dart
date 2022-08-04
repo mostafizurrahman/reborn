@@ -80,31 +80,34 @@ class RebornHomeFilterState extends State<RebornFilterView> {
 
   Widget _onBuildGridFilter(final BuildContext _context, final RebornFilterState filterState) {
     return SizedBox(
-      height: 80,
+      height: 90,
       child: ListView.builder(
         itemBuilder: (final listContext, final _index) {
           return Padding(
             padding: _getPadding(filterList.length, _index),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5)),
-              child: Material(
-                child: Ink(
-                  width: 80,
-                  height: 60,
-                  child: InkWell(
-                    focusColor: CCAppTheme.pinkLightColor,
-                    splashColor: CCAppTheme.periwinkleDarkColor,
-                    onTap: () {
-                      debugPrint("filter tap on ${filterList[_index]}");
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(filterList[_index].iconData ?? Icons.favorite,
-                            color: CCAppTheme.pinkLightColor),
-                        const SizedBox(height: 12),
-                        Text(filterList[_index].displayName, style: CCAppTheme.txt1),
-                      ],
+            child: Container(
+              decoration: CCAppTheme.shadowNoBorder,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                child: Material(
+                  child: Ink(
+                    width: 80,
+                    height: 60,
+                    child: InkWell(
+                      focusColor: CCAppTheme.pinkLightColor,
+                      splashColor: CCAppTheme.periwinkleDarkColor,
+                      onTap: () {
+                        debugPrint("filter tap on ${filterList[_index]}");
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(filterList[_index].iconData ?? Icons.favorite,
+                              color: CCAppTheme.pinkLightColor),
+                          const SizedBox(height: 12),
+                          Text(filterList[_index].displayName, style: CCAppTheme.txt1),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -121,11 +124,11 @@ class RebornHomeFilterState extends State<RebornFilterView> {
 
   EdgeInsets _getPadding(final int listLen, final int listIndex) {
     if (listIndex == 0) {
-      return const EdgeInsets.only(left: 24, right: 8);
+      return const EdgeInsets.only(left: 24, right: 8, top: 8, bottom: 8);
     }
     if (listIndex == listLen - 1) {
-      return const EdgeInsets.only(right: 24);
+      return const EdgeInsets.only(right: 24, top: 8, bottom: 8);
     }
-    return const EdgeInsets.symmetric(horizontal: 8);
+    return const EdgeInsets.all(8);
   }
 }
