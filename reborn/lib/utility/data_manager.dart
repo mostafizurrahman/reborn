@@ -141,6 +141,11 @@ class DataManager {
   Future<void> saveTheme(final int themeValue) async {
     await _setIntValue(WKey.themeKey, themeValue);
   }
+
+  Future<void> clearTheme() async {
+    final _sharedPreference = await SharedPreferences.getInstance();
+    _sharedPreference.remove(WKey.themeKey);
+  }
 }
 
 DataManager dataManager = DataManager();

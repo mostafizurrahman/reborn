@@ -2,17 +2,16 @@ import 'dart:io';
 
 import 'package:reborn/feature/contact_add/contact_entry_widget.dart';
 import 'package:reborn/feature/contact_list/contact_list_widget.dart';
-import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/home/home_widget.dart';
 import 'package:reborn/routing/app_route.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'feature/startup/launch_widget.dart';
-import 'utility/app_enum.dart';
 import 'utility/app_theme_data.dart';
-import 'utility/screen_data.dart';
 
-void main() {
+void main() async {
+
   runApp(const MainAppWidget());
 }
 
@@ -21,18 +20,16 @@ class MainAppWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return MainAppState();
   }
-
 }
 
 class MainAppState extends State<MainAppWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _setFirebase();
   }
 
   @override
@@ -137,6 +134,12 @@ class MainAppState extends State<MainAppWidget> {
       return Future<bool>.value(false);
     }
     return Future<bool>.value(true);
+  }
+
+  void _setFirebase() {
+    Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 }
 

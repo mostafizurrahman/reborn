@@ -6,8 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../utility/app_channel.dart';
-import '../../data_model/contact_service.dart';
-import '../../data_model/sqlite_manager.dart';
+
 
 class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
   LaunchBloc() : super(LaunchState()) {

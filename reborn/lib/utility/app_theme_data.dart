@@ -5,9 +5,11 @@ import 'package:rxdart/rxdart.dart';
 import 'app_enum.dart';
 
 class CCAppTheme {
+  static Color get pinkDarkerColor => const Color(0xFF7827E6);
+  static Color get pinkMediumColor => const Color(0xFFAA4FF6);
   static Color get pinkLightColor => const Color(0xFFEA80FC);
   static Color get periwinkleLightColor => const Color(0xFFADEEE2);
-  static Color get pinkDarkColor => const Color(0xFF7827E6);
+  static Color get pinkDarkColor => const Color(0xFF8D39EC);
   static Color get periwinkleDarkColor => const Color(0xFF9A9CEA);
   static const String pinkDark = "7827E6",
       pinkMD = "8D39EC",
@@ -17,14 +19,64 @@ class CCAppTheme {
       periwinkleMD = "A2B9EE",
       periwinkleML = "A2DCEE",
       periwinkleLight = "ADEEE2";
+
+  Color get txtColor {
+    if (_themeBehaviour.value == ThemeType.dark) {
+      return Colors.grey.shade300;
+    }
+    return Colors.black;
+  }
+
+  Color get background {
+    if (_themeBehaviour.value == ThemeType.dark) {
+      return pinkDarkerColor;
+    }
+    return periwinkleLightColor;
+  }
+
+  Color get foreground {
+    if (_themeBehaviour.value == ThemeType.dark) {
+      return pinkLightColor;
+    }
+    return periwinkleLightColor;
+  }
+
   static BorderRadius get borderRadius => const BorderRadius.all(Radius.circular(10));
-  static TextStyle get txt => const TextStyle(fontSize: 12.0, fontFamily: 'sf_light');
-  static TextStyle get txt1 => const TextStyle(fontSize: 14.0, fontFamily: 'sf_light');
-  static TextStyle get txtReg => const TextStyle(fontSize: 15.0, fontFamily: "sf_reg");
-  static TextStyle get txt2 => const TextStyle(fontSize: 16.0, fontFamily: 'sf_light');
-  static TextStyle get txtHL3 => const TextStyle(fontSize: 17.0, fontFamily: "sf_reg");
-  static TextStyle get txtHL2 => const TextStyle(fontSize: 19.0, fontFamily: "sf_semi");
-  static TextStyle get txtHL1 => const TextStyle(fontSize: 22.0, fontFamily: "sf_heavy");
+  static TextStyle get txt => TextStyle(
+        fontSize: 12.0,
+        fontFamily: 'sf_light',
+        color: rebornTheme.txtColor,
+      );
+  static TextStyle get txt1 => TextStyle(
+        fontSize: 14.0,
+        fontFamily: 'sf_light',
+        color: rebornTheme.txtColor,
+      );
+  static TextStyle get txtReg => TextStyle(
+        fontSize: 15.0,
+        fontFamily: "sf_reg",
+        color: rebornTheme.txtColor,
+      );
+  static TextStyle get txt2 => TextStyle(
+        fontSize: 16.0,
+        fontFamily: 'sf_light',
+        color: rebornTheme.txtColor,
+      );
+  static TextStyle get txtHL3 => TextStyle(
+        fontSize: 17.0,
+        fontFamily: "sf_reg",
+        color: rebornTheme.txtColor,
+      );
+  static TextStyle get txtHL2 => TextStyle(
+        fontSize: 19.0,
+        fontFamily: "sf_semi",
+        color: rebornTheme.txtColor,
+      );
+  static TextStyle get txtHL1 => TextStyle(
+        fontSize: 22.0,
+        fontFamily: "sf_heavy",
+        color: rebornTheme.txtColor,
+      );
   static BoxDecoration get shadowDec => BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.black.withOpacity(0.5), width: 2),
@@ -40,17 +92,17 @@ class CCAppTheme {
       );
 
   static BoxDecoration get shadowNoBorder => BoxDecoration(
-    color: Colors.white,
-    borderRadius: const BorderRadius.all(Radius.circular(6)),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.grey.withAlpha(100),
-        spreadRadius: 2,
-        blurRadius: 4,
-        // changes position of shadow
-      ),
-    ],
-  );
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(Radius.circular(6)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withAlpha(100),
+            spreadRadius: 2,
+            blurRadius: 4,
+            // changes position of shadow
+          ),
+        ],
+      );
 
   static Color get primaryColor => Colors.blueAccent.shade200;
 
@@ -69,7 +121,26 @@ class CCAppTheme {
     } else {
       _themeBehaviour.sink.add(ThemeType.light);
     }
-    await dataManager.saveTheme(_themeCode);
+    if (themeValue == null) {
+      await dataManager.saveTheme(_themeCode);
+    }
+  }
+
+  Future<void> onThemeRead() async {
+    if (DateTime.now().hour > 12) {
+      switchTheme(themeValue: 1);
+    } else {
+      switchTheme(themeValue: 0);
+    }
+  }
+
+  Future<void> switchDefault() async {
+    await dataManager.clearTheme();
+    onThemeRead();
+  }
+
+  void dispose() {
+    _themeBehaviour.close();
   }
 }
 

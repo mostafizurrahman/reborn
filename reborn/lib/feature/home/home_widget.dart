@@ -20,13 +20,9 @@ import 'package:rxdart/rxdart.dart';
 import 'dart:ui' as ui;
 
 import '../data_model/static_data.dart';
-import '../menu/app_bar_widget.dart';
 import '../widget/base_widget/theme_state.dart';
-import '../widget/service_widget.dart';
-import 'home_grid_widget.dart';
 import 'rx_reborn_name/reborn_name_bloc.dart';
 import 'rx_reborn_name/reborn_name_states.dart';
-import 'rx_secret/secret_bloc.dart';
 import 'widgets/reborn_filter_view.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -34,7 +30,6 @@ class HomeWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _HomeState();
   }
 }
@@ -67,6 +62,7 @@ class _HomeState extends ThemeState<HomeWidget> {
   Widget build(BuildContext context) {
     screenData.setScreenData(context);
 
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<RebornFilterBloc>.value(value: _rebornNameBloc),
@@ -87,29 +83,25 @@ class _HomeState extends ThemeState<HomeWidget> {
             ),
           ),
           child: Container(
-            width: screenData.width,
-            height: screenData.height,
-            color: Colors.grey.shade100.withAlpha(200),
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    BlocBuilder(builder: _onBuildFilterBloc, bloc: _rebornNameBloc),
-                    const SizedBox(height: 12),
-                    BlocBuilder(builder: _onBuildSubfilterBloc, bloc: _rebornNameBloc),
-                    // BlocBuilder(builder: _onBuildFilterBloc, bloc: _rebornNameBloc),
-                    // BlocBuilder(builder: _getRecentBlocWidget, bloc: recentBloc),
-                    // BlocBuilder(builder: _getSecretContactWidget, bloc: secretBloc),
-                    // BlocBuilder(builder: _getPrivateContactWidget, bloc: secretBloc),
-                    // HomeGridWidget(onGridTap: _onUtilityTap),
-                    const SizedBox(height: 12),
-                    Divider(color: CCAppTheme.periwinkleDarkColor),
-                    const SizedBox(height: 32),
-                    ..._getContentList(),
-                    const SizedBox(height: 120),
-                  ],
+            color: CCAppTheme.pinkDarkerColor,
+            child: Center(
+              child: Container(
+
+                decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkDarkColor),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 200, horizontal: 48),
+                  child: Container(
+                    decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkMediumColor),
+
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 150, horizontal: 48),
+                      child: Container(
+                        decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkLightColor),
+                        width: 100,
+                        height: 100,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -198,7 +190,7 @@ class _HomeState extends ThemeState<HomeWidget> {
                                     Text(data.meditationList.first.meditationType, style: CCAppTheme.txt2.copyWith(color: Colors.white),)
                                   ],
                                 ),
-                                Text(_category.categoryTitle, style: CCAppTheme.txtHL1),
+                                Text(_category.categoryTitle, style: CCAppTheme.txtHL1.copyWith(color: Colors.white)),
                                 SizedBox(height: screenData.width * 0.3),
                                 Container(
                                   width: screenData.width * 0.8,
@@ -246,7 +238,7 @@ class _HomeState extends ThemeState<HomeWidget> {
       list.add(SizedBox(height: 24));
       list.add(Padding(
         padding: EdgeInsets.only(left: 24, top: 8, bottom: 6),
-        child: Text(_category.categoryTitle, style: CCAppTheme.txtHL1.copyWith(color: CCAppTheme.pinkDarkColor),),
+        child: Text(_category.categoryTitle, style: CCAppTheme.txtHL1),
       ));
       list.add(_widget);
     }

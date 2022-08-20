@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "724390112915",
+    "project_id": "reborn-46d77",
+    "storage_bucket": "reborn-46d77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724390112915:android:8e624f60a5a1e441836766",
+        "android_client_info": {
+          "package_name": "com.reborn.reborn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724390112915-p703m6blj8f6v2jac0b5tellv037dph8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWrZhd3gHJy6liuRVku-jZz23mxpgZDmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724390112915-p703m6blj8f6v2jac0b5tellv037dph8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "724390112915-n26aegf127sk7eue7u35dhjm01io3v48.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.reborn.reborn"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
