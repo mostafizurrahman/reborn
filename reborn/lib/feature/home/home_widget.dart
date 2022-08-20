@@ -19,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:ui' as ui;
 
+import '../../rx_export.dart';
 import '../data_model/static_data.dart';
 import '../widget/base_widget/theme_state.dart';
 import 'rx_reborn_name/reborn_name_bloc.dart';
@@ -67,39 +68,45 @@ class _HomeState extends ThemeState<HomeWidget> {
       providers: [
         BlocProvider<RebornFilterBloc>.value(value: _rebornNameBloc),
       ],
-      child: Scaffold(
-        floatingActionButton: StreamBuilder(
-          builder: _getNavigationBar,
-          stream: _navigationTabBehaviour,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        drawer: const MenuWidget(),
-        body: Container(
-          decoration: const BoxDecoration(
-            color: Colors.grey,
-            image: DecorationImage(
-              image: AssetImage("lib/assets/background.jpg"),
-              fit: BoxFit.cover,
-            ),
+      child: BaseScaffoldState(
+
+      ),
+    );
+  }
+
+  Widget _getBody() {
+    return Scaffold(
+      floatingActionButton: StreamBuilder(
+        builder: _getNavigationBar,
+        stream: _navigationTabBehaviour,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      drawer: const MenuWidget(),
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Colors.grey,
+          image: DecorationImage(
+            image: AssetImage("lib/assets/background.jpg"),
+            fit: BoxFit.cover,
           ),
-          child: Container(
-            color: CCAppTheme.pinkDarkerColor,
-            child: Center(
-              child: Container(
+        ),
+        child: Container(
+          color: CCAppTheme.pinkDarkerColor,
+          child: Center(
+            child: Container(
 
-                decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkDarkColor),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 200, horizontal: 48),
-                  child: Container(
-                    decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkMediumColor),
+              decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkDarkColor),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 200, horizontal: 48),
+                child: Container(
+                  decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkMediumColor),
 
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 150, horizontal: 48),
-                      child: Container(
-                        decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkLightColor),
-                        width: 100,
-                        height: 100,
-                      ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 150, horizontal: 48),
+                    child: Container(
+                      decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkLightColor),
+                      width: 100,
+                      height: 100,
                     ),
                   ),
                 ),

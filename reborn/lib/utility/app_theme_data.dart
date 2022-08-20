@@ -5,6 +5,20 @@ import 'package:rxdart/rxdart.dart';
 import 'app_enum.dart';
 
 class CCAppTheme {
+  bool get isDark {
+    if (_themeBehaviour.hasValue) {
+      return _themeBehaviour.value == ThemeType.dark;
+    }
+    return false;
+  }
+  BorderRadius get topRound{
+    return const BorderRadius.only(
+      topLeft: Radius.circular(8),
+      topRight: Radius.circular(8),
+    );
+  }
+
+
   static Color get pinkDarkerColor => const Color(0xFF7827E6);
   static Color get pinkMediumColor => const Color(0xFFAA4FF6);
   static Color get pinkLightColor => const Color(0xFFEA80FC);
@@ -21,7 +35,7 @@ class CCAppTheme {
       periwinkleLight = "ADEEE2";
 
   Color get txtColor {
-    if (_themeBehaviour.value == ThemeType.dark) {
+    if (isDark) {
       return Colors.grey.shade300;
     }
     return Colors.black;
@@ -141,6 +155,15 @@ class CCAppTheme {
 
   void dispose() {
     _themeBehaviour.close();
+  }
+
+  BoxDecoration get decoration {
+    return BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage(isDark ? "lib/assets/bg_dark.jpg" : "lib/assets/bg_light.jpg"),
+        fit: BoxFit.cover,
+      ),
+    );
   }
 }
 
