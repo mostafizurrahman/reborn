@@ -1,18 +1,90 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-void main() {
-  runApp(const MyApp());
+import 'package:reborn/feature/contact_add/contact_entry_widget.dart';
+import 'package:reborn/feature/contact_list/contact_list_widget.dart';
+import 'package:reborn/feature/home/home_widget.dart';
+import 'package:reborn/routing/app_route.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'feature/startup/launch_widget.dart';
+import 'utility/app_theme_data.dart';
+
+void main() async {
+
+  runApp(const MainAppWidget());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MainAppWidget extends StatefulWidget {
+  const MainAppWidget({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  State<StatefulWidget> createState() {
+    return MainAppState();
+  }
+}
+
+class MainAppState extends State<MainAppWidget> {
+
+  @override
+  void initState() {
+    super.initState();
+    _setFirebase();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    /*
+    theme: ThemeData(
+    // Define the default brightness and colors.
+    brightness: Brightness.dark,
+    primaryColor: Colors.lightBlue[800],
+
+    // Define the default font family.
+    fontFamily: 'Georgia',
+
+    // Define the default `TextTheme`. Use this to specify the default
+    // text styling for headlines, titles, bodies of text, and more.
+    textTheme: const TextTheme(
+      headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+      headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+      bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+    ),
+  )
+
+  (headline1 == null && headline2 == null && headline3 == null && headline4 == null &&
+             headline5 == null && headline6 == null && subtitle1 == null && subtitle2 == null &&
+             bodyText1 == null && bodyText2 == null && caption == null && button == null && overline == null)
+     */
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        backgroundColor: Colors.grey.shade200,
+        primaryColor: Colors.blueAccent,
+        shadowColor: const Color.fromARGB(150, 200, 200, 200),
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+
+          backgroundColor: Colors.white.withAlpha(200),
+          titleTextStyle: const TextStyle(fontSize: 18.0, fontFamily: "sf_semi", color: Colors.black),
+        ),
+        textTheme: TextTheme(
+          headline1: CCAppTheme.txtHL1,
+          headline2: CCAppTheme.txtHL2,
+          headline3: CCAppTheme.txtHL3,
+          bodyText2: CCAppTheme.txt2,
+          bodyText1: CCAppTheme.txt1,
+          caption : CCAppTheme.txtReg,
+          // titleSmall: const TextStyle(fontSize: 15.0, fontFamily: "sf_reg"),
+          // titleMedium: const TextStyle(fontSize: 17.0, fontFamily: "sf_semi"),
+          // titleLarge: const TextStyle(fontSize: 18.0, fontFamily: "sf_heavy"),
+        ),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -24,92 +96,50 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const LaunchWidget(),
+      onGenerateRoute: _getGenerateRoute,
+    );
+  }
+
+  Route _getGenerateRoute(RouteSettings settings) {
+
+    Widget _widget = const SizedBox();
+    if ((settings.name == AppRoutes.home)) {
+      _widget = const HomeWidget();
+    } else if (settings.name == AppRoutes.list) {
+      _widget = ContactListWidget(args: settings.arguments);
+    } else if (settings.name == AppRoutes.entry) {
+      _widget = ContactEntryWidget(args: settings.arguments);
+    }
+
+
+
+    if (Platform.isIOS) {
+      return MaterialPageRoute(
+        builder: (context) {
+          return WillPopScope(
+            onWillPop: () => _onPop(context),
+            child: _widget,
+          );
+        },
+        settings:
+        RouteSettings(name: settings.name, arguments: settings.arguments),
+      );
+    }
+    return AppRoutes.createRoute(settings, _widget);
+  }
+
+  Future<bool> _onPop(BuildContext context) async {
+    if (Navigator.of(context).userGestureInProgress) {
+      return Future<bool>.value(false);
+    }
+    return Future<bool>.value(true);
+  }
+
+  void _setFirebase() {
+    Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
