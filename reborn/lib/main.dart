@@ -6,6 +6,7 @@ import 'package:reborn/feature/home/home_widget.dart';
 import 'package:reborn/routing/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'feature/firebase/firebase_handler.dart';
 import 'firebase_options.dart';
 import 'feature/startup/launch_widget.dart';
 import 'utility/app_theme_data.dart';
@@ -139,7 +140,7 @@ class MainAppState extends State<MainAppWidget> {
   void _setFirebase() {
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
-    );
+    ).then((value) => dataHandler.clearDB());
   }
 }
 
