@@ -15,7 +15,7 @@ class FirebaseHandler {
   FirebaseHandler._internal();
   final List<StreamSubscription<QuerySnapshot>> listenerList = [];
   factory FirebaseHandler() {
-
+    _data._listenFirebase();
     return _data;
   }
 
@@ -27,25 +27,23 @@ class FirebaseHandler {
   }
 
   void _listenFirebase() {
-    final _categories =
-        _firebaseStore.collection("categories").snapshots().listen(_onCategoriesChanged);
-    _categories.onError(_onError);
-    listenerList.add(_categories);
-    final _config = _firebaseStore.collection("config").snapshots().listen(_onCategoriesChanged);
-    _config.onError(_onError);
-    listenerList.add(_config);
-    final _users = _firebaseStore.collection("users").snapshots().listen(_onUsersChanged);
-    _users.onError(_onError);
-    listenerList.add(_users);
-    final _auths = _firebaseStore.collection("authors").snapshots().listen(_onAuthorsChanged);
-    _auths.onError(_onError);
-    listenerList.add(_auths);
-    final _tracks = _firebaseStore.collection("tracks").snapshots().listen(_onTrackAdded);
-    _tracks.onError(_onError);
-    listenerList.add(_tracks);
+
+    final Map<String, Function(QuerySnapshot)> _collections = {
+      "categories" : _onCategoriesChanged,
+      "config" : _onCategoriesChanged,
+      "users" : _onUsersChanged,
+      "authors" : _onAuthorsChanged,
+      "tracks" : _onTrackAdded,
+    };
+    _collections.forEach((key, value) {
+      final _categories =
+      _firebaseStore.collection(key).snapshots().listen(value);
+      _categories.onError(_onError);
+      listenerList.add(_categories);
+    });
   }
 
-  void _onError(final dynamic? _error) {
+  void _onError(final dynamic _error) {
     debugPrint("i am error");
   }
 
@@ -86,7 +84,7 @@ class FirebaseHandler {
   }
 
   void clearDB() {
-    _data._listenFirebase();
+    debugPrint("hawa banke");
   }
 }
 
