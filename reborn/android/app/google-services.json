@@ -1,37 +1,45 @@
 {
   "project_info": {
-    "project_number": "724390112915",
-    "project_id": "reborn-46d77",
-    "storage_bucket": "reborn-46d77.appspot.com"
+    "project_number": "840943017720",
+    "project_id": "reborn-1b03e",
+    "storage_bucket": "reborn-1b03e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:724390112915:android:8e624f60a5a1e441836766",
+        "mobilesdk_app_id": "1:840943017720:android:69a472718594712cee650d",
         "android_client_info": {
           "package_name": "com.reborn.reborn"
         }
       },
       "oauth_client": [
         {
-          "client_id": "724390112915-p703m6blj8f6v2jac0b5tellv037dph8.apps.googleusercontent.com",
+          "client_id": "840943017720-rfiapa870151qnkdm88vh9lbl47jl1ft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reborn.reborn",
+            "certificate_hash": "48f84c52f30fbb6673cbc4a4dbca39206c832d22"
+          }
+        },
+        {
+          "client_id": "840943017720-03aeiqi22gjchfs8gtbnhoi5vk1afmd2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDWrZhd3gHJy6liuRVku-jZz23mxpgZDmo"
+          "current_key": "AIzaSyB2rgX7DsDarBbfZAlk8r2yGCBShtqPoco"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "724390112915-p703m6blj8f6v2jac0b5tellv037dph8.apps.googleusercontent.com",
+              "client_id": "840943017720-03aeiqi22gjchfs8gtbnhoi5vk1afmd2.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "724390112915-n26aegf127sk7eue7u35dhjm01io3v48.apps.googleusercontent.com",
+              "client_id": "840943017720-8o8es85dpbo4ej73c1sr9ndp4cs8h12f.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.reborn.reborn"
