@@ -50,20 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDWrZhd3gHJy6liuRVku-jZz23mxpgZDmo',
-    appId: '1:724390112915:android:8e624f60a5a1e441836766',
-    messagingSenderId: '724390112915',
-    projectId: 'reborn-46d77',
-    storageBucket: 'reborn-46d77.appspot.com',
+    apiKey: 'AIzaSyB2rgX7DsDarBbfZAlk8r2yGCBShtqPoco',
+    appId: '1:840943017720:android:69a472718594712cee650d',
+    messagingSenderId: '840943017720',
+    projectId: 'reborn-1b03e',
+    storageBucket: 'reborn-1b03e.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAyNJPoeiOqld0uLmr7F80eh4eERg_HPSo',
-    appId: '1:724390112915:ios:ba346f9cc8fa1e6a836766',
-    messagingSenderId: '724390112915',
-    projectId: 'reborn-46d77',
-    storageBucket: 'reborn-46d77.appspot.com',
-    iosClientId: '724390112915-n26aegf127sk7eue7u35dhjm01io3v48.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAT4S5vQDFyc6RZZs4JUICNLLSmkcjsP74',
+    appId: '1:840943017720:ios:90608f767715657dee650d',
+    messagingSenderId: '840943017720',
+    projectId: 'reborn-1b03e',
+    storageBucket: 'reborn-1b03e.appspot.com',
+    androidClientId: '840943017720-rfiapa870151qnkdm88vh9lbl47jl1ft.apps.googleusercontent.com',
+    iosClientId: '840943017720-8o8es85dpbo4ej73c1sr9ndp4cs8h12f.apps.googleusercontent.com',
     iosBundleId: 'com.reborn.reborn',
   );
 }
