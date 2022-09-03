@@ -1,3 +1,5 @@
+import '../../entities.dart';
+
 class FBAuthor {
   final String firstName;
   final String lastName;
@@ -5,16 +7,16 @@ class FBAuthor {
   final String phone;
   final String profilePicture;
   final String coverPicture;
-  final String description;
-  final String motivation;
-  final String biography;
+  final LocalizedText description;
+  final LocalizedText motivation;
+  final LocalizedText biography;
   final num duration;
-  final String professionalTitle;
+  final LocalizedText professionalTitle;
   final double averageRating;
   final int playCount;
   final int followers;
-  final List<String> trackList;
-  final List<String> categoryList;
+  final List<String> trackIdList;
+  final List<String> categoryIdList;
   final List<String> studentIdList; //list of user id(s) whom he/she instructing.
   final String country;
   final String flagIcon;
@@ -34,8 +36,8 @@ class FBAuthor {
     required this.averageRating,
     required this.playCount,
     required this.followers,
-    required this.trackList,
-    required this.categoryList,
+    required this.trackIdList,
+    required this.categoryIdList,
     required this.studentIdList,
     required this.country,
     required this.flagIcon,

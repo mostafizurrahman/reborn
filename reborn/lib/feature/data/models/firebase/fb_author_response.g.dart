@@ -14,18 +14,30 @@ FBAuthorResponse _$FBAuthorResponseFromJson(Map<String, dynamic> json) =>
       phone: json['phone'] as String?,
       profilePicture: json['profilePicture'] as String?,
       coverPicture: json['coverPicture'] as String?,
-      description: json['description'] as String?,
-      motivation: json['motivation'] as String?,
-      biography: json['biography'] as String?,
+      description: json['description'] == null
+          ? null
+          : LocalizedResponse.fromJson(
+              json['description'] as Map<String, dynamic>),
+      motivation: json['motivation'] == null
+          ? null
+          : LocalizedResponse.fromJson(
+              json['motivation'] as Map<String, dynamic>),
+      biography: json['biography'] == null
+          ? null
+          : LocalizedResponse.fromJson(
+              json['biography'] as Map<String, dynamic>),
       duration: json['duration'] as num?,
-      professionalTitle: json['professionalTitle'] as String?,
+      professionalTitle: json['professionalTitle'] == null
+          ? null
+          : LocalizedResponse.fromJson(
+              json['professionalTitle'] as Map<String, dynamic>),
       averageRating: (json['averageRating'] as num?)?.toDouble(),
       playCount: json['playCount'] as int?,
       followers: json['followers'] as int?,
-      trackList: (json['trackList'] as List<dynamic>?)
+      trackIdList: (json['trackIdList'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      categoryList: (json['categoryList'] as List<dynamic>?)
+      categoryIdList: (json['categoryIdList'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       studentIdList: (json['studentIdList'] as List<dynamic>?)
