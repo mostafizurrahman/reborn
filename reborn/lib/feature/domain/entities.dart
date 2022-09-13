@@ -18,6 +18,9 @@ extension TrackDsiplayType on String {
     if (this == "groupCover") {
       return CategoryTrackType.groupCoverTrack;
     }
+    if (this == "cover") {
+      return CategoryTrackType.coverTrack;
+    }
     return CategoryTrackType.gridTrack;
   }
 }

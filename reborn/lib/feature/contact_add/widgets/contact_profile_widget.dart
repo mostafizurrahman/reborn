@@ -48,7 +48,7 @@ class _ContactProfileState extends State<ContactProfileWidget> {
     final List<Widget> _textWidgets = [
       Row(
         children: [
-          const Expanded(child: Spacer()),
+          Expanded(child: const Spacer()),
           RIButton(
             dimension: 35,
             iconColor: CCAppTheme.primaryColor,
