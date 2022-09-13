@@ -6,6 +6,11 @@ part of 'fb_track_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+PlayerInfo _$PlayerInfoFromJson(Map<String, dynamic> json) => PlayerInfo(
+      likeCount: json['likeCount'] as int?,
+      totalPlay: json['totalPlay'] as int?,
+    );
+
 FBTrackResponse _$FBTrackResponseFromJson(Map<String, dynamic> json) =>
     FBTrackResponse(
       trackTitle: json['trackTitle'] == null
@@ -29,4 +34,18 @@ FBTrackResponse _$FBTrackResponseFromJson(Map<String, dynamic> json) =>
           .toList(),
       authorID: json['authorID'] as String?,
       trackType: json['trackType'] as String?,
+      trackCoverPhoto: json['trackCoverPhoto'] as String?,
+      isPremium: json['isPremium'] as bool?,
+      generList:
+          (json['generList'] as List<dynamic>).map((e) => e as String).toList(),
+      trackIconData: json['trackIconData'] as int?,
+      playerInfo: json['playerInfo'] == null
+          ? null
+          : PlayerInfo.fromJson(json['playerInfo'] as Map<String, dynamic>),
+      story: json['story'] == null
+          ? null
+          : LocalizedResponse.fromJson(json['story'] as Map<String, dynamic>),
+      isLocalTrack: json['isLocalTrack'] as bool?,
+      trackSecret: json['trackSecret'] as String?,
+      trackAudio: json['trackAudio'] as String?,
     );

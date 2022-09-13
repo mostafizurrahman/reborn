@@ -8,6 +8,7 @@ part 'fb_author_response.g.dart';
 
 @JsonSerializable(createToJson: false)
 class FBAuthorResponse {
+  final String? authorID;
   final String? firstName;
   final String? lastName;
   final String? email;
@@ -29,6 +30,7 @@ class FBAuthorResponse {
   final String? flagIcon;
 
   FBAuthorResponse({
+    required this.authorID,
     required this.firstName,
     required this.lastName,
     required this.email,

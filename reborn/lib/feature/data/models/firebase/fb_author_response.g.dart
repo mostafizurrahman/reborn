@@ -8,6 +8,7 @@ part of 'fb_author_response.dart';
 
 FBAuthorResponse _$FBAuthorResponseFromJson(Map<String, dynamic> json) =>
     FBAuthorResponse(
+      authorID: json['authorID'] as String?,
       firstName: json['firstName'] as String?,
       lastName: json['lastName'] as String?,
       email: json['email'] as String?,

@@ -113,7 +113,7 @@ class PageWidget extends StatelessWidget {
                 child: Text(pageData.subTitle,
                     style: CCAppTheme.txt2, textAlign: TextAlign.left),
               ),
-              const Expanded(child: SizedBox(), flex: 1),
+              Expanded(child: const SizedBox(), flex: 1),
               Image(
                   image: ImageExt.getImageAsset(pageData.imagePath),
                   fit: BoxFit.fitWidth)

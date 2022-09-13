@@ -51,7 +51,7 @@ class _LaunchState extends ThemeState<LaunchWidget> {
                 height: screenData.height * 0.75,
                 child: WelcomePage(pageBehaviour: _pageBehaviour),
               ),
-              const Expanded(child: SizedBox()),
+              Expanded(child: const SizedBox()),
               Container(
                 width: screenData.width - 32,
                 height: 75,
