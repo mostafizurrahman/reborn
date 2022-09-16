@@ -22,7 +22,7 @@ FBCategoryResponse _$FBCategoryResponseFromJson(Map<String, dynamic> json) =>
           : LocalizedResponse.fromJson(
               json['seeMoreTitle'] as Map<String, dynamic>),
       tracksType: json['tracksType'] as String?,
-      tracksIdList: (json['tracksIdList'] as List<dynamic>?)
+      trackIdList: (json['trackIdList'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
     );

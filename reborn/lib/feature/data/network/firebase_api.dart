@@ -26,7 +26,7 @@ abstract class BaseApi {
   final String _apiPath ;
   BaseApi(this._apiPath);
   Future<List<T>> _read<T extends BaseResponse>() async {
-    return await firebase.read<T>(collectionKey: _apiPath);
+    return await firebase.reader.read<T>(collectionKey: _apiPath);
   }
 
   Future<List<BaseResponse>> getList();

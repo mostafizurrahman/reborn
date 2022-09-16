@@ -8,8 +8,8 @@ part 'fb_track_response.g.dart';
 @JsonSerializable(createToJson: false)
 class PlayerInfo {
   int? likeCount;
-  int? totalPlay;
-  PlayerInfo({required this.likeCount, this.totalPlay});
+  int? totalPlayed;
+  PlayerInfo({required this.likeCount, this.totalPlayed});
 
   factory PlayerInfo.fromJson(Map<String, dynamic> json) => _$PlayerInfoFromJson(json);
 
@@ -20,30 +20,27 @@ class PlayerInfo {
 class FBTrackResponse extends BaseResponse {
   final LocalizedResponse? trackTitle;
   final LocalizedResponse? trackSubtitle;
-  final LocalizedResponse? trackDuration;
-  final LocalizedResponse? authorTitle;
-  final List<LocalizedResponse>? trackTypeList; //["Popular", "Mediation", "Sleep", "Music" ... ]
+  final int? trackDuration;
+
+  final List<String>? generList; //["Popular", "Mediation", "Sleep", "Music" ... ]
   final LocalizedResponse? story;
   final String? authorID;
   final String? trackType;
-  final String? trackCoverPhoto;
+  final String? trackCoverImage;
   final String? trackAudio;
   final String? trackSecret;
   final bool? isLocalTrack;
   final int? trackIconData;
   final bool? isPremium;
-  final List<String> generList;
   final PlayerInfo? playerInfo;
 
   FBTrackResponse({
     required this.trackTitle,
     required this.trackSubtitle,
     required this.trackDuration,
-    required this.authorTitle,
-    required this.trackTypeList,
     required this.authorID,
     required this.trackType,
-    required this.trackCoverPhoto,
+    required this.trackCoverImage,
     required this.isPremium,
     required this.generList,
     required this.trackIconData,

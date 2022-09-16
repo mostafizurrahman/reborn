@@ -140,7 +140,7 @@ class MainAppState extends State<MainAppWidget> {
   void _setFirebase() {
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
-    ).then((value) => dataHandler.clearDB());
+    ).then((value) => firebase.clearDB());
   }
 }
 

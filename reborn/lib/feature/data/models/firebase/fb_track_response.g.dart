@@ -8,7 +8,7 @@ part of 'fb_track_response.dart';
 
 PlayerInfo _$PlayerInfoFromJson(Map<String, dynamic> json) => PlayerInfo(
       likeCount: json['likeCount'] as int?,
-      totalPlay: json['totalPlay'] as int?,
+      totalPlayed: json['totalPlayed'] as int?,
     );
 
 FBTrackResponse _$FBTrackResponseFromJson(Map<String, dynamic> json) =>
@@ -21,23 +21,14 @@ FBTrackResponse _$FBTrackResponseFromJson(Map<String, dynamic> json) =>
           ? null
           : LocalizedResponse.fromJson(
               json['trackSubtitle'] as Map<String, dynamic>),
-      trackDuration: json['trackDuration'] == null
-          ? null
-          : LocalizedResponse.fromJson(
-              json['trackDuration'] as Map<String, dynamic>),
-      authorTitle: json['authorTitle'] == null
-          ? null
-          : LocalizedResponse.fromJson(
-              json['authorTitle'] as Map<String, dynamic>),
-      trackTypeList: (json['trackTypeList'] as List<dynamic>?)
-          ?.map((e) => LocalizedResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      trackDuration: json['trackDuration'] as int?,
       authorID: json['authorID'] as String?,
       trackType: json['trackType'] as String?,
-      trackCoverPhoto: json['trackCoverPhoto'] as String?,
+      trackCoverImage: json['trackCoverImage'] as String?,
       isPremium: json['isPremium'] as bool?,
-      generList:
-          (json['generList'] as List<dynamic>).map((e) => e as String).toList(),
+      generList: (json['generList'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       trackIconData: json['trackIconData'] as int?,
       playerInfo: json['playerInfo'] == null
           ? null

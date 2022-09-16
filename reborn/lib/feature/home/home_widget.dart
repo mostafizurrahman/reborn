@@ -20,6 +20,7 @@ import 'package:rxdart/rxdart.dart';
 import 'dart:ui' as ui;
 
 import '../../rx_export.dart';
+import '../data/network/firebase_api.dart';
 import '../data_model/static_data.dart';
 import '../widget/base_widget/theme_state.dart';
 import 'rx_reborn_name/reborn_name_bloc.dart';
@@ -46,6 +47,12 @@ class _HomeState extends ThemeState<HomeWidget> {
     super.initState();
     final _tabBarData = StaticData.getTabBarData(_onTabBarItemTap);
     _navigationTabBehaviour = BehaviorSubject<List<TabBarData>>.seeded(_tabBarData);
+    _read();
+  }
+
+  Future<void> _read() async {
+    final list = await FirebaseTrackApi().getList();
+    print(list);
   }
 
   void _onSecretStateChanged(final SecretState state) {
