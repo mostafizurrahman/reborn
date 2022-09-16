@@ -1,6 +1,7 @@
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:reborn/feature/data/models/localized_response.dart';
+import 'package:reborn/feature/data/network/firebase_api.dart';
 
 part 'fb_track_response.g.dart';
 
@@ -16,7 +17,7 @@ class PlayerInfo {
 }
 
 @JsonSerializable(createToJson: false)
-class FBTrackResponse {
+class FBTrackResponse extends BaseResponse {
   final LocalizedResponse? trackTitle;
   final LocalizedResponse? trackSubtitle;
   final LocalizedResponse? trackDuration;

@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:reborn/feature/data/network/firebase_api.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/domain/firebase/entities/fb_author.dart';
 
@@ -7,7 +8,7 @@ import '../localized_response.dart';
 part 'fb_author_response.g.dart';
 
 @JsonSerializable(createToJson: false)
-class FBAuthorResponse {
+class FBAuthorResponse extends BaseResponse{
   final String? authorID;
   final String? firstName;
   final String? lastName;
