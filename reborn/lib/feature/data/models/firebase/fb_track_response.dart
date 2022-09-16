@@ -1,7 +1,8 @@
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:reborn/feature/data/models/localized_response.dart';
 import 'package:reborn/feature/data/network/firebase_api.dart';
+import 'package:reborn/feature/domain/entities.dart';
+import 'package:reborn/feature/domain/firebase/entities/track_entity.dart';
 
 part 'fb_track_response.g.dart';
 
@@ -14,6 +15,9 @@ class PlayerInfo {
   factory PlayerInfo.fromJson(Map<String, dynamic> json) => _$PlayerInfoFromJson(json);
 
   Map<String, dynamic> toJson() => {};
+
+  PlayerInfoEntity toEntity() =>
+      PlayerInfoEntity(likeCount: likeCount ?? 0, totalPlayed: totalPlayed ?? 0);
 }
 
 @JsonSerializable(createToJson: false)
@@ -54,4 +58,21 @@ class FBTrackResponse extends BaseResponse {
   factory FBTrackResponse.fromJson(Map<String, dynamic> json) => _$FBTrackResponseFromJson(json);
 
   Map<String, dynamic> toJson() => {};
+
+  TrackEntity toEntity() => TrackEntity(
+        trackTitle: trackTitle?.toEntity() ?? emptyTxt,
+        trackSubtitle: trackSubtitle?.toEntity() ?? emptyTxt,
+        trackDuration: trackDuration ?? 0,
+        authorID: authorID ?? '',
+        trackType: trackType ?? '',
+        trackCoverImage: trackCoverImage ?? '',
+        isPremium: isPremium ?? false,
+        generList: generList ?? [],
+        trackIconData: trackIconData ?? 0,
+        playerInfo: playerInfo?.toEntity() ?? PlayerInfoEntity(likeCount: 0, totalPlayed: 0),
+        story: story?.toEntity() ?? emptyTxt,
+        isLocalTrack: isLocalTrack ?? false,
+        trackSecret: trackSecret ?? '',
+        trackAudio: trackAudio ?? '',
+      );
 }
