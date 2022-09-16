@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:reborn/feature/data/network/firebase_api.dart';
 import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/startup/rx_launch/launch_bloc.dart';
 import 'package:reborn/feature/widget/index_widget.dart';
@@ -35,6 +36,8 @@ class _LaunchState extends ThemeState<LaunchWidget> {
     super.initState();
     _launchBloc.add(ContactPermissionEvent());
   }
+
+
 
   @override
   Widget build(BuildContext context) {

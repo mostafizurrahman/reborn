@@ -19,7 +19,7 @@ class FBCategoryResponse extends BaseResponse{
   final LocalizedResponse? title;
   final LocalizedResponse? seeMoreTitle;
   final String? tracksType;
-  final List<String>? tracksIdList;
+  final List<String>? trackIdList;
 
   FBCategoryResponse({
     required this.categoryID,
@@ -31,7 +31,7 @@ class FBCategoryResponse extends BaseResponse{
     required this.title,
     required this.seeMoreTitle,
     required this.tracksType,
-    required this.tracksIdList,
+    required this.trackIdList,
   });
 
   factory FBCategoryResponse.fromJson(Map<String, dynamic> json) =>
@@ -48,7 +48,7 @@ class FBCategoryResponse extends BaseResponse{
         seeMore: seeMore ?? true,
         seeMoreTitle: seeMoreTitle?.toEntity() ?? emptyTxt,
         title: title?.toEntity() ?? emptyTxt,
-        tracksIdList: tracksIdList ?? [],
+        tracksIdList: trackIdList ?? [],
         tracksType: tracksType?.trackType ?? CategoryTrackType.gridTrack,
       );
 }
