@@ -10,6 +10,8 @@ class BaseScaffoldState extends StatelessWidget {
   final Widget? body;
   final Widget? bottom;
   final Widget? floating;
+  final Widget? drawer;
+  final PreferredSizeWidget? appBar;
   final FloatingActionButtonLocation? floatLocation;
 
   const BaseScaffoldState({
@@ -18,6 +20,8 @@ class BaseScaffoldState extends StatelessWidget {
     this.bottom,
     this.floating,
     this.floatLocation,
+    this.appBar,
+    this.drawer,
   }) : super(key: key);
 
   Future<bool> onWilPop() async {
@@ -30,6 +34,8 @@ class BaseScaffoldState extends StatelessWidget {
       value: loadingBloc,
       child: WillPopScope(
         child: Scaffold(
+          drawer: drawer,
+          appBar: appBar,
           body: Container(
             width: screenData.width,
             height: screenData.height,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/home/rx_reborn_name/reborn_name_bloc.dart';
 import 'package:reborn/feature/home/rx_reborn_name/reborn_name_states.dart';
+import 'package:reborn/feature/widget/base_widget/theme_state.dart';
 import 'package:reborn/feature/widget/ink_widget.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/image_ext.dart';
@@ -17,7 +18,7 @@ class RebornFilterView extends StatefulWidget {
   }
 }
 
-class RebornHomeFilterState extends State<RebornFilterView> {
+class RebornHomeFilterState extends ThemeState<RebornFilterView> {
   late final List<RebornFilterData> filterList;
   @override
   void initState() {
@@ -28,20 +29,21 @@ class RebornHomeFilterState extends State<RebornFilterView> {
   @override
   Widget build(BuildContext context) {
     final filterBloc = BlocProvider.of<RebornFilterBloc>(context);
-    const double height = 324;
+
     return Material(
       color: Colors.transparent,
       child: SizedBox(
         width: screenData.width,
-        height: height,
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SizedBox(
-              height: 80,
+              height: 65,
               width: screenData.width,
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -49,18 +51,22 @@ class RebornHomeFilterState extends State<RebornFilterView> {
                         onTap: () => Scaffold.of(context).openDrawer(),
                         iconData: Icons.menu_rounded,
                         iconColor: CCAppTheme.pinkDarkColor,
-                        dimension: 45,
-                        radius: 45 / 2),
+                        dimension: 40,
+                        radius: 20),
+                  ),
+                  const Spacer(),
+                  Text("Reborn", style: headStyle1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Image(
+                      image: ImageExt.getImageAsset("reborn_circle.png"),
+                      width: 40,),
                   ),
                 ],
               ),
             ),
-            Image(
-                image: ImageExt.getImageAsset("reborn_circle.png"),
-                width: screenData.width * 0.225),
-            const SizedBox(height: 24),
-            Text("Hi ${userInfo.displayName}! Good Day!", style: CCAppTheme.txtHL1),
-            const SizedBox(height: 12),
+            const Divider(height: 2, color: Colors.black54),
+            const SizedBox(height: 8),
             BlocBuilder(
               builder: _onBuildGridFilter,
               bloc: filterBloc,

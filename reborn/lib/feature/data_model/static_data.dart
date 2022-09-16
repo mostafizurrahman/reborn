@@ -38,20 +38,20 @@ class StaticData {
             iconData: Icons.star, tabID: "0_t_fav", name: "Favorite", onTap: _onTabBarItemTap)
           ..isSelected = false,
         TabBarData(
-            iconData: Icons.timelapse, tabID: "1_t_recent", name: "Sleep", onTap: _onTabBarItemTap)
+            iconData: Icons.timelapse, tabID: "1_sleep", name: "Sleep", onTap: _onTabBarItemTap)
           ..isSelected = false,
         TabBarData(
-            iconData: Icons.stream, tabID: "2_t_contact", name: "Reborn", onTap: _onTabBarItemTap)
+            iconData: Icons.stream, tabID: "2_reborn", name: "Reborn", onTap: _onTabBarItemTap)
           ..isSelected = true,
         TabBarData(
             iconData: Icons.account_circle_outlined,
-            tabID: "3_t_qr",
+            tabID: "3_coaches",
             name: "Coaches",
             onTap: _onTabBarItemTap)
           ..isSelected = false,
         TabBarData(
             iconData: Icons.person_outline,
-            tabID: "4_t_add",
+            tabID: "4_profile",
             name: "Profile",
             onTap: _onTabBarItemTap)
           ..isSelected = false,
