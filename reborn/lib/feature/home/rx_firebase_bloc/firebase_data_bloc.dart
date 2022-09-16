@@ -28,7 +28,7 @@ class FirebaseDataBloc extends Bloc<FirebaseDataEvent, FirebaseDataState> {
     emit(FirebaseDataLoadingState());
     final CategorySearchData searchData = CategorySearchData();
     final categoryUseCase = GetCategoryUseCase();
-    final List<FBCategory> categoryList = await categoryUseCase(searchData);
+    final List<RebornCategory> categoryList = await categoryUseCase(searchData);
     if (categoryList.isNotEmpty) {
       final TrackSearchData trackSearchData = TrackSearchData();
       final trackUseCase = GetTrackUseCase();

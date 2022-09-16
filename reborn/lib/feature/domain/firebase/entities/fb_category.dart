@@ -1,6 +1,6 @@
 import 'package:reborn/feature/domain/entities.dart';
 
-class FBCategory {
+class RebornCategory {
 
   final String categoryID;
   final bool hasLogo;
@@ -13,7 +13,7 @@ class FBCategory {
   final CategoryTrackType tracksType;
   final List<String> tracksIdList;
 
-  FBCategory({
+  RebornCategory({
     required this.categoryID,
     required this.displayOrder,
     required this.isVisible,

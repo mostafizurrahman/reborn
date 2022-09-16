@@ -36,19 +36,19 @@ class BaseLoadingView extends StatelessWidget {
       Column(
         children:  [
           Text(state.errorText),
-          _loader,
+          loader,
         ],
       );
     }
     return Column(
       children: [
         Text("Loading...", style: CCAppTheme.txtHL2,),
-        _loader,
+        loader,
       ],
     );
   }
 
-  Widget get _loader => const SizedBox(
+  static Widget get loader => const SizedBox(
     child: CircularProgressIndicator(
       strokeWidth: 2,
       backgroundColor: Colors.pink,
