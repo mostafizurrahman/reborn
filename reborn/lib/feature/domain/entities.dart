@@ -1,5 +1,10 @@
 
 
+export 'package:reborn/feature/domain/firebase/entities/app_config.dart';
+export 'package:reborn/feature/domain/firebase/entities/search_data.dart';
+export 'package:reborn/feature/domain/firebase/entities/fb_category.dart';
+export 'package:reborn/feature/domain/firebase/entities/fb_author.dart';
+
 enum CategoryTrackType {
   gridTrack,
   collectionTracks,

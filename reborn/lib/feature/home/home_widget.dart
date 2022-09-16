@@ -51,7 +51,7 @@ class _HomeState extends ThemeState<HomeWidget> {
   }
 
   Future<void> _read() async {
-    final list = await FirebaseTrackApi().getList();
+    final list = await FirebaseAuthorApi().getList();
     print(list);
   }
 
