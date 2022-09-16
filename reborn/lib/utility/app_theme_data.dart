@@ -106,11 +106,11 @@ class CCAppTheme {
       );
 
   static BoxDecoration get shadowNoBorder => BoxDecoration(
-        color: Colors.white,
+        color: Colors.white.withAlpha(200),
         borderRadius: const BorderRadius.all(Radius.circular(6)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withAlpha(100),
+            color: Colors.grey.withAlpha(120),
             spreadRadius: 2,
             blurRadius: 4,
             // changes position of shadow
