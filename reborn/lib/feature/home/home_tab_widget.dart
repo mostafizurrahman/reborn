@@ -10,8 +10,12 @@ class TabBarData {
   final String tabID;
   final IconData iconData;
   final Function(String) onTap;
-  TabBarData(
-      {required this.tabID, required this.name, required this.iconData, required this.onTap});
+  TabBarData({
+    required this.tabID,
+    required this.name,
+    required this.iconData,
+    required this.onTap,
+  });
 }
 
 class HomeTabWidget extends StatelessWidget {
@@ -35,8 +39,8 @@ class HomeTabWidget extends StatelessWidget {
         width: _width,
         child: Material(
           color: _tabData.isSelected
-              ? Colors.grey.shade600.withAlpha(200)
-              : Colors.grey.shade500.withAlpha(140),
+              ? Colors.grey.shade200.withAlpha(60)
+              : Colors.grey.shade600.withAlpha(40),
           child: Ink(
             child: InkWell(
               focusColor: CCAppTheme.pinkLightColor,
@@ -46,14 +50,7 @@ class HomeTabWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 12),
-                  Icon(_tabData.iconData,
-                      color: _tabData.isSelected ? CCAppTheme.pinkDarkColor : Colors.black,
-                      size: 22),
-                  const SizedBox(height: 12),
-                  Text(_tabData.name, style: CCAppTheme.txt),
-                ],
+                children: _getChildrenList(_tabData),
               ),
             ),
           ),
@@ -63,5 +60,28 @@ class HomeTabWidget extends StatelessWidget {
       tabList.add(_container);
     }
     return tabList;
+  }
+
+  List<Widget> _getChildrenList(TabBarData _tabData) {
+    if (_tabData.isSelected) {
+      return [
+        const SizedBox(height: 12),
+        Icon(_tabData.iconData, color: CCAppTheme.pinkDarkColor, size: 22),
+        const SizedBox(height: 12),
+        Text(
+          _tabData.name,
+          style: CCAppTheme.txt1.copyWith(
+            color: CCAppTheme.pinkDarkColor,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ];
+    }
+    return [
+      const SizedBox(height: 12),
+      Icon(_tabData.iconData, color: Colors.black, size: 22),
+      const SizedBox(height: 12),
+      Text(_tabData.name, style: CCAppTheme.txt),
+    ];
   }
 }

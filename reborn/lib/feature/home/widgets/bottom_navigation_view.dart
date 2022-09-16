@@ -13,7 +13,6 @@ class BottomNavigationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _tabBarData = StaticData.getTabBarData(_onTabBarItemTap);
     return StreamBuilder(
       initialData: _tabBarData,
       builder: _getNavigationBar,
@@ -21,8 +20,11 @@ class BottomNavigationView extends StatelessWidget {
     );
   }
 
+
+  List<TabBarData> get _tabBarData => StaticData.getTabBarData(_onTabBarItemTap);
+
   void _onTabBarItemTap(final String tabID) {
-    final _list = tabBarBehaviour.value;
+    final _list = tabBarBehaviour.valueOrNull ?? _tabBarData;
     for (final element in _list) {
       element.isSelected = element.tabID == tabID;
     }

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:reborn/feature/data_model/entity/service_entity.dart';
 import 'package:reborn/feature/home/home_recent_widget.dart';
 import 'package:reborn/feature/home/home_secret_widget.dart';
@@ -24,6 +25,7 @@ import '../../rx_export.dart';
 import '../data/network/firebase_api.dart';
 import '../data_model/static_data.dart';
 import '../widget/base_widget/theme_state.dart';
+import '../widget/ink_widget.dart';
 import 'rx_reborn_name/reborn_name_bloc.dart';
 import 'rx_reborn_name/reborn_name_states.dart';
 import 'widgets/bottom_navigation_view.dart';
@@ -71,7 +73,6 @@ class _HomeState extends ThemeState<HomeWidget> {
   Widget build(BuildContext context) {
     screenData.setScreenData(context);
 
-
     return MultiBlocProvider(
       providers: [
         BlocProvider<RebornFilterBloc>.value(value: _rebornNameBloc),
@@ -80,13 +81,22 @@ class _HomeState extends ThemeState<HomeWidget> {
       child: BaseScaffoldState(
         floating: BottomNavigationView(tabBarBehaviour: _tabBehaviour),
         floatLocation: FloatingActionButtonLocation.centerDocked,
+        drawer: const MenuWidget(),
+        body: SafeArea(
+          child: Column(
+            children: const [
+              RebornFilterView(),
+            ],
+          ),
+        ),
       ),
     );
   }
 
+  void _onTapDrawer() {}
+
   Widget _getBody() {
     return Scaffold(
-      drawer: const MenuWidget(),
       body: Container(
         decoration: const BoxDecoration(
           color: Colors.grey,
@@ -99,13 +109,11 @@ class _HomeState extends ThemeState<HomeWidget> {
           color: CCAppTheme.pinkDarkerColor,
           child: Center(
             child: Container(
-
               decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkDarkColor),
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 200, horizontal: 48),
                 child: Container(
                   decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkMediumColor),
-
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 150, horizontal: 48),
                     child: Container(
@@ -162,24 +170,23 @@ class _HomeState extends ThemeState<HomeWidget> {
               return Padding(
                 padding: EdgeInsets.only(right: 24, bottom: 6, top: 6, left: index == 0 ? 24 : 0),
                 child: Container(
-
-                width: screenData.width * 0.8 - 12,
-                height: screenData.width * 0.6 - 15,
-                decoration: CCAppTheme.shadowNoBorder,
-                child: ClipRRect(
+                  width: screenData.width * 0.8 - 12,
+                  height: screenData.width * 0.6 - 15,
+                  decoration: CCAppTheme.shadowNoBorder,
+                  child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
                     child: Material(
-
                       child: Ink(
                         decoration: BoxDecoration(
-                          image: DecorationImage(image: NetworkImage(_category.rebornMeditationList.first.meditationList.first.meditationCoverImage),
-                            fit: BoxFit.cover
-                        ), ),
+                          image: DecorationImage(
+                              image: NetworkImage(_category.rebornMeditationList.first
+                                  .meditationList.first.meditationCoverImage),
+                              fit: BoxFit.cover),
+                        ),
                         child: BackdropFilter(
                           filter: ui.ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                           child: InkWell(
-
-                            onTap: (){
+                            onTap: () {
                               debugPrint("done");
                             },
                             hoverColor: Colors.blueAccent,
@@ -189,9 +196,9 @@ class _HomeState extends ThemeState<HomeWidget> {
                               children: [
                                 _category.rebornMeditationList.first.isPremiumMeditation
                                     ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [Icon(Icons.lock_outline_rounded)],
-                                )
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: const [Icon(Icons.lock_outline_rounded)],
+                                      )
                                     : const SizedBox(),
                                 Expanded(child: SizedBox()),
                                 Row(
@@ -199,10 +206,14 @@ class _HomeState extends ThemeState<HomeWidget> {
                                   children: [
                                     Icon(Icons.favorite, color: CCAppTheme.periwinkleLightColor),
                                     const SizedBox(width: 12),
-                                    Text(data.meditationList.first.meditationType, style: CCAppTheme.txt2.copyWith(color: Colors.white),)
+                                    Text(
+                                      data.meditationList.first.meditationType,
+                                      style: CCAppTheme.txt2.copyWith(color: Colors.white),
+                                    )
                                   ],
                                 ),
-                                Text(_category.categoryTitle, style: CCAppTheme.txtHL1.copyWith(color: Colors.white)),
+                                Text(_category.categoryTitle,
+                                    style: CCAppTheme.txtHL1.copyWith(color: Colors.white)),
                                 SizedBox(height: screenData.width * 0.3),
                                 Container(
                                   width: screenData.width * 0.8,
@@ -227,7 +238,12 @@ class _HomeState extends ThemeState<HomeWidget> {
                                               style: CCAppTheme.txtHL1
                                                   .copyWith(overflow: TextOverflow.fade)),
                                           SizedBox(height: 8),
-                                          Text(author.authorDescription.substring(0, 30)+"...", style: CCAppTheme.txtHL3.copyWith(color: CCAppTheme.pinkDarkColor, overflow: TextOverflow.clip),),
+                                          Text(
+                                            author.authorDescription.substring(0, 30) + "...",
+                                            style: CCAppTheme.txtHL3.copyWith(
+                                                color: CCAppTheme.pinkDarkColor,
+                                                overflow: TextOverflow.clip),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -258,13 +274,8 @@ class _HomeState extends ThemeState<HomeWidget> {
     return list;
   }
 
-
-
-
-
   @override
   void dispose() {
-
     _rebornNameBloc.close();
     _firebaseBloc.close();
     super.dispose();

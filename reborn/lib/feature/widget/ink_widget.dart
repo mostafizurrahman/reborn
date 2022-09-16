@@ -22,15 +22,13 @@ class InkWidget extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Ink(
+        width: dimension,
+        height: _height,
         child: InkWell(
           focusColor: Colors.blue,
           splashColor: Colors.blueAccent,
           onTap: onTap,
-          child: SizedBox(
-            width: dimension,
-            height: _height,
-            child: Center(child: content),
-          ),
+          child: Center(child: content),
         ),
       ),
     );
@@ -39,7 +37,7 @@ class InkWidget extends StatelessWidget {
 
 class CCImageButton extends CCIconButton {
   final Widget imageWidget;
-  const CCImageButton(
+  CCImageButton(
       {Key? key, required VoidCallback onTap,
       required this.imageWidget,
       final String title = "",
@@ -70,7 +68,7 @@ class CCIconButton extends StatelessWidget {
   final VoidCallback onTap;
   final double? height;
   final bool isRowButton;
-  const CCIconButton(
+  CCIconButton(
       {Key? key,
       required this.onTap,
       required this.iconData,
@@ -132,7 +130,7 @@ class CCIconButton extends StatelessWidget {
 class RIButton extends CCIconButton {
   final double radius;
 
-  const RIButton(
+  RIButton(
       {Key? key,
       required VoidCallback onTap,
       required IconData iconData,
