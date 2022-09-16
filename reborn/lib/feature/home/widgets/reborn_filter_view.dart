@@ -89,7 +89,9 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
                 child: Material(
+                  color: Colors.transparent,
                   child: Ink(
+                    color: Colors.transparent,
                     width: 80,
                     height: 60,
                     child: InkWell(

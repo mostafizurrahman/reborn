@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:reborn/feature/data_model/entity/service_entity.dart';
+import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/home/home_recent_widget.dart';
 import 'package:reborn/feature/home/home_secret_widget.dart';
 import 'package:reborn/feature/home/home_tab_widget.dart';
 import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_bloc.dart';
+import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_states.dart';
 import 'package:reborn/feature/home/rx_recent/recent_bloc.dart';
 import 'package:reborn/feature/home/rx_recent/recent_states.dart';
 import 'package:reborn/feature/home/rx_secret/secret_states.dart';
@@ -22,13 +24,16 @@ import 'package:rxdart/rxdart.dart';
 import 'dart:ui' as ui;
 
 import '../../rx_export.dart';
+import '../base_widget/base_loading_view.dart';
 import '../data/network/firebase_api.dart';
 import '../data_model/static_data.dart';
+import '../loading/rx_loading.dart';
 import '../widget/base_widget/theme_state.dart';
 import '../widget/ink_widget.dart';
 import 'rx_reborn_name/reborn_name_bloc.dart';
 import 'rx_reborn_name/reborn_name_states.dart';
 import 'widgets/bottom_navigation_view.dart';
+import 'widgets/reborn_category_view.dart';
 import 'widgets/reborn_filter_view.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -83,13 +88,80 @@ class _HomeState extends ThemeState<HomeWidget> {
         floatLocation: FloatingActionButtonLocation.centerDocked,
         drawer: const MenuWidget(),
         body: SafeArea(
-          child: Column(
-            children: const [
-              RebornFilterView(),
-            ],
+          child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: [
+                  const RebornFilterView(),
+                  const SizedBox(height: 12),
+                  BlocBuilder<FirebaseDataBloc, FirebaseDataState>(
+                    builder: _onBuildGridFilter,
+                    bloc: _firebaseBloc,
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _onBuildGridFilter(final BuildContext _context, final FirebaseDataState firebaseState) {
+    if (firebaseState is FirebaseDataLoadingState) {
+      return BaseLoadingView(loadingState: LoadingStartState(dismiss: false));
+    }
+    if (firebaseState is FirebaseDataReadyState) {
+      final categories = firebaseState.categories;
+      return ListView.builder(
+        itemBuilder: _getCategoryView,
+        itemCount: categories.length,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+      );
+    }
+    return const SizedBox();
+  }
+
+  Widget _getCategoryView(final BuildContext listContext, final int _index) {
+    final FirebaseDataReadyState firebaseState = _firebaseBloc.state as FirebaseDataReadyState;
+    final FBCategory category = firebaseState.categories[_index];
+    // return Padding(
+    //   padding: _getPadding(filterList.length, _index),
+    //   child: Container(
+    //     decoration: CCAppTheme.shadowNoBorder,
+    //     child: ClipRRect(
+    //       borderRadius: const BorderRadius.all(Radius.circular(5)),
+    //       child: Material(
+    //         color: Colors.transparent,
+    //         child: Ink(
+    //           color: Colors.transparent,
+    //           width: 80,
+    //           height: 60,
+    //           child: InkWell(
+    //             focusColor: CCAppTheme.pinkLightColor,
+    //             splashColor: CCAppTheme.periwinkleDarkColor,
+    //             onTap: () {
+    //               debugPrint("filter tap on ${filterList[_index]}");
+    //             },
+    //             child: Column(
+    //               mainAxisAlignment: MainAxisAlignment.center,
+    //               children: [
+    //                 Icon(filterList[_index].iconData ?? Icons.favorite,
+    //                     color: CCAppTheme.pinkLightColor),
+    //                 const SizedBox(height: 12),
+    //                 Text(filterList[_index].displayName, style: CCAppTheme.txt1),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
+    return RebornCategoryView(
+      firebaseState: firebaseState,
+      category: category,
     );
   }
 
@@ -279,8 +351,5 @@ class _HomeState extends ThemeState<HomeWidget> {
     _rebornNameBloc.close();
     _firebaseBloc.close();
     super.dispose();
-
-    // recentBloc.close();
-    // secretBloc.close();
   }
 }
