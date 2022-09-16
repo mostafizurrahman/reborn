@@ -1,9 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:reborn/feature/data/network/firebase_api.dart';
 import 'package:reborn/feature/domain/firebase/entities/app_config.dart';
 part 'fb_config_response.g.dart';
 
 @JsonSerializable(createToJson: false)
-class FBConfigResponse {
+class FBConfigResponse extends BaseResponse{
 
   final String? appStoreUrl;
   final String? appVersion;

@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:reborn/feature/data/network/firebase_api.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/domain/firebase/entities/fb_author.dart';
 import 'package:reborn/feature/domain/firebase/entities/fb_category.dart';
@@ -8,7 +9,7 @@ import '../localized_response.dart';
 part 'fb_category_response.g.dart';
 
 @JsonSerializable(createToJson: false)
-class FBCategoryResponse {
+class FBCategoryResponse extends BaseResponse{
   final String? categoryID;
   final bool? hasLogo;
   final bool? isVisible;

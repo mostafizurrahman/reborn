@@ -113,7 +113,7 @@ class ServiceWidget extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(child: const SizedBox()),
+          const Expanded(child: SizedBox()),
           if (serviceEntity.serviceData is RecentEntity)
             _getPictureRow(
                 serviceEntity.serviceData, serviceEntity.serviceName),
