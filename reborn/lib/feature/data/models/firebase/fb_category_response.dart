@@ -39,7 +39,7 @@ class FBCategoryResponse extends BaseResponse{
 
   Map<String, dynamic> toJson() => {};
 
-  FBCategory toEntity() => FBCategory(
+  RebornCategory toEntity() => RebornCategory(
         categoryID: categoryID ?? '',
         hasLogo: hasLogo ?? false,
         logoData: logoData ?? -1,

@@ -8,6 +8,7 @@ import 'package:reborn/feature/home/home_recent_widget.dart';
 import 'package:reborn/feature/home/home_secret_widget.dart';
 import 'package:reborn/feature/home/home_tab_widget.dart';
 import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_bloc.dart';
+import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_events.dart';
 import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_states.dart';
 import 'package:reborn/feature/home/rx_recent/recent_bloc.dart';
 import 'package:reborn/feature/home/rx_recent/recent_states.dart';
@@ -47,21 +48,13 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeState extends ThemeState<HomeWidget> {
   final BehaviorSubject<List<TabBarData>> _tabBehaviour = BehaviorSubject();
-  // final RecentBloc recentBloc = RecentBloc();
-  // final SecretBloc secretBloc = SecretBloc();
   final RebornFilterBloc _rebornNameBloc = RebornFilterBloc();
   final FirebaseDataBloc _firebaseBloc = FirebaseDataBloc();
   @override
   void initState() {
     super.initState();
-
-    // _read();
+    _firebaseBloc.add(LoadFirebaseDataEvent());
   }
-
-  // Future<void> _read() async {
-  //   final list = await FirebaseAuthorApi().getList();
-  //   print(list);
-  // }
 
   void _onSecretStateChanged(final SecretState state) {
     if (state is SecretHomeTapState) {
@@ -88,20 +81,20 @@ class _HomeState extends ThemeState<HomeWidget> {
         floatLocation: FloatingActionButtonLocation.centerDocked,
         drawer: const MenuWidget(),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: [
-                  const RebornFilterView(),
-                  const SizedBox(height: 12),
-                  BlocBuilder<FirebaseDataBloc, FirebaseDataState>(
-                    builder: _onBuildGridFilter,
-                    bloc: _firebaseBloc,
-                  ),
-                ],
+          child: SizedBox(
+              height: screenData.height,
+              child: BlocBuilder<FirebaseDataBloc, FirebaseDataState>(
+                builder: _onBuildGridFilter,
+                bloc: _firebaseBloc,
+              )
+              //   SingleChildScrollView(
+              //   child: Column(
+              //     children: [
+              //       ,
+              //     ],
+              //   ),
+              // ),
               ),
-            ),
-          ),
         ),
       ),
     );
@@ -109,13 +102,29 @@ class _HomeState extends ThemeState<HomeWidget> {
 
   Widget _onBuildGridFilter(final BuildContext _context, final FirebaseDataState firebaseState) {
     if (firebaseState is FirebaseDataLoadingState) {
-      return BaseLoadingView(loadingState: LoadingStartState(dismiss: false));
+      return SizedBox(
+        height: screenData.height / 2,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const RebornFilterView(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: BaseLoadingView.loader,
+            ),
+            Text(
+              "Loading...",
+              style: CCAppTheme.txtHL2,
+            ),
+          ],
+        ),
+      );
     }
     if (firebaseState is FirebaseDataReadyState) {
       final categories = firebaseState.categories;
       return ListView.builder(
         itemBuilder: _getCategoryView,
-        itemCount: categories.length,
+        itemCount: categories.length + 1,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
       );
@@ -124,226 +133,19 @@ class _HomeState extends ThemeState<HomeWidget> {
   }
 
   Widget _getCategoryView(final BuildContext listContext, final int _index) {
+    if (_index == 0) {
+      return const RebornFilterView();
+    }
     final FirebaseDataReadyState firebaseState = _firebaseBloc.state as FirebaseDataReadyState;
-    final FBCategory category = firebaseState.categories[_index];
-    // return Padding(
-    //   padding: _getPadding(filterList.length, _index),
-    //   child: Container(
-    //     decoration: CCAppTheme.shadowNoBorder,
-    //     child: ClipRRect(
-    //       borderRadius: const BorderRadius.all(Radius.circular(5)),
-    //       child: Material(
-    //         color: Colors.transparent,
-    //         child: Ink(
-    //           color: Colors.transparent,
-    //           width: 80,
-    //           height: 60,
-    //           child: InkWell(
-    //             focusColor: CCAppTheme.pinkLightColor,
-    //             splashColor: CCAppTheme.periwinkleDarkColor,
-    //             onTap: () {
-    //               debugPrint("filter tap on ${filterList[_index]}");
-    //             },
-    //             child: Column(
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               children: [
-    //                 Icon(filterList[_index].iconData ?? Icons.favorite,
-    //                     color: CCAppTheme.pinkLightColor),
-    //                 const SizedBox(height: 12),
-    //                 Text(filterList[_index].displayName, style: CCAppTheme.txt1),
-    //               ],
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
-    return RebornCategoryView(
-      firebaseState: firebaseState,
-      category: category,
-    );
-  }
-
-  void _onTapDrawer() {}
-
-  Widget _getBody() {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.grey,
-          image: DecorationImage(
-            image: AssetImage("lib/assets/background.jpg"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Container(
-          color: CCAppTheme.pinkDarkerColor,
-          child: Center(
-            child: Container(
-              decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkDarkColor),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 200, horizontal: 48),
-                child: Container(
-                  decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkMediumColor),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 150, horizontal: 48),
-                    child: Container(
-                      decoration: CCAppTheme.shadowDec.copyWith(color: CCAppTheme.pinkLightColor),
-                      width: 100,
-                      height: 100,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+    final RebornCategory category = firebaseState.categories[_index - 1];
+    final padding = screenData.getHomeVerticalPadding(firebaseState.categories.length, _index - 1);
+    return Padding(
+      padding: padding,
+      child: RebornCategoryView(
+        firebaseState: firebaseState,
+        category: category,
       ),
     );
-  }
-
-  Widget _onBuildFilterBloc(final BuildContext context, final RebornFilterState state) {
-    return const RebornFilterView();
-  }
-
-  Widget _onBuildSubfilterBloc(final BuildContext context, final RebornFilterState state) {
-    return const SubFilterView();
-  }
-
-  void _onUtilityTap(final String routPath) {}
-
-  // Widget _getSecretContactWidget(final BuildContext context, final SecretState state) {
-  //   // return HomeSecretWidget(secretBloc: secretBloc);
-  // }
-  //
-  // Widget _getPrivateContactWidget(final BuildContext context, final SecretState state) {
-  //   // return HomePrivateWidget(secretBloc: secretBloc);
-  // }
-  //
-  // Widget _getRecentBlocWidget(final BuildContext context, final RecentState state) {
-  //   // return HomeRecentWidget(recentBloc: recentBloc);
-  // }
-
-  List<Widget> _getContentList() {
-    final categories = StaticData.categoryList;
-    List<Widget> list = [];
-
-    final rand = Random();
-    for (int i = 0; i < categories.length; i++) {
-      final _category = categories[i];
-      final author = _category.rebornMeditationList.first.authorList.first;
-      final _widget = SizedBox(
-        width: screenData.width,
-        height: 330,
-        child: ListView.builder(
-            itemBuilder: (context, index) {
-              final data = _category.rebornMeditationList[index];
-              return Padding(
-                padding: EdgeInsets.only(right: 24, bottom: 6, top: 6, left: index == 0 ? 24 : 0),
-                child: Container(
-                  width: screenData.width * 0.8 - 12,
-                  height: screenData.width * 0.6 - 15,
-                  decoration: CCAppTheme.shadowNoBorder,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(6)),
-                    child: Material(
-                      child: Ink(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(_category.rebornMeditationList.first
-                                  .meditationList.first.meditationCoverImage),
-                              fit: BoxFit.cover),
-                        ),
-                        child: BackdropFilter(
-                          filter: ui.ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                          child: InkWell(
-                            onTap: () {
-                              debugPrint("done");
-                            },
-                            hoverColor: Colors.blueAccent,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                _category.rebornMeditationList.first.isPremiumMeditation
-                                    ? Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: const [Icon(Icons.lock_outline_rounded)],
-                                      )
-                                    : const SizedBox(),
-                                Expanded(child: SizedBox()),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.favorite, color: CCAppTheme.periwinkleLightColor),
-                                    const SizedBox(width: 12),
-                                    Text(
-                                      data.meditationList.first.meditationType,
-                                      style: CCAppTheme.txt2.copyWith(color: Colors.white),
-                                    )
-                                  ],
-                                ),
-                                Text(_category.categoryTitle,
-                                    style: CCAppTheme.txtHL1.copyWith(color: Colors.white)),
-                                SizedBox(height: screenData.width * 0.3),
-                                Container(
-                                  width: screenData.width * 0.8,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.all(8),
-                                        child: ClipRRect(
-                                          borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                          child: CachedNetworkImage(
-                                              imageUrl: author.authorImage,
-                                              width: 44,
-                                              height: 44,
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                      SizedBox(width: 12),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(author.authorName,
-                                              style: CCAppTheme.txtHL1
-                                                  .copyWith(overflow: TextOverflow.fade)),
-                                          SizedBox(height: 8),
-                                          Text(
-                                            author.authorDescription.substring(0, 30) + "...",
-                                            style: CCAppTheme.txtHL3.copyWith(
-                                                color: CCAppTheme.pinkDarkColor,
-                                                overflow: TextOverflow.clip),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  color: Colors.grey.shade300,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-            itemCount: _category.rebornMeditationList.length,
-            scrollDirection: Axis.horizontal),
-      );
-      list.add(SizedBox(height: 24));
-      list.add(Padding(
-        padding: EdgeInsets.only(left: 24, top: 8, bottom: 6),
-        child: Text(_category.categoryTitle, style: CCAppTheme.txtHL1),
-      ));
-      list.add(_widget);
-    }
-
-    return list;
   }
 
   @override

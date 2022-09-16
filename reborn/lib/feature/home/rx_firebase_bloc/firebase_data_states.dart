@@ -9,7 +9,7 @@ class FirebaseDataErrorState extends FirebaseDataState {}
 class FirebaseDataLoadingState extends FirebaseDataState {}
 
 class FirebaseDataReadyState extends FirebaseDataState {
-  final List<FBCategory> categories;
+  final List<RebornCategory> categories;
   final List<FBAuthor> authors;
   final List<TrackEntity> tracks;
   FirebaseDataReadyState({

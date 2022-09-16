@@ -12,6 +12,26 @@ class ScreenData {
       _size = MediaQuery.of(context).size;
     }
   }
+
+  EdgeInsets getHorizontalPadding(final int listLen, final int listIndex) {
+    if (listIndex == 0) {
+      return const EdgeInsets.only(left: 24, right: 8, top: 8, bottom: 8);
+    }
+    if (listIndex == listLen - 1) {
+      return const EdgeInsets.only(right: 24, top: 8, bottom: 8);
+    }
+    return const EdgeInsets.all(8);
+  }
+
+  EdgeInsets getHomeVerticalPadding(final int listLen, final int listIndex) {
+    if (listIndex == 0) {
+      return const EdgeInsets.only(top: 16, bottom: 8);
+    }
+    if (listIndex == listLen - 1) {
+      return const EdgeInsets.only(bottom: 88);
+    }
+    return const EdgeInsets.symmetric(vertical: 8);
+  }
 }
 
 final ScreenData screenData = ScreenData();

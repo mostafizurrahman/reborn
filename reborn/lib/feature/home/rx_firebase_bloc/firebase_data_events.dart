@@ -14,7 +14,7 @@ class LoadFirebaseDataEvent extends FirebaseDataEvent {
 }
 
 class CompleteFirebaseDataEvent extends FirebaseDataEvent {
-  final List<FBCategory> categories;
+  final List<RebornCategory> categories;
   final List<FBAuthor> authors;
   final List<TrackEntity> tracks;
   CompleteFirebaseDataEvent({

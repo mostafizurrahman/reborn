@@ -10,6 +10,8 @@ import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'package:reborn/utility/user_info.dart';
 
+import 'sub_filter_view.dart';
+
 class RebornFilterView extends StatefulWidget {
   const RebornFilterView({Key? key}) : super(key: key);
   @override
@@ -71,6 +73,9 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
               builder: _onBuildGridFilter,
               bloc: filterBloc,
             ),
+
+            const SizedBox(height: 12),
+            const SubFilterView(),
           ],
         ),
       ),
@@ -83,7 +88,7 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
       child: ListView.builder(
         itemBuilder: (final listContext, final _index) {
           return Padding(
-            padding: _getPadding(filterList.length, _index),
+            padding: screenData.getHorizontalPadding(filterList.length, _index),
             child: Container(
               decoration: CCAppTheme.shadowNoBorder,
               child: ClipRRect(
@@ -123,13 +128,5 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
     );
   }
 
-  EdgeInsets _getPadding(final int listLen, final int listIndex) {
-    if (listIndex == 0) {
-      return const EdgeInsets.only(left: 24, right: 8, top: 8, bottom: 8);
-    }
-    if (listIndex == listLen - 1) {
-      return const EdgeInsets.only(right: 24, top: 8, bottom: 8);
-    }
-    return const EdgeInsets.all(8);
-  }
+
 }
