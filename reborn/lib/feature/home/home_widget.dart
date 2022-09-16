@@ -5,6 +5,7 @@ import 'package:reborn/feature/data_model/entity/service_entity.dart';
 import 'package:reborn/feature/home/home_recent_widget.dart';
 import 'package:reborn/feature/home/home_secret_widget.dart';
 import 'package:reborn/feature/home/home_tab_widget.dart';
+import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_bloc.dart';
 import 'package:reborn/feature/home/rx_recent/recent_bloc.dart';
 import 'package:reborn/feature/home/rx_recent/recent_states.dart';
 import 'package:reborn/feature/home/rx_secret/secret_states.dart';
@@ -25,6 +26,7 @@ import '../data_model/static_data.dart';
 import '../widget/base_widget/theme_state.dart';
 import 'rx_reborn_name/reborn_name_bloc.dart';
 import 'rx_reborn_name/reborn_name_states.dart';
+import 'widgets/bottom_navigation_view.dart';
 import 'widgets/reborn_filter_view.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -37,23 +39,22 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeState extends ThemeState<HomeWidget> {
-  late final BehaviorSubject<List<TabBarData>> _navigationTabBehaviour;
+  final BehaviorSubject<List<TabBarData>> _tabBehaviour = BehaviorSubject();
   // final RecentBloc recentBloc = RecentBloc();
   // final SecretBloc secretBloc = SecretBloc();
   final RebornFilterBloc _rebornNameBloc = RebornFilterBloc();
-
+  final FirebaseDataBloc _firebaseBloc = FirebaseDataBloc();
   @override
   void initState() {
     super.initState();
-    final _tabBarData = StaticData.getTabBarData(_onTabBarItemTap);
-    _navigationTabBehaviour = BehaviorSubject<List<TabBarData>>.seeded(_tabBarData);
-    _read();
+
+    // _read();
   }
 
-  Future<void> _read() async {
-    final list = await FirebaseAuthorApi().getList();
-    print(list);
-  }
+  // Future<void> _read() async {
+  //   final list = await FirebaseAuthorApi().getList();
+  //   print(list);
+  // }
 
   void _onSecretStateChanged(final SecretState state) {
     if (state is SecretHomeTapState) {
@@ -74,20 +75,17 @@ class _HomeState extends ThemeState<HomeWidget> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<RebornFilterBloc>.value(value: _rebornNameBloc),
+        BlocProvider<FirebaseDataBloc>.value(value: _firebaseBloc),
       ],
       child: BaseScaffoldState(
-
+        floating: BottomNavigationView(tabBarBehaviour: _tabBehaviour),
+        floatLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
 
   Widget _getBody() {
     return Scaffold(
-      floatingActionButton: StreamBuilder(
-        builder: _getNavigationBar,
-        stream: _navigationTabBehaviour,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       drawer: const MenuWidget(),
       body: Container(
         decoration: const BoxDecoration(
@@ -260,23 +258,17 @@ class _HomeState extends ThemeState<HomeWidget> {
     return list;
   }
 
-  void _onTabBarItemTap(final String tabID) {
-    final _list = _navigationTabBehaviour.value;
-    for (final element in _list) {
-      element.isSelected = element.tabID == tabID;
-    }
-    _navigationTabBehaviour.sink.add(_list);
-    debugPrint("i am here $tabID");
-  }
 
-  Widget _getNavigationBar(final BuildContext context, AsyncSnapshot<List<TabBarData>> snapshot) {
-    return HomeTabWidget(tabDataList: snapshot.data ?? []);
-  }
+
+
 
   @override
   void dispose() {
-    // TODO: implement dispose
+
+    _rebornNameBloc.close();
+    _firebaseBloc.close();
     super.dispose();
+
     // recentBloc.close();
     // secretBloc.close();
   }
