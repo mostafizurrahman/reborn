@@ -8,7 +8,7 @@ import '../localized_response.dart';
 part 'fb_author_response.g.dart';
 
 @JsonSerializable(createToJson: false)
-class FBAuthorResponse extends BaseResponse{
+class FBAuthorResponse extends BaseResponse {
   final String? authorID;
   final String? firstName;
   final String? lastName;
@@ -58,6 +58,7 @@ class FBAuthorResponse extends BaseResponse{
   Map<String, dynamic> toJson() => {};
 
   FBAuthor toEntity() => FBAuthor(
+        authorID: authorID ?? '',
         firstName: firstName ?? "",
         lastName: lastName ?? "",
         email: email ?? '',

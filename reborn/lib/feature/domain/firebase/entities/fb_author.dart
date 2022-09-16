@@ -20,8 +20,9 @@ class FBAuthor {
   final List<String> studentIdList; //list of user id(s) whom he/she instructing.
   final String country;
   final String flagIcon;
-
+  final String authorID;
   FBAuthor({
+    required this.authorID,
     required this.firstName,
     required this.lastName,
     required this.email,

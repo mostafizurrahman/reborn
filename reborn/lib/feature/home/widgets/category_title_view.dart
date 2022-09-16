@@ -20,7 +20,7 @@ class CategoryTitleView extends StatelessWidget  {
           padding: const EdgeInsets.only(left: 24, right: 8),
           child: ViewProvider.getCupertinoIcon(iconValue: category.logoData.toInt()),
         ),
-        Text(category.title.en, style: CCAppTheme.txt2),
+        Text(category.title.en, style: CCAppTheme.txt2.copyWith(fontWeight: FontWeight.w800)),
         const Expanded(child: Divider(height: 2, color: Colors.black54,),),
         ..._addSeeMore(),
       ],

@@ -39,4 +39,5 @@ FBTrackResponse _$FBTrackResponseFromJson(Map<String, dynamic> json) =>
       isLocalTrack: json['isLocalTrack'] as bool?,
       trackSecret: json['trackSecret'] as String?,
       trackAudio: json['trackAudio'] as String?,
+      trackID: json['trackID'] as String?,
     );
