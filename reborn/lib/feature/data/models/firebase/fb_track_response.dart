@@ -37,7 +37,7 @@ class FBTrackResponse extends BaseResponse {
   final int? trackIconData;
   final bool? isPremium;
   final PlayerInfo? playerInfo;
-
+  final String? trackID;
   FBTrackResponse({
     required this.trackTitle,
     required this.trackSubtitle,
@@ -53,6 +53,7 @@ class FBTrackResponse extends BaseResponse {
     required this.isLocalTrack,
     required this.trackSecret,
     required this.trackAudio,
+    required this.trackID,
   });
 
   factory FBTrackResponse.fromJson(Map<String, dynamic> json) => _$FBTrackResponseFromJson(json);
@@ -74,5 +75,6 @@ class FBTrackResponse extends BaseResponse {
         isLocalTrack: isLocalTrack ?? false,
         trackSecret: trackSecret ?? '',
         trackAudio: trackAudio ?? '',
+    trackID: trackID ?? '',
       );
 }

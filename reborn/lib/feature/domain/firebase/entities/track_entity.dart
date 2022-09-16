@@ -10,7 +10,7 @@ class TrackEntity {
   final LocalizedText trackTitle;
   final LocalizedText trackSubtitle;
   final int trackDuration;
-
+  final String trackID;
   final List<String> generList; //["Popular", "Mediation", "Sleep", "Music" ... ]
   final LocalizedText story;
   final String authorID;
@@ -23,7 +23,10 @@ class TrackEntity {
   final bool isPremium;
   final PlayerInfoEntity playerInfo;
 
+  FBAuthor? trackAuthor;
+
   TrackEntity({
+    required this.trackID,
     required this.trackTitle,
     required this.trackSubtitle,
     required this.trackDuration,

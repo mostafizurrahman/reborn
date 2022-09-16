@@ -25,12 +25,12 @@ class ScreenData {
 
   EdgeInsets getHomeVerticalPadding(final int listLen, final int listIndex) {
     if (listIndex == 0) {
-      return const EdgeInsets.only(top: 16, bottom: 8);
+      return const EdgeInsets.only(top: 16, bottom: 16);
     }
     if (listIndex == listLen - 1) {
       return const EdgeInsets.only(bottom: 88);
     }
-    return const EdgeInsets.symmetric(vertical: 8);
+    return const EdgeInsets.only(bottom: 16, top: 3);
   }
 }
 
