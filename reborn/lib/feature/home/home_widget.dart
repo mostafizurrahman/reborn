@@ -13,6 +13,10 @@ import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_states.dart';
 import 'package:reborn/feature/home/rx_recent/recent_bloc.dart';
 import 'package:reborn/feature/home/rx_recent/recent_states.dart';
 import 'package:reborn/feature/home/rx_secret/secret_states.dart';
+import 'package:reborn/feature/home/widgets/home_coach_view.dart';
+import 'package:reborn/feature/home/widgets/home_favorite_view.dart';
+import 'package:reborn/feature/home/widgets/home_profile_view.dart';
+import 'package:reborn/feature/home/widgets/home_sleep_view.dart';
 import 'package:reborn/feature/home/widgets/sub_filter_view.dart';
 import 'package:reborn/feature/menu/menu_widget.dart';
 import 'package:reborn/feature/widget/widget_properties.dart';
@@ -56,17 +60,6 @@ class _HomeState extends ThemeState<HomeWidget> {
     _firebaseBloc.add(LoadFirebaseDataEvent());
   }
 
-  void _onSecretStateChanged(final SecretState state) {
-    if (state is SecretHomeTapState) {
-      final bool isAdd = StaticData.parentTypes.contains(state.secretTapType);
-      final Map args = {ArgsKey.secretType: state.secretTapType, "secret": state.isSecret};
-      args["title"] = isAdd ? "Add Contact" : "Contact List";
-      isAdd
-          ? Navigator.pushNamed(context, AppRoutes.entry, arguments: args)
-          : Navigator.pushNamed(context, AppRoutes.list, arguments: args);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     screenData.setScreenData(context);
@@ -82,22 +75,26 @@ class _HomeState extends ThemeState<HomeWidget> {
         drawer: const MenuWidget(),
         body: SafeArea(
           child: SizedBox(
-              height: screenData.height,
-              child: BlocBuilder<FirebaseDataBloc, FirebaseDataState>(
-                builder: _onBuildGridFilter,
-                bloc: _firebaseBloc,
-              )
-              //   SingleChildScrollView(
-              //   child: Column(
-              //     children: [
-              //       ,
-              //     ],
-              //   ),
-              // ),
-              ),
+            height: screenData.height,
+            child: StreamBuilder<List<TabBarData>>(
+              stream: _tabBehaviour.stream,
+              builder: _onBuildTabView,
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  Widget _onBuildTabView(_, __) {
+    return BlocBuilder<FirebaseDataBloc, FirebaseDataState>(
+      builder: _onBuildGridFilter,
+      bloc: _firebaseBloc,
+    );
+  }
+
+  String _getTabId(final List<TabBarData> tabList) {
+    return tabList.firstWhere((element) => element.isSelected).tabID;
   }
 
   Widget _onBuildGridFilter(final BuildContext _context, final FirebaseDataState firebaseState) {
@@ -121,6 +118,19 @@ class _HomeState extends ThemeState<HomeWidget> {
       );
     }
     if (firebaseState is FirebaseDataReadyState) {
+      final List<TabBarData> tabList = _tabBehaviour.valueOrNull ?? [];
+      if (tabList.isNotEmpty) {
+        final String tabId = _getTabId(tabList);
+        if (tabId == StaticData.tabFavorite) {
+          return const HomeFavoriteView();
+        } else if (tabId == StaticData.tabSleeping) {
+          return const HomeSleepView();
+        } else if (tabId == StaticData.tabCoaches) {
+          return const HomeCoachView();
+        } else if (tabId == StaticData.tabProfile) {
+          return const HomeProfileView();
+        }
+      }
       final categories = firebaseState.categories;
       return ListView.builder(
         itemBuilder: _getCategoryView,
