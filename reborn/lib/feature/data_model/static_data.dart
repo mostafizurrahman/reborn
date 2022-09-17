@@ -32,29 +32,43 @@ class StaticData {
   static String get idFavoriteContacts => "id_favorite_contacts";
   static String get idDeletedContacts => "recent_deleted_contacts";
   static String get idAdditionContacts => "recent_added_contacts";
+  static String get tabFavorite => "0_t_fav";
+  static String get tabSleeping => "1_sleep";
+  static String get tabReborn => "2_reborn";
+  static String get tabCoaches => "3_coaches";
+  static String get tabProfile => "4_profile";
 
   static List<TabBarData> getTabBarData(final Function(String) _onTabBarItemTap) => [
         TabBarData(
-            iconData: Icons.star, tabID: "0_t_fav", name: "Favorite", onTap: _onTabBarItemTap)
-          ..isSelected = false,
+          iconData: Icons.star,
+          tabID: tabFavorite,
+          name: "Favorite",
+          onTap: _onTabBarItemTap,
+        )..isSelected = false,
         TabBarData(
-            iconData: Icons.timelapse, tabID: "1_sleep", name: "Sleep", onTap: _onTabBarItemTap)
-          ..isSelected = false,
+          iconData: Icons.timelapse,
+          tabID: tabSleeping,
+          name: "Sleep",
+          onTap: _onTabBarItemTap,
+        )..isSelected = false,
         TabBarData(
-            iconData: Icons.stream, tabID: "2_reborn", name: "Reborn", onTap: _onTabBarItemTap)
-          ..isSelected = true,
+          iconData: Icons.stream,
+          tabID: tabReborn,
+          name: "Reborn",
+          onTap: _onTabBarItemTap,
+        )..isSelected = true,
         TabBarData(
-            iconData: Icons.account_circle_outlined,
-            tabID: "3_coaches",
-            name: "Coaches",
-            onTap: _onTabBarItemTap)
-          ..isSelected = false,
+          iconData: Icons.account_circle_outlined,
+          tabID: tabCoaches,
+          name: "Coaches",
+          onTap: _onTabBarItemTap,
+        )..isSelected = false,
         TabBarData(
-            iconData: Icons.person_outline,
-            tabID: "4_profile",
-            name: "Profile",
-            onTap: _onTabBarItemTap)
-          ..isSelected = false,
+          iconData: Icons.person_outline,
+          tabID: tabProfile,
+          name: "Profile",
+          onTap: _onTabBarItemTap,
+        )..isSelected = false,
       ];
 
   static List<PageData> getPageData() {
@@ -156,21 +170,22 @@ class StaticData {
 
   static RebornMeditationData get rebornMeditationData {
     var rng = Random();
-    final images = ["https://wallpaperaccess.com/full/5117569.jpg",
-    "https://images.unsplash.com/photo-1609154767012-331529e7d73b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80",
-    "https://media.istockphoto.com/photos/autumn-tree-picture-id474517002?k=20&m=474517002&s=612x612&w=0&h=K9GFM6NphMwPBe5C9cTDRwbfGhASH1M2FP6OsxoZMe4=",
-    "https://media.istockphoto.com/photos/morning-in-the-field-picture-id184342766?b=1&k=20&m=184342766&s=170667a&w=0&h=a9LAA3eFjPgokvPQVmSttWOkP_6fCyNZlK2PQuh4rrw=",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx25vr8cSjz7hb8AY1QExa6WTo1gLNPQmrICS8cqASaTbqX9gbRSMu6dGsIAUTqkKAY5Q&usqp=CAU"];
+    final images = [
+      "https://wallpaperaccess.com/full/5117569.jpg",
+      "https://images.unsplash.com/photo-1609154767012-331529e7d73b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80",
+      "https://media.istockphoto.com/photos/autumn-tree-picture-id474517002?k=20&m=474517002&s=612x612&w=0&h=K9GFM6NphMwPBe5C9cTDRwbfGhASH1M2FP6OsxoZMe4=",
+      "https://media.istockphoto.com/photos/morning-in-the-field-picture-id184342766?b=1&k=20&m=184342766&s=170667a&w=0&h=a9LAA3eFjPgokvPQVmSttWOkP_6fCyNZlK2PQuh4rrw=",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx25vr8cSjz7hb8AY1QExa6WTo1gLNPQmrICS8cqASaTbqX9gbRSMu6dGsIAUTqkKAY5Q&usqp=CAU"
+    ];
     return RebornMeditationData(
       audioAuthor: audioAuthor,
       meditationID: "meditation",
       meditationTitle: "Reborn yourself",
       duration: "4:29 Min",
       isPremiumContent: false,
-      meditationCoverImage:
-          images[rng.nextInt(5)],
+      meditationCoverImage: images[rng.nextInt(5)],
       meditationThumbImage:
-      "https://theproductivewoman.com/wp-content/uploads/2017/05/Katie-59c.jpg",
+          "https://theproductivewoman.com/wp-content/uploads/2017/05/Katie-59c.jpg",
       meditationType: "Work Wellness",
     );
   }
@@ -225,9 +240,7 @@ class MeditationCategoryData {
   final List<String> subFilterList; //subfilter_id
   final List<RebornMeditation> rebornMeditationList;
   MeditationCategoryData(
-
-      {
-        required this.categoryID,
+      {required this.categoryID,
       required this.categoryTitle,
       required this.subFilterList,
       required this.rebornMeditationList});
@@ -238,8 +251,6 @@ class RebornMeditation {
   final String meditationID;
   final List<RebornMeditationData> meditationList;
   final List<AudioAuthor> authorList;
-
-
 
   RebornMeditation(
       {required this.meditationID,
