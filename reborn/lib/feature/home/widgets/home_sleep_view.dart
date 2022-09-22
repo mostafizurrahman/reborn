@@ -20,8 +20,9 @@ class _HomeSleepState extends State<HomeSleepView>  {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Container(
-        decoration: CCAppTheme.shadowDec,
+        color: Colors.transparent,
         child: Center(child: Text("Sleep"),),
       ),
     );
