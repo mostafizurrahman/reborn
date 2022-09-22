@@ -221,6 +221,19 @@ class StaticData {
             rebornMeditationList: List.generate(2 + rng.nextInt(7), (index) => rebornMeditation),
             subFilterList: ["filter_gender_id", "filter_country_id", "filter_coach_id"]));
   }
+
+  static List<String> gridImages = ["https://i.imgur.com/whbe83G.jpg",
+    "https://i.imgur.com/wXMqHQ2.jpg",
+    "https://i.imgur.com/9CtCQO6.jpg",
+    "https://i.imgur.com/j8fuLNM.jpg",
+  ];
+
+  static List<String> coverImages = [
+    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+    "https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072821_1280.jpg",
+    "https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067_1280.png",
+    "https://cdn.pixabay.com/photo/2016/12/11/12/02/mountains-1899264_1280.jpg",
+  ];
 }
 
 class SubFilterData {

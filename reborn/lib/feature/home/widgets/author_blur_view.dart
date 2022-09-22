@@ -8,7 +8,12 @@ import 'package:reborn/utility/screen_data.dart';
 
 class AuthorBlurView extends StatelessWidget {
   final FBAuthor authorData;
-  const AuthorBlurView({Key? key, required this.authorData}) : super(key: key);
+  final Color authorTitleColor;
+  const AuthorBlurView({
+    Key? key,
+    required this.authorData,
+    this.authorTitleColor = Colors.black,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     const Radius radius = Radius.circular(7);
@@ -34,9 +39,19 @@ class AuthorBlurView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 12),
-                Text("${authorData.firstName} ${authorData.lastName}", style: CCAppTheme.txtHL2,),
+                Text(
+                  "${authorData.firstName} ${authorData.lastName}",
+                  style: CCAppTheme.txtHL2.copyWith(
+                    color: authorTitleColor,
+                  ),
+                ),
                 const SizedBox(height: 8),
-                Expanded(child: Text(authorData.biography.en, style: CCAppTheme.txt2.copyWith(color: Colors.white),),),
+                Expanded(
+                  child: Text(
+                    authorData.biography.en,
+                    style: CCAppTheme.txt2.copyWith(color: Colors.white),
+                  ),
+                ),
               ],
             ),
           )

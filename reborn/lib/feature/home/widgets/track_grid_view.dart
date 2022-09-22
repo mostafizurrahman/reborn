@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/home/widgets/author_blur_view.dart';
 import 'package:reborn/feature/widget/blur_round_view.dart';
@@ -17,10 +20,13 @@ class TrackGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     final author = track.trackAuthor;
     final width = screenData.width;
+    var rng = Random();
+    int index = rng.nextInt(StaticData.gridImages.length);
+
     return Material(
       borderRadius: const BorderRadius.all(Radius.circular(9)),
       color: Colors.transparent,
-      child: Ink(
+      child: Container(
         color: Colors.transparent,
         width: width * 0.65,
         height: width,
@@ -29,7 +35,7 @@ class TrackGridView extends StatelessWidget {
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(7)),
               child: CachedNetworkImage(
-                imageUrl: "https://i.imgur.com/wXMqHQ2.jpg",
+                imageUrl: StaticData.gridImages[index], //  track.trackCoverImage,
                 fit: BoxFit.cover,
                 width: width * 0.65,
                 height: width,
@@ -42,24 +48,29 @@ class TrackGridView extends StatelessWidget {
                 },
               ),
             ),
-            InkWell(
-              focusColor: CCAppTheme.pinkLightColor,
-              splashColor: CCAppTheme.periwinkleDarkColor,
-              onTap: () {
-                debugPrint("filter tap on ${track.trackTitle.en}");
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: TrackGridContent(trackEntity: track),
-                  ),
-                  if (author != null) AuthorBlurView(authorData: author),
-                ],
-              ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: TrackGridContent(trackEntity: track),
+                ),
+                if (author != null) AuthorBlurView(authorData: author),
+              ],
             ),
             if (track.isPremium) _getPremiumWidget(),
+            Material(
+              color: Colors.transparent,
+              child: Ink(
+                child: InkWell(
+                  focusColor: CCAppTheme.pinkLightColor.withAlpha(80),
+                  splashColor: CCAppTheme.periwinkleDarkColor.withAlpha(110),
+                  onTap: () {
+                    debugPrint("filter tap on ${track.trackTitle.en}");
+                  },
+                ),
+              ),
+            )
           ],
         ),
       ),
