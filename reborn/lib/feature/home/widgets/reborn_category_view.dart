@@ -28,7 +28,7 @@ class RebornCategoryView extends StatefulWidget {
 class _RebornCategoryState extends State<RebornCategoryView> {
   @override
   Widget build(BuildContext context) {
-    final double height = screenData.height * 0.275;
+    final double height = screenData.width * 0.65;
 
     return SizedBox(
       height: height,

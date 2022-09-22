@@ -11,13 +11,21 @@ class CCAppTheme {
     }
     return false;
   }
+
+
   BorderRadius get topRound{
     return const BorderRadius.only(
-      topLeft: Radius.circular(8),
-      topRight: Radius.circular(8),
+      topLeft: Radius.circular(7),
+      topRight: Radius.circular(7),
     );
   }
 
+  BorderRadius get bottomRound{
+    return const BorderRadius.only(
+      topLeft: Radius.circular(7),
+      topRight: Radius.circular(7),
+    );
+  }
 
   static Color get pinkDarkerColor => const Color(0xFF7827E6);
   static Color get pinkMediumColor => const Color(0xFFAA4FF6);
@@ -104,6 +112,12 @@ class CCAppTheme {
           ),
         ],
       );
+
+  static BoxDecoration get circleBorderDec => BoxDecoration(
+    color: Colors.transparent,
+    border: Border.all(color: CCAppTheme.periwinkleDarkColor, width: 1.5),
+    borderRadius: const BorderRadius.all(Radius.circular(1000)),
+  );
 
   static BoxDecoration get shadowNoBorder => BoxDecoration(
         color: Colors.white.withAlpha(200),
