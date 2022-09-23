@@ -2,9 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
+import 'package:reborn/feature/widget/blur_round_view.dart';
 import 'package:reborn/feature/widget/profile_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
+
+import '../../widget/view_provider.dart';
 
 class TrackCategoryView extends StatelessWidget {
   final RebornCategory category;
@@ -17,78 +20,37 @@ class TrackCategoryView extends StatelessWidget {
     required this.summary,
   }) : super(key: key);
 
+  double get width => screenData.width - 48;
+
   @override
-  Widget build(BuildContext context) {
-    final double width = screenData.width - 48;
-    return Material(
+  Widget build(BuildContext context)  {
+
+    return Container(
+      decoration: CCAppTheme.shadowNoBorder,
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderRadius: circleRadius,
         child: SizedBox(
           width: width,
           height: height,
           child: Stack(
             children: [
-              CachedNetworkImage(
-                imageUrl: category.categoryCover ?? '', //  track.trackCoverImage,
-                fit: BoxFit.cover,
-                width: width,
-                height: height,
-                errorWidget: (_, __, ___) {
-                  debugPrint("done");
-                  return const Icon(
-                    CupertinoIcons.person,
-                    size: 60,
-                  );
-                },
-              ),
+              backgroundWidget,
               Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Colors.white, Colors.transparent],
-                      begin: FractionalOffset(0.0, 0.0),
-                      end: FractionalOffset(0.0, 2.0),
-                      stops: [0.0, 2.0],
-                      tileMode: TileMode.clamp),
-                ),
+                decoration: decoration,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: Text(
-                        category.title.en,
-                        style: CCAppTheme.txtHL2.copyWith(color: Colors.pinkAccent),
-                      ),
-                    ),
-                    Text("Track List For Reborn",
-                        style: CCAppTheme.txtReg.copyWith(color: Colors.deepPurple)),
+                    titleWidget,
+                    Text("Calm Tracks For Reborn",
+                        style: CCAppTheme.txtHL1),
                     Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                          text: summary.summary[0],
-                          style:
-                              DefaultTextStyle.of(context).style.copyWith(color: Colors.pinkAccent),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: summary.summary[1],
-                              style: CCAppTheme.txtHL3.copyWith(color: Colors.deepPurple),
-                            ),
-                            TextSpan(
-                              text: summary.summary[2],
-                              style: CCAppTheme.txt2.copyWith(color: Colors.pinkAccent),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Text(
-                      //   summary.duration,
-                      //   style: CCAppTheme.txt2.copyWith(color: Colors.pinkAccent),
-                      // ),
+                      child: _getSummaryWidget(width),
                     ),
-                    Divider(height: 3),
+                    const Divider(height: 3, color: Colors.pinkAccent,),
                     SizedBox(
-                      height: height * 0.2,
-                      child: _getAuthors(),
+                      height: height * 0.3,
+                      child: BlurRoundView(
+                        content: _getAuthors(), radius: rebornTheme.bottomRound,
+                      ),
                     ),
                   ],
                 ),
@@ -100,23 +62,93 @@ class TrackCategoryView extends StatelessWidget {
     );
   }
 
+  Widget _getSummaryWidget(final double width) {
+    final len = summary.summary.length;
+    return Row(
+      children: List<Widget>.generate(
+        len + 2,
+        (index) {
+          if (index == 1 || index == 3) {
+            return Container(
+              color: Colors.pinkAccent,
+              width: 1.5,
+              height: 30,
+            );
+          }
+          return SizedBox(
+            width: width / 3 - 3,
+            child: Center(
+              child: Text(
+                summary.summary[index % len],
+                style: CCAppTheme.txtReg,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   Widget _getAuthors() {
     List<Widget> profiles = [];
     double x = 24;
-    double vertical = height * 0.2 / 2 - 25;
     for (final author in summary.authors) {
       final profile = ProfileView(imagePath: author.profilePicture);
       final position = Positioned(
-        child: profile,
-        top: vertical,
-        bottom: vertical,
+        child: Center(child: profile),
+
         left: x,
       );
       profiles.add(position);
-      x += 40;
+      x += 35;
     }
     return Stack(
+      alignment: AlignmentDirectional.centerStart,
       children: profiles,
     );
   }
+
+  Widget get titleWidget => Padding(
+    padding: const EdgeInsets.only(top: 16, bottom: 8),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ViewProvider.getCupertinoIcon(
+          iconValue: category.logoData.toInt(),
+          color: Colors.pinkAccent,
+        ),
+        const SizedBox(width: 12),
+        Text(
+          category.title.en,
+          style: CCAppTheme.txtHL2.copyWith(color: Colors.pinkAccent),
+        )
+      ],
+    ),
+  );
+
+  Widget get backgroundWidget => CachedNetworkImage(
+    imageUrl: category.categoryCover ?? '', //  track.trackCoverImage,
+    fit: BoxFit.cover,
+    width: width,
+    height: height,
+    errorWidget: (_, __, ___) {
+      debugPrint("done");
+      return const Icon(
+        CupertinoIcons.person,
+        size: 60,
+      );
+    },
+  );
+
+  BorderRadius get circleRadius => const BorderRadius.all(Radius.circular(8));
+
+  BoxDecoration get decoration => BoxDecoration(
+
+    gradient: LinearGradient(
+        colors: [Colors.white.withAlpha(200), Colors.transparent],
+        begin: const FractionalOffset(0.0, 0.000),
+        end: const FractionalOffset(0.0, 0.75),
+        stops: const [0.0, 0.75],
+        tileMode: TileMode.clamp),
+  );
 }
