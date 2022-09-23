@@ -58,7 +58,6 @@ class TrackCoverView extends StatelessWidget {
                 Expanded(
                   child: TrackCoverContent(trackEntity: track),
                 ),
-
                 if (author != null) AuthorBlurView(authorData: author, authorTitleColor: Colors.white,),
               ],
             ),
@@ -74,7 +73,7 @@ class TrackCoverView extends StatelessWidget {
                   },
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

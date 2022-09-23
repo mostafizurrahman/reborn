@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/data/network/firebase_api.dart';
-import 'package:reborn/feature/domain/firebase/entities/track_entity.dart';
 import 'package:reborn/feature/domain/firebase/usecase/get_author_use_case.dart';
 import 'package:reborn/feature/domain/firebase/usecase/get_category_use_case.dart';
 import 'package:reborn/feature/domain/firebase/usecase/get_track_use_case.dart';

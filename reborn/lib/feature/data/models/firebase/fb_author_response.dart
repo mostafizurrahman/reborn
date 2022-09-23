@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:reborn/feature/data/network/firebase_api.dart';
 import 'package:reborn/feature/domain/entities.dart';
-import 'package:reborn/feature/domain/firebase/entities/fb_author.dart';
+
 
 import '../localized_response.dart';
 

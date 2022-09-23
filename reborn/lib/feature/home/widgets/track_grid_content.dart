@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/widget/view_provider.dart';
 import 'package:reborn/utility/app_theme_data.dart';
+import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/screen_data.dart';
 
 class TrackGridContent extends StatelessWidget {
@@ -18,8 +19,7 @@ class TrackGridContent extends StatelessWidget {
               begin: FractionalOffset(0.0, 0.0),
               end: FractionalOffset(0.0, 2.0),
               stops: [0.0, 2.0],
-              tileMode: TileMode.clamp
-          ),
+              tileMode: TileMode.clamp),
         ),
         width: screenData.width,
         child: Column(
@@ -42,7 +42,9 @@ class TrackGridContent extends StatelessWidget {
         ],
       ),
     );
-    widgets.add(const SizedBox(height: 4),);
+    widgets.add(
+      const SizedBox(height: 4),
+    );
     widgets.add(
       Text(trackEntity.trackSubtitle.en, style: CCAppTheme.txt2),
     );
@@ -64,8 +66,7 @@ class TrackCoverContent extends StatelessWidget {
               begin: FractionalOffset(0.0, 0.0),
               end: FractionalOffset(0.0, 2.0),
               stops: [0.0, 2.0],
-              tileMode: TileMode.clamp
-          ),
+              tileMode: TileMode.clamp),
         ),
         width: screenData.width,
         child: Column(
@@ -88,9 +89,21 @@ class TrackCoverContent extends StatelessWidget {
         ],
       ),
     );
-    widgets.add(const SizedBox(height: 8),);
+    widgets.add(
+      const SizedBox(height: 8),
+    );
     widgets.add(
       Text(trackEntity.trackSubtitle.en, style: CCAppTheme.txt2),
+    );
+    final duration = DataFormatter.formattedDuration(Duration(seconds: trackEntity.trackDuration));
+    widgets.add(
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Text(
+          "Duration - $duration",
+          style: CCAppTheme.txtReg,
+        ),
+      ),
     );
     return widgets;
   }
