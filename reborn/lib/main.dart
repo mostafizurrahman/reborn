@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:reborn/feature/contact_add/contact_entry_widget.dart';
 import 'package:reborn/feature/contact_list/contact_list_widget.dart';
+import 'package:reborn/feature/domain/category_summary.dart';
 import 'package:reborn/feature/home/home_widget.dart';
+import 'package:reborn/feature/track_list/track_list_page.dart';
 import 'package:reborn/routing/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -111,6 +113,10 @@ class MainAppState extends State<MainAppWidget> {
       _widget = ContactListWidget(args: settings.arguments);
     } else if (settings.name == AppRoutes.entry) {
       _widget = ContactEntryWidget(args: settings.arguments);
+    } else if (settings.name == TrackListPage.path) {
+      final summary = TrackListPage.getSummary(settings.arguments as Map);
+      final category = TrackListPage.getCategory(settings.arguments as Map);
+      _widget = TrackListPage(category: category, summary: summary);
     }
 
 

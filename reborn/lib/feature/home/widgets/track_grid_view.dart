@@ -70,7 +70,7 @@ class TrackGridView extends StatelessWidget {
                   },
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

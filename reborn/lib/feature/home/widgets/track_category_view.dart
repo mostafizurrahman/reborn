@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
+import 'package:reborn/feature/track_list/track_list_page.dart';
 import 'package:reborn/feature/widget/blur_round_view.dart';
 import 'package:reborn/feature/widget/profile_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
@@ -23,8 +24,7 @@ class TrackCategoryView extends StatelessWidget {
   double get width => screenData.width - 48;
 
   @override
-  Widget build(BuildContext context)  {
-
+  Widget build(BuildContext context) {
     return Container(
       decoration: CCAppTheme.shadowNoBorder,
       child: ClipRRect(
@@ -40,21 +40,25 @@ class TrackCategoryView extends StatelessWidget {
                 child: Column(
                   children: [
                     titleWidget,
-                    Text("Calm Tracks For Reborn",
-                        style: CCAppTheme.txtHL1),
+                    Text("Calm Tracks For Reborn", style: CCAppTheme.txtHL1),
                     Expanded(
                       child: _getSummaryWidget(width),
                     ),
-                    const Divider(height: 3, color: Colors.pinkAccent,),
+                    const Divider(
+                      height: 3,
+                      color: Colors.pinkAccent,
+                    ),
                     SizedBox(
                       height: height * 0.3,
                       child: BlurRoundView(
-                        content: _getAuthors(), radius: rebornTheme.bottomRound,
+                        content: _getAuthors(),
+                        radius: rebornTheme.bottomRound,
                       ),
                     ),
                   ],
                 ),
               ),
+              tapWidget(context),
             ],
           ),
         ),
@@ -96,7 +100,6 @@ class TrackCategoryView extends StatelessWidget {
       final profile = ProfileView(imagePath: author.profilePicture);
       final position = Positioned(
         child: Center(child: profile),
-
         left: x,
       );
       profiles.add(position);
@@ -109,46 +112,62 @@ class TrackCategoryView extends StatelessWidget {
   }
 
   Widget get titleWidget => Padding(
-    padding: const EdgeInsets.only(top: 16, bottom: 8),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ViewProvider.getCupertinoIcon(
-          iconValue: category.logoData.toInt(),
-          color: Colors.pinkAccent,
+        padding: const EdgeInsets.only(top: 16, bottom: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ViewProvider.getCupertinoIcon(
+              iconValue: category.logoData.toInt(),
+              color: Colors.pinkAccent,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              category.title.en,
+              style: CCAppTheme.txtHL2.copyWith(color: Colors.pinkAccent),
+            )
+          ],
         ),
-        const SizedBox(width: 12),
-        Text(
-          category.title.en,
-          style: CCAppTheme.txtHL2.copyWith(color: Colors.pinkAccent),
-        )
-      ],
-    ),
-  );
+      );
 
   Widget get backgroundWidget => CachedNetworkImage(
-    imageUrl: category.categoryCover ?? '', //  track.trackCoverImage,
-    fit: BoxFit.cover,
-    width: width,
-    height: height,
-    errorWidget: (_, __, ___) {
-      debugPrint("done");
-      return const Icon(
-        CupertinoIcons.person,
-        size: 60,
+        imageUrl: category.categoryCover ?? '', //  track.trackCoverImage,
+        fit: BoxFit.cover,
+        width: width,
+        height: height,
+        errorWidget: (_, __, ___) {
+          debugPrint("done");
+          return const Icon(
+            CupertinoIcons.person,
+            size: 60,
+          );
+        },
       );
-    },
-  );
 
   BorderRadius get circleRadius => const BorderRadius.all(Radius.circular(8));
 
   BoxDecoration get decoration => BoxDecoration(
+        gradient: LinearGradient(
+            colors: [Colors.white.withAlpha(200), Colors.transparent],
+            begin: const FractionalOffset(0.0, 0.000),
+            end: const FractionalOffset(0.0, 0.75),
+            stops: const [0.0, 0.75],
+            tileMode: TileMode.clamp),
+      );
 
-    gradient: LinearGradient(
-        colors: [Colors.white.withAlpha(200), Colors.transparent],
-        begin: const FractionalOffset(0.0, 0.000),
-        end: const FractionalOffset(0.0, 0.75),
-        stops: const [0.0, 0.75],
-        tileMode: TileMode.clamp),
-  );
+  Widget tapWidget(BuildContext context) => Material(
+        color: Colors.transparent,
+        child: Ink(
+          child: InkWell(
+            focusColor: CCAppTheme.pinkLightColor.withAlpha(80),
+            splashColor: CCAppTheme.periwinkleDarkColor.withAlpha(110),
+            onTap: () {
+              Navigator.pushNamed(context, TrackListPage.path, arguments: {
+                "summary": summary,
+                "category": category,
+              });
+              debugPrint("filter tap on ${category.title.en}");
+            },
+          ),
+        ),
+      );
 }
