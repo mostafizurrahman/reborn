@@ -57,7 +57,7 @@ class FBAuthorResponse extends BaseResponse {
 
   Map<String, dynamic> toJson() => {};
 
-  FBAuthor toEntity() => FBAuthor(
+  RebornAuthor toEntity() => RebornAuthor(
         authorID: authorID ?? '',
         firstName: firstName ?? "",
         lastName: lastName ?? "",

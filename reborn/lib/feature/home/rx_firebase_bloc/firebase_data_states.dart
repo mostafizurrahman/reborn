@@ -10,7 +10,7 @@ class FirebaseDataLoadingState extends FirebaseDataState {}
 
 class FirebaseDataReadyState extends FirebaseDataState {
   final List<RebornCategory> categories;
-  final List<FBAuthor> authors;
+  final List<RebornAuthor> authors;
   final List<TrackEntity> tracks;
   FirebaseDataReadyState({
     required this.categories,

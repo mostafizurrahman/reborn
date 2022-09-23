@@ -7,7 +7,7 @@ import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 
 class AuthorBlurView extends StatelessWidget {
-  final FBAuthor authorData;
+  final RebornAuthor authorData;
   final Color authorTitleColor;
   const AuthorBlurView({
     Key? key,

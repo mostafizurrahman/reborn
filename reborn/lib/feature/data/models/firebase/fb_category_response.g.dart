@@ -25,4 +25,10 @@ FBCategoryResponse _$FBCategoryResponseFromJson(Map<String, dynamic> json) =>
       trackIdList: (json['trackIdList'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      description: json['description'] == null
+          ? null
+          : LocalizedResponse.fromJson(
+              json['description'] as Map<String, dynamic>),
+      categoryType: json['categoryType'] as String?,
+      coverImage: json['coverImage'] as String?,
     );

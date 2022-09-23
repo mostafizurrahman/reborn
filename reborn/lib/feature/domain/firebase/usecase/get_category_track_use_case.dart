@@ -9,7 +9,7 @@ import 'package:collection/collection.dart';
 class GetCategoryTrackUseCase extends BaseUseCase<List<TrackEntity>, List<String>>{
 
   final List<TrackEntity> trackList;
-  final List<FBAuthor> authorList;
+  final List<RebornAuthor> authorList;
   GetCategoryTrackUseCase({required this.trackList, required this.authorList});
   @override
   Future<List<TrackEntity>> call(List<String> input) async {

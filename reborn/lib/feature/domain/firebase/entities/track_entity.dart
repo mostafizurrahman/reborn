@@ -23,7 +23,7 @@ class TrackEntity {
   final bool isPremium;
   final PlayerInfoEntity playerInfo;
 
-  FBAuthor? trackAuthor;
+  RebornAuthor? trackAuthor;
 
   TrackEntity({
     required this.trackID,

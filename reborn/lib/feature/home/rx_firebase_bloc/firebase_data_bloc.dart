@@ -35,7 +35,7 @@ class FirebaseDataBloc extends Bloc<FirebaseDataEvent, FirebaseDataState> {
       if (trackList.isNotEmpty) {
         final authorSearch = AuthorSearchData();
         final authorUseCase = GetAuthorUseCase();
-        final List<FBAuthor> authorList = await authorUseCase(authorSearch);
+        final List<RebornAuthor> authorList = await authorUseCase(authorSearch);
         if (authorList.isNotEmpty) {
           final _event = CompleteFirebaseDataEvent(
             categories: categoryList,
