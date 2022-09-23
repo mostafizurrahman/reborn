@@ -5,6 +5,13 @@ import 'package:flutter/material.dart';
 
 class AppRoutes {
 
+  static String get trackList => "/home/tracks";
+
+
+
+
+
+
   static String get settings => "settings";
   static String get account => "account";
   static String get help => "help";

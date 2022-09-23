@@ -2,8 +2,8 @@
 
 export 'package:reborn/feature/domain/firebase/entities/app_config.dart';
 export 'package:reborn/feature/domain/firebase/entities/search_data.dart';
-export 'package:reborn/feature/domain/firebase/entities/fb_category.dart';
-export 'package:reborn/feature/domain/firebase/entities/fb_author.dart';
+export 'package:reborn/feature/domain/firebase/entities/reborn_category.dart';
+export 'package:reborn/feature/domain/firebase/entities/reborn_author.dart';
 export 'package:reborn/feature/domain/firebase/entities/track_entity.dart';
 
 enum CategoryTrackType {
