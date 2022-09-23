@@ -7,7 +7,7 @@ import '../localized_response.dart';
 part 'fb_category_response.g.dart';
 
 @JsonSerializable(createToJson: false)
-class FBCategoryResponse extends BaseResponse{
+class FBCategoryResponse extends BaseResponse {
   final String? categoryID;
   final bool? hasLogo;
   final bool? isVisible;
@@ -18,6 +18,9 @@ class FBCategoryResponse extends BaseResponse{
   final LocalizedResponse? seeMoreTitle;
   final String? tracksType;
   final List<String>? trackIdList;
+  final LocalizedResponse? description;
+  final String? coverImage;
+  final String? categoryType;
 
   FBCategoryResponse({
     required this.categoryID,
@@ -30,6 +33,9 @@ class FBCategoryResponse extends BaseResponse{
     required this.seeMoreTitle,
     required this.tracksType,
     required this.trackIdList,
+    required this.description,
+    required this.categoryType,
+    required this.coverImage,
   });
 
   factory FBCategoryResponse.fromJson(Map<String, dynamic> json) =>
@@ -48,5 +54,8 @@ class FBCategoryResponse extends BaseResponse{
         title: title?.toEntity() ?? emptyTxt,
         tracksIdList: trackIdList ?? [],
         tracksType: tracksType?.trackType ?? CategoryTrackType.gridTrack,
+        categoryCover: coverImage,
+        description: description?.toEntity(),
+        categoryType: categoryType ?? 'home',
       );
 }

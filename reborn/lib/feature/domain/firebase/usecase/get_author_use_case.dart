@@ -7,16 +7,16 @@ import '../../base_use_case.dart';
 import '../../entities.dart';
 
 
-class GetAuthorUseCase implements BaseUseCase<List<FBAuthor>, AuthorSearchData> {
+class GetAuthorUseCase implements BaseUseCase<List<RebornAuthor>, AuthorSearchData> {
 
   final FirebaseAuthorApi _authorApi = FirebaseAuthorApi();
   @override
-  Future<List<FBAuthor>> call(AuthorSearchData input) async {
+  Future<List<RebornAuthor>> call(AuthorSearchData input) async {
     final List<FBAuthorResponse>  authorResponseList = await _authorApi.getList();
     if (authorResponseList.isNotEmpty && authorResponseList.first is FBErrorResponse) {
       return [];
     }
-    final List<FBAuthor> authors = authorResponseList.map((e) => e.toEntity()).toList();
+    final List<RebornAuthor> authors = authorResponseList.map((e) => e.toEntity()).toList();
     return authors;
   }
 

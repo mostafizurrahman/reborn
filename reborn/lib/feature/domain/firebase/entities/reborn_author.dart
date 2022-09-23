@@ -1,6 +1,6 @@
 import '../../entities.dart';
 
-class FBAuthor {
+class RebornAuthor {
   final String firstName;
   final String lastName;
   final String email;
@@ -21,7 +21,7 @@ class FBAuthor {
   final String country;
   final String flagIcon;
   final String authorID;
-  FBAuthor({
+  RebornAuthor({
     required this.authorID,
     required this.firstName,
     required this.lastName,

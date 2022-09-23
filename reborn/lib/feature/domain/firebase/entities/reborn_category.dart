@@ -12,6 +12,9 @@ class RebornCategory {
   final LocalizedText seeMoreTitle;
   final CategoryTrackType tracksType;
   final List<String> tracksIdList;
+  final LocalizedText? description;
+  final String categoryType;
+  final String? categoryCover;
 
   RebornCategory({
     required this.categoryID,
@@ -24,5 +27,8 @@ class RebornCategory {
     required this.seeMoreTitle,
     required this.tracksType,
     required this.tracksIdList,
+    required this.description,
+    required this.categoryType,
+    required this.categoryCover,
   });
 }
