@@ -64,7 +64,7 @@ class GetSummaryUseCase extends BaseUseCase<CategorySummary, RebornCategory> {
     final Duration duration = Duration(seconds: seconds.toInt());
     final String formatted = DataFormatter.formattedDuration(duration);
     return [
-      "Duration $formatted",
+      "$formatted ${formatted.length > 5 ? "Hr" : "Min"}",
       "${_tracks.length} Tracks",
     ];
   }

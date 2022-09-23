@@ -22,8 +22,8 @@ class CCAppTheme {
 
   BorderRadius get bottomRound{
     return const BorderRadius.only(
-      topLeft: Radius.circular(7),
-      topRight: Radius.circular(7),
+      bottomLeft: Radius.circular(7),
+      bottomRight: Radius.circular(7),
     );
   }
 
@@ -121,7 +121,7 @@ class CCAppTheme {
 
   static BoxDecoration get shadowNoBorder => BoxDecoration(
         color: Colors.white.withAlpha(200),
-        borderRadius: const BorderRadius.all(Radius.circular(6)),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withAlpha(120),
