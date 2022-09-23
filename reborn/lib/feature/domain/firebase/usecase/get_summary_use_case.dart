@@ -27,24 +27,23 @@ class GetSummaryUseCase extends BaseUseCase<CategorySummary, RebornCategory> {
     return Future.value(summary);
   }
 
-  List<TrackEntity> getFilterList(List<String> input) {
-    final List<TrackEntity> _tracks = input.map(_getTrack).toList();
-    return _tracks;
-  }
-
   TrackEntity _getTrack(final String trackID) {
     final track = tracks.firstWhereOrNull((element) => element.trackID == trackID);
+    print("Track -- ${track?.trackID} -- Author ${track?.authorID}");
     if (track != null) {
       final author = authors.firstWhereOrNull((element) => element.authorID == track.authorID);
       track.trackAuthor = author;
       return track;
     }
-    return tracks.first;
+    return tracks.last;
   }
 
   List<RebornAuthor> _getAuthors(List<TrackEntity> tracks) {
     final Set<String> authorSet = {};
-    tracks.where((element) => authorSet.add(element.authorID));
+    for(final track in tracks) {
+      authorSet.add(track.authorID);
+    }
+    // tracks.where((element) => authorSet.add(element.authorID));
     final List<String> authorIdList = authorSet.toList();
     final List<RebornAuthor> authorList = [];
 
