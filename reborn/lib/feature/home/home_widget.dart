@@ -132,11 +132,14 @@ class _HomeState extends ThemeState<HomeWidget> {
         }
       }
       final categories = firebaseState.categories;
-      return ListView.builder(
-        itemBuilder: _getCategoryView,
-        itemCount: categories.length + 1,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
+      return ScrollConfiguration(
+        behavior: HorizontalScrollBehavior(),
+        child: ListView.builder(
+          itemBuilder: _getCategoryView,
+          itemCount: categories.length + 1,
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+        ),
       );
     }
     return const SizedBox();

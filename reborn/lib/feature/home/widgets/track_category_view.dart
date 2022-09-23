@@ -19,7 +19,7 @@ class TrackCategoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double width = screenData.width - 32;
+    final double width = screenData.width - 48;
     return Material(
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(8)),

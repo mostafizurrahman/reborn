@@ -32,6 +32,16 @@ class ScreenData {
     }
     return const EdgeInsets.only(bottom: 16, top: 3);
   }
+
+
+}
+
+class HorizontalScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
 }
 
 final ScreenData screenData = ScreenData();
