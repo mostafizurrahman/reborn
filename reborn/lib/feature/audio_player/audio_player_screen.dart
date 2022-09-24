@@ -6,6 +6,7 @@ import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'dart:ui' as ui;
 import '../widget/view_provider.dart';
+import 'widget/audio_player_bottom_view.dart';
 import 'widget/audio_player_view.dart';
 
 class AudioPlayerScreen extends StatefulWidget {
@@ -24,11 +25,32 @@ class AudioPlayerScreen extends StatefulWidget {
 }
 
 class _AudioPlayerState extends State<AudioPlayerScreen> {
+
   @override
   Widget build(BuildContext context) {
-    return BaseScaffoldState(
-      floatLocation: FloatingActionButtonLocation.startTop,
-      floating: ViewProvider.backButton(context),
+    return Container(
+      width: screenData.width,
+      height: screenData.height,
+      decoration: rebornTheme.decoration,
+      child:SafeArea(
+        child: Scaffold(
+          floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+          floatingActionButton: ViewProvider.backButton(context),
+          backgroundColor: Colors.transparent,
+          body: Container(
+            width: screenData.width,
+
+
+          ),
+          bottomNavigationBar: AudioPlayerBottomView(track: widget.track),
+        ),
+      ),
+    ) ;
+
+
+
+
+      BaseScaffoldState(
       body: Container(
         width: screenData.width,
         height: screenData.height,
