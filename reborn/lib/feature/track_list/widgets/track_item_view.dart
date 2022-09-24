@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:reborn/feature/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/home/widgets/author_blur_view.dart';
-import 'package:reborn/feature/widget/blur_round_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
 
-import '../../data_model/static_data.dart';
 
 class TrackItemView extends StatelessWidget {
   final TrackEntity track;
@@ -39,6 +38,7 @@ class TrackItemView extends StatelessWidget {
                   Expanded(child: _getTextContent()),
                 ],
               ),
+              Positioned(child: _tapWidget(context), left: 0, right: 0, top: 0, bottom:0,),
             ],
           ),
         ),
@@ -60,7 +60,13 @@ class TrackItemView extends StatelessWidget {
         const SizedBox(height: 12),
         const Expanded(child: SizedBox()),
         _getSummaryText(),
-        const SizedBox(height: 12,child: Divider(height: 4, color: Colors.pinkAccent,),),
+        const SizedBox(
+          height: 12,
+          child: Divider(
+            height: 4,
+            color: Colors.pinkAccent,
+          ),
+        ),
         if (track.trackAuthor != null) AuthorLeftRoundView(authorData: track.trackAuthor!),
       ],
     );
@@ -126,4 +132,20 @@ class TrackItemView extends StatelessWidget {
       ),
     );
   }
+
+  Widget _tapWidget(BuildContext context) => Material(
+    color: Colors.transparent,
+    child: Ink(
+      child: InkWell(
+        focusColor: CCAppTheme.pinkLightColor.withAlpha(80),
+        splashColor: CCAppTheme.periwinkleDarkColor.withAlpha(110),
+        onTap: () {
+          Navigator.pushNamed(context, AudioPlayerScreen.path, arguments: {
+            "track": track,
+          });
+          debugPrint("track tap on ${track.trackTitle.en}");
+        },
+      ),
+    ),
+  );
 }

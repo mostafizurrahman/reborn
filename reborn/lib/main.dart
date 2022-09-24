@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:reborn/feature/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/contact_add/contact_entry_widget.dart';
 import 'package:reborn/feature/contact_list/contact_list_widget.dart';
 import 'package:reborn/feature/domain/category_summary.dart';
@@ -116,6 +117,9 @@ class MainAppState extends State<MainAppWidget> {
     } else if (settings.name == TrackListPage.path) {
       final summary = TrackListPage.getSummary(settings.arguments as Map);
       _widget = TrackListPage(summary: summary);
+    } else if (settings.name == AudioPlayerScreen.path) {
+      final track = AudioPlayerScreen.getTrack(settings.arguments as Map);
+      _widget = AudioPlayerScreen(track: track);
     }
 
 
