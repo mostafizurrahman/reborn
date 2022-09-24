@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:reborn/feature/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/contact_add/contact_entry_widget.dart';
 import 'package:reborn/feature/contact_list/contact_list_widget.dart';
@@ -43,7 +44,9 @@ class MainAppState extends State<MainAppWidget> {
 
   @override
   Widget build(BuildContext context) {
-
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     /*
     theme: ThemeData(
     // Define the default brightness and colors.
