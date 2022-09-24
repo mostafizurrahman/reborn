@@ -31,7 +31,7 @@ class ListCoverView extends StatelessWidget {
                 children: [
                   titleWidget,
                   _getSummaryWidget(),
-                  SizedBox(height: 8)
+                  const SizedBox(height: 8)
                 ],
               ),
               decoration: decoration,
