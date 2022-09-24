@@ -7,6 +7,7 @@ import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/home/widgets/author_blur_view.dart';
 import 'package:reborn/feature/widget/blur_round_view.dart';
+import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
 
 import '../../../utility/app_theme_data.dart';
@@ -40,11 +41,7 @@ class TrackGridView extends StatelessWidget {
                 width: width * 0.65,
                 height: width,
                 errorWidget: (_, __, ___) {
-                  debugPrint("done");
-                  return const Icon(
-                    CupertinoIcons.person,
-                    size: 60,
-                  );
+                  return ImageExt.getDefaultGrid(width: width * 0.65, height: width);
                 },
               ),
             ),

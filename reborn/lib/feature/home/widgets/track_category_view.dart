@@ -6,6 +6,7 @@ import 'package:reborn/feature/track_list/track_list_page.dart';
 import 'package:reborn/feature/widget/blur_round_view.dart';
 import 'package:reborn/feature/widget/profile_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
+import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
 
 import '../../widget/view_provider.dart';
@@ -135,11 +136,7 @@ class TrackCategoryView extends StatelessWidget {
         width: width,
         height: height,
         errorWidget: (_, __, ___) {
-          debugPrint("done");
-          return const Icon(
-            CupertinoIcons.person,
-            size: 60,
-          );
+          return  ImageExt.getDefaultCover(width: width , height: height,);
         },
       );
 
@@ -163,7 +160,6 @@ class TrackCategoryView extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, TrackListPage.path, arguments: {
                 "summary": summary,
-                "category": category,
               });
               debugPrint("filter tap on ${category.title.en}");
             },

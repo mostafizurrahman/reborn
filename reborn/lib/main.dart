@@ -115,8 +115,7 @@ class MainAppState extends State<MainAppWidget> {
       _widget = ContactEntryWidget(args: settings.arguments);
     } else if (settings.name == TrackListPage.path) {
       final summary = TrackListPage.getSummary(settings.arguments as Map);
-      final category = TrackListPage.getCategory(settings.arguments as Map);
-      _widget = TrackListPage(category: category, summary: summary);
+      _widget = TrackListPage(summary: summary);
     }
 
 

@@ -23,6 +23,9 @@ class GetSummaryUseCase extends BaseUseCase<CategorySummary, RebornCategory> {
       authors: _authors,
       tracks: _tracks,
       summary: _summaryTxt,
+      title: input.title,
+      coverImage: input.categoryCover ?? "",
+      logoData: input.logoData.toInt(),
     );
     return Future.value(summary);
   }

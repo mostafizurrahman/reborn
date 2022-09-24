@@ -6,6 +6,20 @@ import 'package:reborn/feature/widget/profile_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 
+class AuthorLeftRoundView extends AuthorBlurView {
+  const AuthorLeftRoundView({Key? key, required RebornAuthor authorData}) : super(key: key, authorData: authorData);
+
+  @override
+  Widget build(BuildContext context) {
+    const Radius radius = Radius.circular(40);
+    final Widget content = _getContent();
+    return BlurRoundView(
+      content: content,
+      radius: const BorderRadius.only(topLeft: radius),
+    );
+  }
+}
+
 class AuthorBlurView extends StatelessWidget {
   final RebornAuthor authorData;
   final Color authorTitleColor;
@@ -54,7 +68,7 @@ class AuthorBlurView extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
