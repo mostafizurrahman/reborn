@@ -27,12 +27,13 @@ class AuthorLeftRoundView extends AuthorBlurView {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
 
                 Text(
                   "${authorData.firstName} ${authorData.lastName}",
                   style: CCAppTheme.txtHL3,
                 ),
+                const SizedBox(height: 4),
                 Expanded(
                   child: Text(
                     authorData.biography.en,
