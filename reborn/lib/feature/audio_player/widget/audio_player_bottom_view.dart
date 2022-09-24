@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reborn/utility/app_theme_data.dart';
+import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/screen_data.dart';
 
 import '../../domain/entities.dart';
@@ -21,6 +22,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   double sliderValue = 0;
   @override
   Widget build(BuildContext context) {
+    final duration = DataFormatter.formattedDuration(Duration(seconds: widget.track.trackDuration));
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Container(
@@ -65,7 +67,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        "04:21",
+                        duration,
                         style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontSize: 32,

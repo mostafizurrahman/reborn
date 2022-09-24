@@ -48,6 +48,7 @@ class _RebornCategoryState extends State<RebornCategoryView> {
             height: 50,
             child: CategoryTitleView(
               category: widget.category,
+              firebaseState: widget.firebaseState,
             ),
           ),
           SizedBox(

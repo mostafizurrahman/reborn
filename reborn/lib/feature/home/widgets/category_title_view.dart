@@ -4,12 +4,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
+import 'package:reborn/feature/domain/firebase/usecase/get_summary_use_case.dart';
+import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_states.dart';
+import 'package:reborn/feature/track_list/track_list_page.dart';
 import 'package:reborn/feature/widget/view_provider.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 
 class CategoryTitleView extends StatelessWidget  {
   final RebornCategory category;
-  const CategoryTitleView({Key? key, required this.category}) : super(key: key);
+  final FirebaseDataState firebaseState;
+  const CategoryTitleView({Key? key, required this.category, required this.firebaseState}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +26,12 @@ class CategoryTitleView extends StatelessWidget  {
         ),
         Text(category.title.en, style: CCAppTheme.txt2.copyWith(fontWeight: FontWeight.w800)),
         const Expanded(child: Divider(height: 2, color: Colors.black54,),),
-        ..._addSeeMore(),
+        ..._addSeeMore(context),
       ],
     );
   }
 
-  List<Widget> _addSeeMore() {
+  List<Widget> _addSeeMore(final BuildContext context) {
     final List<Widget> _widgets = [];
 
     if (category.seeMore) {
@@ -37,9 +41,13 @@ class CategoryTitleView extends StatelessWidget  {
           height: 30,
           width: 70,
           child: InkWell(
-            onTap: (){
-              //#ACTION VIEW ALL
-              debugPrint("Ready for data");
+            onTap: () async {
+              if (firebaseState is FirebaseDataReadyState) {
+                final state = firebaseState as FirebaseDataReadyState;
+                final useCase = GetSummaryUseCase(tracks: state.tracks, authors: state.authors);
+                final CategorySummary summary = await useCase(category);
+                Navigator.of(context).pushNamed(TrackListPage.path, arguments:  {"summary" : summary});
+              }
             },
             child: Center(child: Text(category.seeMoreTitle.en, style: CCAppTheme.txt)),
           ),
