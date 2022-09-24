@@ -134,6 +134,19 @@ class CCAppTheme {
         ],
       );
 
+  static BoxDecoration get shadowAudio => BoxDecoration(
+    color: Colors.white.withAlpha(50),
+    borderRadius: const BorderRadius.all(Radius.circular(8)),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withAlpha(50),
+        spreadRadius: 2,
+        blurRadius: 4,
+        // changes position of shadow
+      ),
+    ],
+  );
+
 
   static BoxDecoration get playerDecoration => BoxDecoration(
     color: Colors.white24,
