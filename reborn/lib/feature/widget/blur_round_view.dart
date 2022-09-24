@@ -7,12 +7,13 @@ class BlurRoundView extends StatelessWidget {
   final Widget content;
   final double viewHeight;
   final BorderRadius radius;
-
+  final Color color;
   const BlurRoundView({
     Key? key,
     required this.content,
     this.viewHeight = 80,
     required this.radius,
+    this.color = Colors.transparent,
   }) : super(key: key);
 
   @override
@@ -22,7 +23,7 @@ class BlurRoundView extends StatelessWidget {
       child: BackdropFilter(
         filter: ui.ImageFilter.blur(sigmaX: 12, sigmaY: 12),
         child: Material(
-          color: Colors.transparent,
+          color: color,
           child: SizedBox(
             height: viewHeight,
             width: screenData.width,
