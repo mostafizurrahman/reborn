@@ -40,17 +40,21 @@ class _MenuState extends ThemeState<MenuWidget> {
                       itemBuilder: (final _context, final _index) {
                         final _data = menuList[_index];
                         final _imgWidget = Padding(
-                            padding: const EdgeInsets.only(left: 24, right: 12),
-                            child: ImageExt.get(
-                                "menu_icons/${_data.iconName}.png",
-                                dimension: 35));
+                          padding: const EdgeInsets.only(left: 24, right: 12),
+                          child: ImageExt.get(
+                            "menu_icons/${_data.iconName}.png",
+                            widgetHeight: 35,
+                            widgetWidth: 35,
+                          ),
+                        );
                         return CCImageButton(
-                            onTap: () => _onTapMenu(data: _data),
-                            title: _data.titleKey.toUpperCase(),
-                            isRowButton: true,
-                            dimension: screenData.width * 0.75,
-                            height: 55,
-                            imageWidget: _imgWidget);
+                          onTap: () => _onTapMenu(data: _data),
+                          title: _data.titleKey.toUpperCase(),
+                          isRowButton: true,
+                          dimension: screenData.width * 0.75,
+                          height: 55,
+                          imageWidget: _imgWidget,
+                        );
                       },
                       itemCount: menuList.length,
                       scrollDirection: Axis.vertical),

@@ -4,14 +4,16 @@ class CategorySummary {
   final List<RebornAuthor> authors;
   final List<String> summary;
   final List<TrackEntity> tracks;
-  String? coverImage;
-  int iconData = -1;
-  LocalizedText? title;
+  final String coverImage;
+  final int logoData;
+  final LocalizedText title;
+  bool get isLocal => logoData == -1;
   CategorySummary({
     required this.tracks,
     required this.summary,
     required this.authors,
-    this.coverImage,
-    this.title,
+    required this.coverImage,
+    required this.title,
+    required this.logoData,
   });
 }

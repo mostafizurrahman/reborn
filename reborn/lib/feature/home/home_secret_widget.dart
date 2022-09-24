@@ -65,7 +65,7 @@ class HomeSecretWidget extends StatelessWidget {
   Color get background => const Color.fromARGB(200, 30, 30, 75);
   Widget get secretIcon => Container(
         decoration: iconShadow.copyWith(color: Colors.pinkAccent),
-        child: ImageExt.get("icons/ic_incognito.png", dimension: 40),
+        child: ImageExt.get("icons/ic_incognito.png", widgetHeight: 40, widgetWidth: 40),
       );
   List<dynamic> get contacts => [];//sqlDatabase.secretList;
   String get secretTitle => "SECRET";

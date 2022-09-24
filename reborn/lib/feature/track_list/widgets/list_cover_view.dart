@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/category_summary.dart';
 import 'package:reborn/feature/domain/entities.dart';
+import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
 
 import '../../../utility/app_theme_data.dart';
@@ -50,10 +51,7 @@ class ListCoverView extends StatelessWidget {
         height: _height,
         errorWidget: (_, __, ___) {
           debugPrint("done");
-          return const Icon(
-            CupertinoIcons.person,
-            size: 60,
-          );
+          return ImageExt.getDefaultCover(width: screenData.width , height: _height,);
         },
       );
 
@@ -93,20 +91,28 @@ class ListCoverView extends StatelessWidget {
     );
   }
 
-  Widget get titleWidget => Padding(
-        padding: const EdgeInsets.only(top: 16, bottom: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ViewProvider.getCupertinoIcon(
-              iconValue: summary.iconData.toInt(),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              summary.title?.en ?? "",
-              style: CCAppTheme.txtHL2,
-            )
-          ],
-        ),
+  Widget get titleWidget {
+    late Icon icon;
+    if (summary.logoData == -1) {
+      icon = const Icon(CupertinoIcons.music_albums);
+    } else {
+      icon = ViewProvider.getCupertinoIcon(
+        iconValue: summary.logoData.toInt(),
       );
+    }
+    return  Padding(
+      padding: const EdgeInsets.only(top: 16, bottom: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          icon,
+          const SizedBox(width: 12),
+          Text(
+            summary.title.en ,
+            style: CCAppTheme.txtHL2,
+          )
+        ],
+      ),
+    );
+  }
 }

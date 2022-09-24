@@ -132,6 +132,30 @@ class CCAppTheme {
         ],
       );
 
+  static BoxDecoration get trackDecoration => BoxDecoration(
+    color: Colors.grey.withAlpha(80),
+      image: const DecorationImage(
+        image: AssetImage(
+            'assets/assets/track_background.png'),
+        fit: BoxFit.cover,
+      ),
+    gradient:  LinearGradient(
+      colors: [Colors.white.withAlpha(100), CCAppTheme.periwinkleDarkColor],
+      begin: FractionalOffset(0.0, 0.30),
+      end: FractionalOffset(0.0, 1.0),
+      stops: [0.0, 1.0],
+      tileMode: TileMode.clamp,
+    ),
+
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withAlpha(120),
+        spreadRadius: 2,
+        blurRadius: 4,
+      ),
+    ],
+  );
+
   static Color get primaryColor => Colors.blueAccent.shade200;
 
   static final _rebornTheme = CCAppTheme._internal();

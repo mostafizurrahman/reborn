@@ -19,7 +19,8 @@ class TrackGridContent extends StatelessWidget {
               begin: FractionalOffset(0.0, 0.0),
               end: FractionalOffset(0.0, 2.0),
               stops: [0.0, 2.0],
-              tileMode: TileMode.clamp),
+              tileMode: TileMode.clamp,
+          ),
         ),
         width: screenData.width,
         child: Column(

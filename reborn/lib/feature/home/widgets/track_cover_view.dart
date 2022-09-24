@@ -7,6 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
+import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
 
 import '../../../utility/app_theme_data.dart';
@@ -42,13 +43,7 @@ class TrackCoverView extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: width * 0.8,
                 height: width,
-                errorWidget: (_, __, ___) {
-                  debugPrint("done");
-                  return const Icon(
-                    CupertinoIcons.person,
-                    size: 60,
-                  );
-                },
+                errorWidget: (_, __, ___) => ImageExt.getDefaultCover(width: width * 0.8, height: width,),
               ),
             ),
             Column(
