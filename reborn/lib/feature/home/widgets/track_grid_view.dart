@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reborn/feature/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/home/widgets/author_blur_view.dart';
@@ -63,7 +64,7 @@ class TrackGridView extends StatelessWidget {
                   focusColor: CCAppTheme.pinkLightColor.withAlpha(80),
                   splashColor: CCAppTheme.periwinkleDarkColor.withAlpha(110),
                   onTap: () {
-                    debugPrint("filter tap on ${track.trackTitle.en}");
+                    Navigator.of(context).pushNamed(AudioPlayerScreen.path, arguments: {"track" : track});
                   },
                 ),
               ),

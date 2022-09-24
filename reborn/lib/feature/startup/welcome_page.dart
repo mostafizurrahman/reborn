@@ -47,8 +47,9 @@ class _WelcomeState extends State<WelcomePage> {
     final _widgets =
         _pages.map((_pageData) => PageWidget(pageData: _pageData)).toList();
     return Material(
-      color: Colors.white,
+      color: Colors.transparent,
       child: PageView(
+
         controller: _pageController,
         children: _widgets,
       ),
@@ -75,7 +76,10 @@ class PageWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Container(
         height: screenData.height * 0.75,
-        decoration: CCAppTheme.shadowDec
+        decoration: CCAppTheme.shadowDec.copyWith(image:const DecorationImage(
+          image: AssetImage('lib/assets/bg_light.jpg'),
+          fit: BoxFit.cover,
+        ), color: Colors.transparent)
             .copyWith(border: Border.all(color: Colors.white, width: 0)),
         child: ClipRRect(
           borderRadius: const BorderRadius.only(

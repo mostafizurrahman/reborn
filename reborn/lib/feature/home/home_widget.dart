@@ -100,11 +100,11 @@ class _HomeState extends ThemeState<HomeWidget> {
   Widget _onBuildGridFilter(final BuildContext _context, final FirebaseDataState firebaseState) {
     if (firebaseState is FirebaseDataLoadingState) {
       return SizedBox(
-        height: screenData.height / 2,
+        height: screenData.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const RebornFilterView(),
+            //const RebornFilterView(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: BaseLoadingView.loader,

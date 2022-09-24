@@ -44,6 +44,12 @@ class _LaunchState extends ThemeState<LaunchWidget> {
     screenData.setScreenData(context);
     return Scaffold(
       body: Container(
+        decoration: BoxDecoration(
+          image: const DecorationImage(
+            image: AssetImage('lib/assets/bg_light.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         width: screenData.width,
         height: screenData.height,
         child: SafeArea(
@@ -65,7 +71,6 @@ class _LaunchState extends ThemeState<LaunchWidget> {
             ],
           ),
         ),
-        color: Colors.white,
       ),
     );
   }
