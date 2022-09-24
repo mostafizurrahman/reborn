@@ -116,8 +116,10 @@ class CCAppTheme {
   static BoxDecoration get circleBorderDec => BoxDecoration(
     color: Colors.transparent,
     border: Border.all(color: CCAppTheme.periwinkleDarkColor, width: 1.5),
-    borderRadius: const BorderRadius.all(Radius.circular(1000)),
+    borderRadius: brCircle,
   );
+
+  static BorderRadius get brCircle => const BorderRadius.all(Radius.circular(1000));
 
   static BoxDecoration get shadowNoBorder => BoxDecoration(
         color: Colors.white.withAlpha(200),
@@ -132,20 +134,32 @@ class CCAppTheme {
         ],
       );
 
+
+  static BoxDecoration get playerDecoration => BoxDecoration(
+    color: Colors.white24,
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withAlpha(120),
+        spreadRadius: 2,
+        blurRadius: 4,
+      ),
+    ],
+  );
+
   static BoxDecoration get trackDecoration => BoxDecoration(
 
-      image: const DecorationImage(
-        image: AssetImage('lib/assets/track_background.png'),
-        fit: BoxFit.cover,
-      ),
-    // gradient:  LinearGradient(
-    //   colors: [Colors.white.withAlpha(100), CCAppTheme.periwinkleDarkColor],
-    //   begin: FractionalOffset(0.0, 0.30),
-    //   end: FractionalOffset(0.0, 1.0),
-    //   stops: [0.0, 1.0],
-    //   tileMode: TileMode.clamp,
-    // ),
-    //
+      // image: const DecorationImage(
+      //   image: AssetImage('lib/assets/track_background.png'),
+      //   fit: BoxFit.cover,
+      // ),
+    gradient:  LinearGradient(
+      colors: [Colors.white.withAlpha(100), CCAppTheme.periwinkleDarkColor],
+      begin: FractionalOffset(0.0, 0.30),
+      end: FractionalOffset(0.0, 1.0),
+      stops: [0.0, 1.0],
+      tileMode: TileMode.clamp,
+    ),
+    // //
     boxShadow: [
       BoxShadow(
         color: Colors.grey.withAlpha(120),
