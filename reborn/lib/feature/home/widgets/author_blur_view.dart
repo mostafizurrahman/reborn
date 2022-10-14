@@ -48,7 +48,7 @@ class AuthorLeftRoundView extends AuthorBlurView {
     );
     return BlurRoundView(
         viewHeight:64,
-      color: Colors.grey.withAlpha(40),
+      color: Colors.grey.withAlpha(100),
       content: content,
       radius: const BorderRadius.only(topLeft: radius),
     );

@@ -12,15 +12,14 @@ class CCAppTheme {
     return false;
   }
 
-
-  BorderRadius get topRound{
+  BorderRadius get topRound {
     return const BorderRadius.only(
       topLeft: Radius.circular(7),
       topRight: Radius.circular(7),
     );
   }
 
-  BorderRadius get bottomRound{
+  BorderRadius get bottomRound {
     return const BorderRadius.only(
       bottomLeft: Radius.circular(7),
       bottomRight: Radius.circular(7),
@@ -114,10 +113,10 @@ class CCAppTheme {
       );
 
   static BoxDecoration get circleBorderDec => BoxDecoration(
-    color: Colors.transparent,
-    border: Border.all(color: CCAppTheme.periwinkleDarkColor, width: 1.5),
-    borderRadius: brCircle,
-  );
+        color: Colors.transparent,
+        border: Border.all(color: CCAppTheme.periwinkleDarkColor, width: 1.5),
+        borderRadius: brCircle,
+      );
 
   static BorderRadius get brCircle => const BorderRadius.all(Radius.circular(1000));
 
@@ -135,52 +134,50 @@ class CCAppTheme {
       );
 
   static BoxDecoration get shadowAudio => BoxDecoration(
-    color: Colors.white.withAlpha(50),
-    borderRadius: const BorderRadius.all(Radius.circular(8)),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.grey.withAlpha(50),
-        spreadRadius: 2,
-        blurRadius: 4,
-        // changes position of shadow
-      ),
-    ],
-  );
-
+        color: Colors.white.withAlpha(50),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withAlpha(50),
+            spreadRadius: 2,
+            blurRadius: 4,
+            // changes position of shadow
+          ),
+        ],
+      );
 
   static BoxDecoration get playerDecoration => BoxDecoration(
-    color: Colors.white24,
-    boxShadow: [
-      BoxShadow(
-        color: Colors.grey.withAlpha(120),
-        spreadRadius: 2,
-        blurRadius: 4,
-      ),
-    ],
-  );
+        color: Colors.white24,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withAlpha(120),
+            spreadRadius: 2,
+            blurRadius: 4,
+          ),
+        ],
+      );
 
   static BoxDecoration get trackDecoration => BoxDecoration(
-
-      // image: const DecorationImage(
-      //   image: AssetImage('lib/assets/track_background.png'),
-      //   fit: BoxFit.cover,
-      // ),
-    gradient:  LinearGradient(
-      colors: [Colors.white.withAlpha(100), CCAppTheme.periwinkleDarkColor],
-      begin: FractionalOffset(0.0, 0.30),
-      end: FractionalOffset(0.0, 1.0),
-      stops: [0.0, 1.0],
-      tileMode: TileMode.clamp,
-    ),
-    // //
-    boxShadow: [
-      BoxShadow(
-        color: Colors.grey.withAlpha(120),
-        spreadRadius: 2,
-        blurRadius: 4,
-      ),
-    ],
-  );
+        // image: const DecorationImage(
+        //   image: AssetImage('lib/assets/track_background.png'),
+        //   fit: BoxFit.cover,
+        // ),
+        gradient: LinearGradient(
+          colors: [Colors.white.withAlpha(100), CCAppTheme.periwinkleDarkColor],
+          begin: FractionalOffset(0.0, 0.30),
+          end: FractionalOffset(0.0, 1.0),
+          stops: [0.0, 1.0],
+          tileMode: TileMode.clamp,
+        ),
+        // //
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withAlpha(120),
+            spreadRadius: 2,
+            blurRadius: 4,
+          ),
+        ],
+      );
 
   static Color get primaryColor => Colors.blueAccent.shade200;
 

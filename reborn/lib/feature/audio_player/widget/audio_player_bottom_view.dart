@@ -48,9 +48,9 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
                       children: [
                         const SizedBox(width: 24),
                         _getTapWidget(_onBackwardAudio, Icons.fast_rewind),
-                        Expanded(child: SizedBox(), flex: 2),
+                        const Expanded(child: SizedBox(), flex: 2),
                         _getTapWidget(_onBackwardAudio, Icons.play_arrow, dimension: 70),
-                        Expanded(child: SizedBox(), flex: 2),
+                        const Expanded(child: SizedBox(), flex: 2),
                         _getTapWidget(_onBackwardAudio, Icons.fast_forward),
                         const SizedBox(width: 24),
                       ],
@@ -68,7 +68,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
                     children: [
                       Text(
                         duration,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w300,
                           fontSize: 32,
                         ),
@@ -95,7 +95,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
                     inactiveColor: Colors.blueGrey,
                     thumbColor: Colors.white,
                     activeColor: CCAppTheme.pinkDarkerColor,
-                  )
+                  ),
                 ],
               ),
             )

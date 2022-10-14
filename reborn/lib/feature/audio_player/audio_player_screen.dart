@@ -26,14 +26,13 @@ class AudioPlayerScreen extends StatefulWidget {
 }
 
 class _AudioPlayerState extends State<AudioPlayerScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: screenData.width,
       height: screenData.height,
       decoration: rebornTheme.decoration,
-      child:SafeArea(
+      child: SafeArea(
         child: Scaffold(
           floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
           floatingActionButton: ViewProvider.backButton(context),
@@ -48,14 +47,12 @@ class _AudioPlayerState extends State<AudioPlayerScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(width: 24),
+                    const SizedBox(width: 24),
                     ViewProvider.getCupertinoIcon(
                       iconValue: widget.track.trackIconData.toInt(),
                       color: Colors.pinkAccent,
                     ),
-                    const SizedBox(
-                      width: 12,
-                    ),
+                    const SizedBox(width: 12),
                     Text(
                       widget.track.trackTitle.en,
                       style: CCAppTheme.txtHL1,
@@ -63,41 +60,42 @@ class _AudioPlayerState extends State<AudioPlayerScreen> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 24, top: 8),
+                  padding: const EdgeInsets.only(left: 24, top: 8),
                   child: Text(
                     widget.track.story.en,
-                    style:
-                    CCAppTheme.txtReg.copyWith(color: Colors.black54, fontWeight: FontWeight.bold),
+                    style: CCAppTheme.txtReg
+                        .copyWith(color: Colors.black54, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: 24),
-                Expanded(child: SizedBox()),
-                Padding(padding: EdgeInsets.only(left: 24), child: Text("By--"),),
-                if (widget.track.trackAuthor != null) AuthorLeftRoundView(authorData: widget.track.trackAuthor!),
+                const Expanded(child: SizedBox()),
+                const Padding(
+                  padding: EdgeInsets.only(left: 24, bottom: 6),
+                  child: Text("By--"),
+                ),
+                if (widget.track.trackAuthor != null)
+                  AuthorLeftRoundView(authorData: widget.track.trackAuthor!),
               ],
             ),
-
           ),
           bottomNavigationBar: AudioPlayerBottomView(track: widget.track),
         ),
       ),
-    ) ;
+    );
   }
 
   BoxDecoration get decoration => BoxDecoration(
-
-    // image: const DecorationImage(
-    //   image: AssetImage('lib/assets/track_background.png'),
-    //   fit: BoxFit.cover,
-    // ),
-    gradient:  LinearGradient(
-      colors: [Colors.white.withAlpha(150), CCAppTheme.periwinkleDarkColor.withAlpha(50)],
-      begin: FractionalOffset(0.0, 0.30),
-      end: FractionalOffset(0.0, 1.0),
-      stops: [0.0, 1.0],
-      tileMode: TileMode.clamp,
-    ),
-  );
+        // image: const DecorationImage(
+        //   image: AssetImage('lib/assets/track_background.png'),
+        //   fit: BoxFit.cover,
+        // ),
+        gradient: LinearGradient(
+          colors: [Colors.white.withAlpha(150), CCAppTheme.periwinkleDarkColor.withAlpha(50)],
+          begin: FractionalOffset(0.0, 0.30),
+          end: FractionalOffset(0.0, 1.0),
+          stops: [0.0, 1.0],
+          tileMode: TileMode.clamp,
+        ),
+      );
 
   double durationInMilSec = 0;
 
