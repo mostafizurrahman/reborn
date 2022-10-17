@@ -14,7 +14,7 @@ class ImageExt {
     final String name, {
     final double widgetWidth = 40,
         final double widgetHeight = 40,
-    final BoxFit fit = BoxFit.cover,
+    final BoxFit fit = BoxFit.contain,
   }) {
     return Image(
       image: getImageAsset(name),
@@ -36,7 +36,7 @@ class ImageExt {
       image: getImageAsset("default_cover.jpg"),
       width: width,
       height: height,
-      fit: BoxFit.cover,
+      fit: BoxFit.contain,
     );
   }
 
@@ -48,7 +48,7 @@ class ImageExt {
       image: getImageAsset("default_grid.jpg"),
       width: width,
       height: height,
-      fit: BoxFit.cover,
+      fit: BoxFit.contain,
     );
   }
 }

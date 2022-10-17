@@ -13,24 +13,26 @@ class SubFilterView extends StatelessWidget {
   Widget build(BuildContext context) {
     final _bloc = BlocProvider.of<RebornFilterBloc>(context);
     final list = StaticData.subfilterList;
-    final List<Widget> widgets = [];
+    final List<Widget> widgets = [_getSliverBox(24)];
     for (var data in list) {
       widgets.add(_getFilterItem(data));
-      widgets.add(const SliverToBoxAdapter(child: SizedBox(width: 12)));
+      widgets.add(_getSliverBox(12));
     }
-    return Padding(
-      padding: const EdgeInsets.only(left: 6),
-      child: SizedBox(
-        height: 40,
-        width: screenData.width - 48,
-        child: CustomScrollView(
-          scrollBehavior: HorizontalScrollBehavior(),
-          scrollDirection: Axis.horizontal,
-          slivers: widgets,
-          shrinkWrap: false,
-        ),
+    widgets.add(_getSliverBox(8));
+    return SizedBox(
+      height: 40,
+      width: MediaQuery.of(context).size.width,
+      child: CustomScrollView(
+        scrollBehavior: HorizontalScrollBehavior(),
+        scrollDirection: Axis.horizontal,
+        slivers: widgets,
+        shrinkWrap: false,
       ),
     );
+  }
+
+  SliverToBoxAdapter _getSliverBox(final double _width) {
+    return SliverToBoxAdapter(child: SizedBox(width: _width));
   }
 
   SliverToBoxAdapter _getFilterItem(final SubFilterData data) {

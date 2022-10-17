@@ -73,7 +73,6 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
               builder: _onBuildGridFilter,
               bloc: filterBloc,
             ),
-
             const SizedBox(height: 12),
             const SubFilterView(),
           ],

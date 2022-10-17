@@ -6,6 +6,8 @@
 import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../domain/entities.dart';
 import 'audio_player_event.dart';
@@ -20,10 +22,13 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
   final List<TrackEntity> _shuffleList = [];
 
   final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer();
-  late final StreamSubscription _audioPlayerFinished;
-
+  final List<StreamSubscription> _audioSubscriber = [];
+  ValueStream<Duration> get progressStream => _audioPlayer.currentPosition;
   AudioPlayerBloc() : super(InitAudioState()) {
-    _audioPlayerFinished = _audioPlayer.playlistAudioFinished.listen(_onAudioPlayingFinished);
+    _audioSubscriber.addAll([
+      _audioPlayer.playlistAudioFinished.listen(_onAudioPlayingFinished),
+      progressStream.listen(_onDurationChanged),
+    ]);
     on<TrackAudioEvent>(_onTrackAudioEvent);
     on<PlayerAudioEvent>(_onPlayerAudioEvent);
     on<LoadAudioEvent>(_onLoadAudioEvent);
@@ -33,6 +38,10 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     on<FinishTrackAudioEvent>((event, emit) => emit(FinishTrackAudioState()));
     on<FinishListAudioEvent>(
         (event, emit) => emit(FinishListAudioState(isLooping: event.isLooping)));
+  }
+
+  void _onDurationChanged(final Duration duration) {
+    debugPrint('duration ----------------- ${duration.toString()}');
   }
 
   void _onAudioPlayingFinished(final Playing playing) {
@@ -106,7 +115,9 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
 
   @override
   Future<void> close() {
-    _audioPlayerFinished.cancel();
+    for (final element in _audioSubscriber) {
+      element.cancel();
+    }
     return super.close();
   }
 

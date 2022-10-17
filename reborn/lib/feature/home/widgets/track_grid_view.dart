@@ -1,13 +1,10 @@
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/audio_player/audio_player_screen.dart';
-import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/home/widgets/author_blur_view.dart';
-import 'package:reborn/feature/widget/blur_round_view.dart';
 import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
 
@@ -22,24 +19,23 @@ class TrackGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     final author = track.trackAuthor;
     final width = screenData.width;
-    var rng = Random();
-    int index = rng.nextInt(StaticData.gridImages.length);
 
+    final itemWidth = width * 0.7;
     return Material(
       borderRadius: const BorderRadius.all(Radius.circular(9)),
       color: Colors.transparent,
       child: Container(
         color: Colors.transparent,
-        width: width * 0.65,
+        width: itemWidth,
         height: width,
         child: Stack(
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(7)),
               child: CachedNetworkImage(
-                imageUrl: StaticData.gridImages[index], //  track.trackCoverImage,
-                fit: BoxFit.cover,
-                width: width * 0.65,
+                imageUrl: track.trackCoverImage, //  track.trackCoverImage,
+                fit: BoxFit.fitWidth,
+                width: itemWidth,
                 height: width,
                 errorWidget: (_, __, ___) {
                   return ImageExt.getDefaultGrid(width: width * 0.65, height: width);

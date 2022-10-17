@@ -132,7 +132,7 @@ class TrackCategoryView extends StatelessWidget {
 
   Widget get backgroundWidget => CachedNetworkImage(
         imageUrl: category.categoryCover ?? '', //  track.trackCoverImage,
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         width: width,
         height: height,
         errorWidget: (_, __, ___) {
