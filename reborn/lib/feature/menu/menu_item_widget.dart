@@ -22,24 +22,14 @@ class MenuData {
 
 
   static List<MenuData> menuItems = [
-    // MenuData(
-    //   menuID: "id_profile",
-    //   route: AppRoutes.profile,
-    //   iconName: 'ic_home',
-    //   titleKey: 'app_icon',
-    // ),
+
     MenuData(
       menuID: "id_home",
       route: AppRoutes.home,
       iconName: 'ic_home',
       titleKey: 'home',
     ),
-    // MenuData(
-    //   menuID: "id_profile",
-    //   route: AppRoutes.profile,
-    //   iconName: 'ic_profile',
-    //   titleKey: 'profile',
-    // ),
+
     MenuData(
       menuID: "id_orders",
       route: AppRoutes.orders,
