@@ -58,6 +58,10 @@ class FinishTrackAudioState extends AudioState {
 
 }
 
+class AudioDurationState extends AudioState {
+  final Duration duration;
+  AudioDurationState({required this.duration});
+}
 
 class FinishListAudioState extends AudioState {
     final bool isLooping;
@@ -69,7 +73,11 @@ class FinishAlbumAudioState extends AudioState {
 
 }
 
-class PlayerAudioState extends AudioState {
-  final bool isPlaying;
-  PlayerAudioState({required this.isPlaying});
+class AudioPlayingState extends AudioState {
+  AudioPlayingState();
+}
+
+
+class AudioPausedState extends AudioState {
+  AudioPausedState();
 }

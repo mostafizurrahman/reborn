@@ -14,6 +14,7 @@ import 'audio_player_event.dart';
 import 'audio_player_state.dart';
 
 class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
+
   int _trackIndex = 0;
   int _shuffleIndex = 0;
   bool _shouldLoop = false;
@@ -29,9 +30,11 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
       _audioPlayer.playlistAudioFinished.listen(_onAudioPlayingFinished),
       progressStream.listen(_onDurationChanged),
     ]);
+    on<SeekAudioEvent>(_onSeekAudioPlayer);
     on<TrackAudioEvent>(_onTrackAudioEvent);
-    on<PlayerAudioEvent>(_onPlayerAudioEvent);
+    on<PlayPauseAudioEvent>(_onPlayerAudioEvent);
     on<LoadAudioEvent>(_onLoadAudioEvent);
+    on<EmitAudioDurationEvent>(_onDurationAudioEvent);
     on<ShuffleAudioEvent>(_onShuffleAudioEvent);
     on<LoopAudioEvent>(_onLoopAudioEvent);
     on<FinishAlbumAudioEvent>((event, emit) => emit(FinishAlbumAudioState()));
@@ -39,9 +42,20 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     on<FinishListAudioEvent>(
         (event, emit) => emit(FinishListAudioState(isLooping: event.isLooping)));
   }
+  Future<void> _onSeekAudioPlayer(final SeekAudioEvent event, final Emitter<AudioState> emit) async {
+    final duration = Duration(seconds: event.seconds);
+    _audioPlayer.seek(duration);
+    if (!_audioPlayer.isPlaying.value) {
+      emit(AudioPlayingState());
+    }
+    emit(AudioDurationState(duration: duration));
+  }
+  Future<void> _onDurationAudioEvent(final EmitAudioDurationEvent event, final Emitter<AudioState> emit) async {
+    emit(AudioDurationState(duration: event.duration));
+  }
 
   void _onDurationChanged(final Duration duration) {
-    debugPrint('duration ----------------- ${duration.toString()}');
+    add(EmitAudioDurationEvent(duration: duration));
   }
 
   void _onAudioPlayingFinished(final Playing playing) {
@@ -80,28 +94,21 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     emit(InitAudioState());
     final audio = event.trackEntity.isLocalTrack
         ? Audio(event.trackEntity.trackAudio)
-        : Audio.network(event.trackEntity.trackAudio);
-    _audioPlayer.open(audio, showNotification: true).onError((error, stackTrace) {
-      final errorState = ErrorAudioState(
-        errorMessage: "unable to open audio file",
-        error: error,
-        stackTrace: stackTrace,
-      );
-      emit(errorState);
-    }).then(
-      (value) => emit(StartTrackAudioState(trackEntity: event.trackEntity)),
-    );
+        : Audio.network('${event.trackEntity.trackAudio}${event.trackEntity.trackSecret}');
+     await _audioPlayer.open(audio, showNotification: true);
+    emit(StartTrackAudioState(trackEntity: event.trackEntity));
   }
 
   Future<void> _onPlayerAudioEvent(
-      final PlayerAudioEvent event, final Emitter<AudioState> emit) async {
+      final PlayPauseAudioEvent event, final Emitter<AudioState> emit) async {
     final bool isPlaying = _audioPlayer.isPlaying.value;
     if (isPlaying) {
       await _audioPlayer.pause();
+      emit(AudioPlayingState());
     } else {
       await _audioPlayer.play();
+      emit(AudioPausedState());
     }
-    emit(PlayerAudioState(isPlaying: !isPlaying));
   }
 
   Future<void> _onTrackAudioEvent(
@@ -118,6 +125,7 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     for (final element in _audioSubscriber) {
       element.cancel();
     }
+    _audioPlayer.stop().then((value) => _audioPlayer.dispose());
     return super.close();
   }
 
@@ -155,4 +163,6 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
       }
     }
   }
+
+
 }

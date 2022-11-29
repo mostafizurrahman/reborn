@@ -28,16 +28,33 @@ class ShuffleAudioEvent extends AudioEvent {
   ShuffleAudioEvent();
 }
 
+class ForwardAudioEvent extends AudioEvent {
+  final int seconds; // +seconds for froward & -seconds for backward
+  ForwardAudioEvent({required this.seconds});
+}
+
+class SeekAudioEvent extends AudioEvent {
+  final int seconds; // +seconds for froward & -seconds for backward
+  SeekAudioEvent({required this.seconds});
+}
+
+
 class LoopAudioEvent extends AudioEvent {
 
 }
 
-class PlayerAudioEvent extends AudioEvent {
+
+
+class PlayPauseAudioEvent extends AudioEvent {
 
 }
 
 class FinishTrackAudioEvent extends AudioEvent {
 
+}
+class EmitAudioDurationEvent extends AudioEvent {
+  final Duration duration;
+  EmitAudioDurationEvent({required this.duration});
 }
 
 
