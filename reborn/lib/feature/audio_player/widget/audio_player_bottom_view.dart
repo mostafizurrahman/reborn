@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/audio_player/rx_audio/audio_player_bloc.dart';
@@ -10,6 +13,7 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../domain/entities.dart';
 import '../rx_audio/audio_player_event.dart';
+import 'progress_circle_painter.dart';
 
 class AudioPlayerBottomView extends StatefulWidget {
   final TrackEntity track;
@@ -25,16 +29,26 @@ class AudioPlayerBottomView extends StatefulWidget {
 }
 
 class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
-  static const int audioLength = 5;
+  static const int audioLength = 5000;
   final BehaviorSubject<double> _sliderBehavior = BehaviorSubject.seeded(0);
+  final PublishSubject<bool> _audioLoaderPublisher = PublishSubject();
   final AudioPlayerBloc _audioBloc = AudioPlayerBloc();
-  double sliderValue = 0;
+  double _sliderValue = 0;
+  static const double _playerDimension = 130;
+  late final StreamSubscription _subscription;
 
   @override
   void initState() {
     super.initState();
-    sliderValue = widget.track.trackDuration.toDouble();
+    _sliderValue = widget.track.trackDuration.toDouble() * 1000;
+    _subscription = _audioBloc.stream.listen(_onAudioBlocChanged);
     _audioBloc.add(LoadAudioEvent(trackEntity: widget.track));
+  }
+
+  void _onAudioBlocChanged(final AudioState audioState) {
+    if (audioState is StartTrackAudioState) {
+      _audioLoaderPublisher.sink.add(true);
+    }
   }
 
   @override
@@ -46,28 +60,56 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
         child: Container(
           height: 300,
           width: screenData.width - 48,
-          decoration: CCAppTheme
-              .shadowAudio, //.copyWith(borderRadius: rebornTheme.topRound),
-          child: Column(
-            children: [
-              _getAudioControlPanel(),
-              _getAudioStatusPanel(),
-            ],
+          decoration: CCAppTheme.shadowAudio,
+          child: StreamBuilder(
+            builder: _getAudioWidget,
+            stream: _audioLoaderPublisher.stream,
           ),
         ),
       ),
     );
+
+  }
+
+  Widget _getAudioWidget(
+      final BuildContext ctx, final AsyncSnapshot<bool> snap) {
+    if (snap.data == true) {
+      return Column(
+        children: [
+          _getAudioControlPanel(),
+          _getAudioStatusPanel(),
+        ],
+      );
+    }
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        CircularProgressIndicator(),
+        SizedBox(
+          height: 12,
+        ),
+        Text('Loading Audio...')
+      ],
+    );
   }
 
   Widget _getAudioControlPanel() {
+    const double size = _playerDimension - 16;
     return SizedBox(
       height: 175,
       child: Stack(
         children: [
           Center(
+            child: StreamBuilder(
+              builder: _getProgressPainter,
+              stream: _sliderBehavior.stream,
+            ),
+          ),
+          Center(
             child: Container(
-              height: 140,
-              width: 140,
+              height: size,
+              width: size,
               decoration: CCAppTheme.circleBorderDec
                   .copyWith(color: CCAppTheme.periwinkleLightColor),
             ),
@@ -76,6 +118,20 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
             child: BlocBuilder(builder: _onBuildControlPanel, bloc: _audioBloc),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _getProgressPainter(
+      final BuildContext ctx, final AsyncSnapshot<double> data) {
+    final double progress =
+        (_sliderBehavior.valueOrNull ?? 0) / _sliderValue * 100;
+    return CustomPaint(
+      size: const Size(_playerDimension, _playerDimension),
+      painter: ProgressCirclePainter(
+        circleRadius: _playerDimension / 2,
+        topSpacing: 0,
+        progress: progress,
       ),
     );
   }
@@ -101,14 +157,13 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   }
 
   IconData _getPlayPauseIconFor({required final AudioState state}) {
-    if (state is AudioPlayingState || state is AudioDurationState ) {
+    if (state is AudioPlayingState || state is AudioDurationState) {
       return Icons.pause_circle_filled_rounded;
     }
     return Icons.play_arrow;
   }
 
   Widget _getAudioStatusPanel() {
-
     final state = _audioBloc.state;
     if (state is LoadingStartState) {
       return const CircularProgressIndicator();
@@ -163,11 +218,11 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
       duration = DataFormatter.formattedDuration(
         Duration(seconds: state.duration.inSeconds),
       );
-      debugPrint('duration ----------------- ${state.duration.inSeconds}');
-      _sliderBehavior.sink.add(state.duration.inSeconds.toDouble());
+      _sliderBehavior.sink.add(state.duration.inMilliseconds.toDouble());
     } else {
+      final time = snapshot.data?.toInt() ?? widget.track.trackDuration * 1000;
       duration = DataFormatter.formattedDuration(
-        Duration(seconds: snapshot.data?.toInt() ?? widget.track.trackDuration),
+        Duration(milliseconds: time),
       );
     }
     return Text(
@@ -175,6 +230,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
       style: const TextStyle(
         fontWeight: FontWeight.w300,
         fontSize: 32,
+        fontFeatures: [FontFeature.tabularFigures()],
       ),
     );
   }
@@ -183,10 +239,10 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
       BuildContext ctx, final AsyncSnapshot<double> snapshot) {
     return Slider(
       min: 0,
-      max: sliderValue,
+      max: _sliderValue,
       onChangeStart: _onChangeStared,
       onChangeEnd: _onChangeEnded,
-      value: snapshot.data ?? 0,
+      value: snapshot.data ?? 0.1,
       onChanged: _sliderBehavior.sink.add,
       inactiveColor: Colors.blueGrey,
       thumbColor: Colors.white,
@@ -200,7 +256,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   }
 
   void _onChangeEnded(final double value) {
-    _audioBloc.add(SeekAudioEvent(seconds: value.toInt()));
+    _audioBloc.add(SeekAudioEvent(milliseconds: value.toInt()));
     _sliderBehavior.sink.add(value);
   }
 
@@ -233,11 +289,11 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
 
   ///TODO Audio events
   void _onBackwardAudio() {
-    _audioBloc.add(ForwardAudioEvent(seconds: -audioLength));
+    _audioBloc.add(SeekAudioEvent(milliseconds: -audioLength));
   }
 
   void _onForwardAudio() {
-    _audioBloc.add(ForwardAudioEvent(seconds: audioLength));
+    _audioBloc.add(SeekAudioEvent(milliseconds: audioLength));
   }
 
   void _onPlayAudio() {

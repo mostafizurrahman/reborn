@@ -28,14 +28,9 @@ class ShuffleAudioEvent extends AudioEvent {
   ShuffleAudioEvent();
 }
 
-class ForwardAudioEvent extends AudioEvent {
-  final int seconds; // +seconds for froward & -seconds for backward
-  ForwardAudioEvent({required this.seconds});
-}
-
 class SeekAudioEvent extends AudioEvent {
-  final int seconds; // +seconds for froward & -seconds for backward
-  SeekAudioEvent({required this.seconds});
+  final int milliseconds; // +seconds for froward & -seconds for backward
+  SeekAudioEvent({required this.milliseconds});
 }
 
 

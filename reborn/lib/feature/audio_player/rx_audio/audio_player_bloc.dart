@@ -44,7 +44,7 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
   }
   Future<void> _onSeekAudioPlayer(final SeekAudioEvent event, final Emitter<AudioState> emit) async {
     emit(AudioPlayingState());
-    final duration = Duration(seconds: event.seconds);
+    final duration = Duration(milliseconds: event.milliseconds);
     _audioPlayer.seek(duration);
     if (!_audioPlayer.isPlaying.value) {
       emit(AudioPlayingState());
