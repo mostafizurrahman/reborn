@@ -14,7 +14,6 @@ import 'audio_player_event.dart';
 import 'audio_player_state.dart';
 
 class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
-
   int _trackIndex = 0;
   int _shuffleIndex = 0;
   bool _shouldLoop = false;
@@ -31,6 +30,7 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
       progressStream.listen(_onDurationChanged),
     ]);
     on<SeekAudioEvent>(_onSeekAudioPlayer);
+    on<ForwardAudioEvent>(_onForwardAudioPlayer);
     on<TrackAudioEvent>(_onTrackAudioEvent);
     on<PlayPauseAudioEvent>(_onPlayerAudioEvent);
     on<LoadAudioEvent>(_onLoadAudioEvent);
@@ -39,19 +39,46 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     on<LoopAudioEvent>(_onLoopAudioEvent);
     on<FinishAlbumAudioEvent>((event, emit) => emit(FinishAlbumAudioState()));
     on<FinishTrackAudioEvent>((event, emit) => emit(FinishTrackAudioState()));
-    on<FinishListAudioEvent>(
-        (event, emit) => emit(FinishListAudioState(isLooping: event.isLooping)));
+    on<FinishListAudioEvent>((event, emit) =>
+        emit(FinishListAudioState(isLooping: event.isLooping)));
   }
-  Future<void> _onSeekAudioPlayer(final SeekAudioEvent event, final Emitter<AudioState> emit) async {
+
+  Future<void> _onForwardAudioPlayer(
+      final ForwardAudioEvent event, final Emitter<AudioState> emit) async {
     emit(AudioPlayingState());
-    final duration = Duration(milliseconds: event.milliseconds);
+    int position = _audioPlayer.currentPosition.valueOrNull?.inMilliseconds ?? 0;
+    position += event.milliseconds;
+    final duration =
+        _audioPlayer.current.valueOrNull?.audio.duration.inMilliseconds ?? 0;
+    if (position < 0) {
+      position = 0;
+    } else if (position >= duration) {
+      _audioPlayer.pause();
+      position = duration;
+    }
+    await _seekAudioPlayer(position, emit);
+  }
+
+  Future<void> _seekAudioPlayer(final int milliseconds, final Emitter<AudioState> emit) async {
+
+    final duration = Duration(milliseconds: milliseconds);
     _audioPlayer.seek(duration);
     if (!_audioPlayer.isPlaying.value) {
+      await _audioPlayer.play();
       emit(AudioPlayingState());
     }
     emit(AudioDurationState(duration: duration));
   }
-  Future<void> _onDurationAudioEvent(final EmitAudioDurationEvent event, final Emitter<AudioState> emit) async {
+
+
+  Future<void> _onSeekAudioPlayer(
+      final SeekAudioEvent event, final Emitter<AudioState> emit) async {
+    emit(AudioPlayingState());
+    await _seekAudioPlayer(event.milliseconds, emit);
+  }
+
+  Future<void> _onDurationAudioEvent(final EmitAudioDurationEvent event,
+      final Emitter<AudioState> emit) async {
     emit(AudioPlayingState());
     emit(AudioDurationState(duration: event.duration));
   }
@@ -66,7 +93,8 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     if (_shouldLoop) {
       if (_index == 0) {
         add(FinishListAudioEvent(isLooping: true));
-        final _track = _shouldShuffle ? _shuffleList[_index] : _trackList[_index];
+        final _track =
+            _shouldShuffle ? _shuffleList[_index] : _trackList[_index];
         add(LoadAudioEvent(trackEntity: _track));
       }
     } else if (_index == 0) {
@@ -77,7 +105,8 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     }
   }
 
-  Future<void> _onLoopAudioEvent(final LoopAudioEvent event, final Emitter<AudioState> emit) async {
+  Future<void> _onLoopAudioEvent(
+      final LoopAudioEvent event, final Emitter<AudioState> emit) async {
     emit(InitAudioState());
     _shouldLoop = !_shouldLoop;
     final _loopState = LoopAudioState(isLooped: _shouldLoop);
@@ -92,13 +121,20 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     emit(_shuffleState);
   }
 
-  Future<void> _onLoadAudioEvent(final LoadAudioEvent event, final Emitter<AudioState> emit) async {
+  Future<void> _onLoadAudioEvent(
+      final LoadAudioEvent event, final Emitter<AudioState> emit) async {
     emit(InitAudioState());
     final audio = event.trackEntity.isLocalTrack
         ? Audio(event.trackEntity.trackAudio)
-        : Audio.network('${event.trackEntity.trackAudio}${event.trackEntity.trackSecret}');
-     await _audioPlayer.open(audio, showNotification: true);
-    emit(StartTrackAudioState(trackEntity: event.trackEntity));
+        : Audio.network(
+            '${event.trackEntity.trackAudio}${event.trackEntity.trackSecret}');
+    await _audioPlayer.open(audio, showNotification: true);
+    final duration =
+        _audioPlayer.current.valueOrNull?.audio.duration.inMilliseconds ?? 0;
+    emit(StartTrackAudioState(
+      trackEntity: event.trackEntity,
+      totalDuration: duration.toDouble(),
+    ));
   }
 
   Future<void> _onPlayerAudioEvent(
@@ -158,13 +194,12 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
       //TODO - Remove playing audio and insert it at the first position
       if (_audioPlayer.isPlaying.value) {
         final _assetPath = _audioPlayer.current.value?.audio.assetAudioPath;
-        final _track = _trackList.firstWhere((element) => element.trackAudio == _assetPath);
+        final _track = _trackList
+            .firstWhere((element) => element.trackAudio == _assetPath);
         _shuffleList.remove(_track);
         _shuffleList.insert(0, _track);
         _trackIndex = 0;
       }
     }
   }
-
-
 }

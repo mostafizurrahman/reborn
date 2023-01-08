@@ -40,14 +40,16 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   @override
   void initState() {
     super.initState();
-    _sliderValue = widget.track.trackDuration.toDouble() * 1000;
     _subscription = _audioBloc.stream.listen(_onAudioBlocChanged);
     _audioBloc.add(LoadAudioEvent(trackEntity: widget.track));
   }
 
   void _onAudioBlocChanged(final AudioState audioState) {
     if (audioState is StartTrackAudioState) {
+      _sliderValue = audioState.totalDuration;
       _audioLoaderPublisher.sink.add(true);
+    } else if (audioState is FinishTrackAudioState) {
+
     }
   }
 
@@ -68,7 +70,6 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
         ),
       ),
     );
-
   }
 
   Widget _getAudioWidget(
@@ -169,7 +170,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
       return const CircularProgressIndicator();
     }
     final duration = DataFormatter.formattedDuration(
-      Duration(seconds: widget.track.trackDuration),
+      Duration(milliseconds: _sliderValue.toInt()),
     );
     return SizedBox(
       height: 125,
@@ -182,7 +183,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
                 duration,
                 style: const TextStyle(
                   fontWeight: FontWeight.w300,
-                  fontSize: 32,
+                  fontSize: 19,
                 ),
               ),
               _getTapWidget(
@@ -229,7 +230,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
       duration,
       style: const TextStyle(
         fontWeight: FontWeight.w300,
-        fontSize: 32,
+        fontSize: 19,
         fontFeatures: [FontFeature.tabularFigures()],
       ),
     );
@@ -289,11 +290,11 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
 
   ///TODO Audio events
   void _onBackwardAudio() {
-    _audioBloc.add(SeekAudioEvent(milliseconds: -audioLength));
+    _audioBloc.add(ForwardAudioEvent(milliseconds: -audioLength));
   }
 
   void _onForwardAudio() {
-    _audioBloc.add(SeekAudioEvent(milliseconds: audioLength));
+    _audioBloc.add(ForwardAudioEvent(milliseconds: audioLength));
   }
 
   void _onPlayAudio() {
@@ -302,6 +303,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
 
   @override
   void dispose() {
+    _subscription.cancel();
     _audioBloc.close();
     super.dispose();
   }

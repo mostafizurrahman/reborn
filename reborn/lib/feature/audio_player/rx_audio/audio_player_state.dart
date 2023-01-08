@@ -50,7 +50,8 @@ class LoopAudioState extends AudioState {
 
 class StartTrackAudioState extends AudioState {
   final TrackEntity trackEntity;
-  StartTrackAudioState({required this.trackEntity});
+  final double totalDuration;
+  StartTrackAudioState({required this.trackEntity, required this.totalDuration,});
 }
 
 

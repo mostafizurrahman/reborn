@@ -33,6 +33,11 @@ class SeekAudioEvent extends AudioEvent {
   SeekAudioEvent({required this.milliseconds});
 }
 
+class ForwardAudioEvent extends AudioEvent {
+  final int milliseconds; // +seconds for froward & -seconds for backward
+  ForwardAudioEvent({required this.milliseconds});
+}
+
 
 class LoopAudioEvent extends AudioEvent {
 
