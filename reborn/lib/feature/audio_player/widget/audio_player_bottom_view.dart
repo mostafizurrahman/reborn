@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/audio_player/rx_audio/audio_player_bloc.dart';
 import 'package:reborn/feature/audio_player/rx_audio/audio_player_state.dart';
+import 'package:reborn/feature/loading/rx_loading.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/screen_data.dart';
@@ -25,13 +26,14 @@ class AudioPlayerBottomView extends StatefulWidget {
 
 class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   static const int audioLength = 5;
-  final BehaviorSubject<double> _sliderBehavior = BehaviorSubject();
+  final BehaviorSubject<double> _sliderBehavior = BehaviorSubject.seeded(0);
   final AudioPlayerBloc _audioBloc = AudioPlayerBloc();
   double sliderValue = 0;
 
   @override
   void initState() {
     super.initState();
+    sliderValue = widget.track.trackDuration.toDouble();
     _audioBloc.add(LoadAudioEvent(trackEntity: widget.track));
   }
 
@@ -99,14 +101,18 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   }
 
   IconData _getPlayPauseIconFor({required final AudioState state}) {
-    if (state is AudioPlayingState) {
+    if (state is AudioPlayingState || state is AudioDurationState ) {
       return Icons.pause_circle_filled_rounded;
     }
-
     return Icons.play_arrow;
   }
 
   Widget _getAudioStatusPanel() {
+
+    final state = _audioBloc.state;
+    if (state is LoadingStartState) {
+      return const CircularProgressIndicator();
+    }
     final duration = DataFormatter.formattedDuration(
       Duration(seconds: widget.track.trackDuration),
     );
@@ -129,9 +135,14 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
                 Icons.favorite_border,
                 color: Colors.pinkAccent,
               ),
-              StreamBuilder(
-                builder: _getDurationView,
-                stream: _sliderBehavior.stream,
+              BlocBuilder(
+                builder: (ctx, state) {
+                  return StreamBuilder(
+                    builder: _getDurationView,
+                    stream: _sliderBehavior.stream,
+                  );
+                },
+                bloc: _audioBloc,
               ),
             ],
           ),
@@ -156,8 +167,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
       _sliderBehavior.sink.add(state.duration.inSeconds.toDouble());
     } else {
       duration = DataFormatter.formattedDuration(
-        Duration(
-            seconds: snapshot.data?.toInt() ?? widget.track.trackDuration),
+        Duration(seconds: snapshot.data?.toInt() ?? widget.track.trackDuration),
       );
     }
     return Text(
@@ -173,7 +183,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
       BuildContext ctx, final AsyncSnapshot<double> snapshot) {
     return Slider(
       min: 0,
-      max: 1,
+      max: sliderValue,
       onChangeStart: _onChangeStared,
       onChangeEnd: _onChangeEnded,
       value: snapshot.data ?? 0,

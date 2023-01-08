@@ -43,6 +43,7 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
         (event, emit) => emit(FinishListAudioState(isLooping: event.isLooping)));
   }
   Future<void> _onSeekAudioPlayer(final SeekAudioEvent event, final Emitter<AudioState> emit) async {
+    emit(AudioPlayingState());
     final duration = Duration(seconds: event.seconds);
     _audioPlayer.seek(duration);
     if (!_audioPlayer.isPlaying.value) {
@@ -51,6 +52,7 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     emit(AudioDurationState(duration: duration));
   }
   Future<void> _onDurationAudioEvent(final EmitAudioDurationEvent event, final Emitter<AudioState> emit) async {
+    emit(AudioPlayingState());
     emit(AudioDurationState(duration: event.duration));
   }
 
@@ -104,10 +106,10 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     final bool isPlaying = _audioPlayer.isPlaying.value;
     if (isPlaying) {
       await _audioPlayer.pause();
-      emit(AudioPlayingState());
+      emit(AudioPausedState());
     } else {
       await _audioPlayer.play();
-      emit(AudioPausedState());
+      emit(AudioPlayingState());
     }
   }
 
