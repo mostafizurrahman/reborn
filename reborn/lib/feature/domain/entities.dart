@@ -1,5 +1,3 @@
-
-
 export 'package:reborn/feature/domain/firebase/entities/app_config.dart';
 export 'package:reborn/feature/domain/firebase/entities/search_data.dart';
 export 'package:reborn/feature/domain/firebase/entities/reborn_category.dart';
@@ -36,6 +34,12 @@ class LocalizedText {
   final String en;
   final String ru;
   LocalizedText({required this.en, required this.ru});
+  Map<String, dynamic> toJson() => _$LocalizedTextToJson(this);
 }
 
+Map<String, dynamic> _$LocalizedTextToJson(LocalizedText instance) =>
+    <String, dynamic>{
+      'en': instance.en,
+      'ru': instance.ru,
+    };
 final emptyTxt = LocalizedText(en: '', ru: '');

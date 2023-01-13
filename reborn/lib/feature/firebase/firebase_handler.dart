@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/data/models/firebase/fb_author_response.dart';
 import 'package:reborn/feature/data/models/firebase/fb_category_response.dart';

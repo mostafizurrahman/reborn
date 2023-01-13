@@ -1,17 +1,25 @@
-
 import 'package:reborn/feature/domain/entities.dart';
+
 class PlayerInfoEntity {
   int likeCount;
   int totalPlayed;
   PlayerInfoEntity({required this.likeCount, required this.totalPlayed});
-
+  Map<String, dynamic> toJson() => _$PlayerInfoToJson(this);
 }
+
+Map<String, dynamic> _$PlayerInfoToJson(PlayerInfoEntity instance) =>
+    <String, dynamic>{
+      'likeCount': instance.likeCount,
+      'totalPlayed': instance.totalPlayed,
+    };
+
 class TrackEntity {
   final LocalizedText trackTitle;
   final LocalizedText trackSubtitle;
   final int trackDuration;
   final String trackID;
-  final List<String> generList; //["Popular", "Mediation", "Sleep", "Music" ... ]
+  //["Popular", "Mediation", "Sleep", "Music" ... ]
+  final List<String> generList;
   final LocalizedText story;
   final String authorID;
   final String trackType;
@@ -42,4 +50,25 @@ class TrackEntity {
     required this.trackSecret,
     required this.trackAudio,
   });
+
+  Map<String, dynamic> toJson() => _$TrackEntityToJson(this);
 }
+
+Map<String, dynamic> _$TrackEntityToJson(TrackEntity instance) =>
+    <String, dynamic>{
+      'trackTitle': instance.trackTitle.toJson(),
+      'trackSubtitle': instance.trackSubtitle.toJson(),
+      'trackDuration': instance.trackDuration,
+      'generList': instance.generList,
+      'story': instance.story.toJson(),
+      'authorID': instance.authorID,
+      'trackType': instance.trackType,
+      'trackCoverImage': instance.trackCoverImage,
+      'trackAudio': instance.trackAudio,
+      'trackSecret': instance.trackSecret,
+      'isLocalTrack': instance.isLocalTrack,
+      'trackIconData': instance.trackIconData,
+      'isPremium': instance.isPremium,
+      'playerInfo': instance.playerInfo.toJson(),
+      'trackID': instance.trackID,
+    };
