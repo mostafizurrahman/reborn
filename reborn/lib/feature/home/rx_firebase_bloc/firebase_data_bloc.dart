@@ -5,22 +5,13 @@ import 'package:reborn/feature/domain/firebase/usecase/get_track_use_case.dart';
 import 'package:reborn/feature/firebase/firebase_handler.dart';
 import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_events.dart';
 import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_states.dart';
+import 'package:reborn/utility/cache_storage.dart';
 
 import '../../domain/entities.dart';
 
 class FirebaseDataBloc extends Bloc<FirebaseDataEvent, FirebaseDataState> {
   FirebaseDataBloc() : super(FirebaseDataLoadingState()) {
-
     on<LoadFirebaseDataEvent>(_onLoadFirebaseData);
-    on<CompleteFirebaseDataEvent>(
-      (event, emit) => emit(
-        FirebaseDataReadyState(
-          categories: event.categories,
-          tracks: event.tracks,
-          authors: event.authors,
-        ),
-      ),
-    );
   }
 
   Future<void> _onLoadFirebaseData(
@@ -34,16 +25,18 @@ class FirebaseDataBloc extends Bloc<FirebaseDataEvent, FirebaseDataState> {
       final trackUseCase = GetTrackUseCase();
       final List<TrackEntity> trackList = await trackUseCase(trackSearchData);
       if (trackList.isNotEmpty) {
+        cacheStorage.tracks = trackList;
         final authorSearch = AuthorSearchData();
         final authorUseCase = GetAuthorUseCase();
         final List<RebornAuthor> authorList = await authorUseCase(authorSearch);
         if (authorList.isNotEmpty) {
-          final _event = CompleteFirebaseDataEvent(
+          cacheStorage.authors = authorList;
+          final state = FirebaseDataReadyState(
             categories: categoryList,
             tracks: trackList,
             authors: authorList,
           );
-          add(_event);
+          emit(state);
         } else {
           emit(FirebaseDataErrorState());
         }

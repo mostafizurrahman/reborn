@@ -2,6 +2,8 @@ import 'dart:typed_data';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'package:reborn/feature/data/models/firebase/fb_track_response.dart';
+import 'package:reborn/feature/domain/entities.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:collection/collection.dart';
 import '../../utility/app_enum.dart';
@@ -61,6 +63,25 @@ class SQLiteManager {
     final database = _info.database;
     final id = await database.delete(_tableTracks, where: 'trackID = ?', whereArgs: [trackID]);
     return id == 1;
+  }
+  
+  Future<List<TrackEntity>> getFavoriteList() async {
+    final database = _info.database;
+    final List<Map> jsonTracks = await database.query(_tableTracks);
+    final List<TrackEntity> tracks = [];
+    if (jsonTracks.isNotEmpty) {
+      for(final jsonTrack in jsonTracks) {
+        final jsonContent = jsonTrack['jsonContent'];
+        final Map<String, dynamic> data = (json.decode(jsonContent) as Map).map(_castEntry);
+        final track = FBTrackResponse.fromJson(data).toEntity();
+        tracks.add(track);
+      }
+    }
+    return tracks;
+  }
+
+  MapEntry<String, dynamic> _castEntry(final dynamic key, final dynamic value) {
+    return MapEntry<String, dynamic>(key.toString(), value);
   }
 
   // Future<void> updateContacts() async {

@@ -75,6 +75,10 @@ class FirebaseHandler {
     });
   }
 
+  Future<bool> updateLocalFavorite({required final TrackEntity track}) async {
+    return await writer._updateLocalFavoriteTrack(track);
+  }
+
   void _onError(final dynamic error) {
     debugPrint("i am error");
   }

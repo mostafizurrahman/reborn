@@ -5,6 +5,7 @@ import 'package:reborn/utility/user_info.dart';
 import '../../base_use_case.dart';
 
 class SetFavoriteTrackUseCase extends BaseUseCase<bool, TrackEntity> {
+
   @override
   Future<bool> call(final TrackEntity input) async {
     final String deviceID = userInfo.deviceID;

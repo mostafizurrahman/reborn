@@ -14,7 +14,7 @@ import 'package:reborn/feature/home/rx_recent/recent_bloc.dart';
 import 'package:reborn/feature/home/rx_recent/recent_states.dart';
 import 'package:reborn/feature/home/rx_secret/secret_states.dart';
 import 'package:reborn/feature/home/widgets/home_coach_view.dart';
-import 'package:reborn/feature/home/widgets/home_favorite_view.dart';
+import 'package:reborn/feature/favorites/home_favorite_view.dart';
 import 'package:reborn/feature/home/widgets/home_profile_view.dart';
 import 'package:reborn/feature/home/widgets/home_sleep_view.dart';
 import 'package:reborn/feature/home/widgets/sub_filter_view.dart';
