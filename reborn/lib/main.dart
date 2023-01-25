@@ -4,19 +4,20 @@ import 'package:flutter/services.dart';
 import 'package:reborn/feature/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/contact_add/contact_entry_widget.dart';
 import 'package:reborn/feature/contact_list/contact_list_widget.dart';
+import 'package:reborn/feature/data_model/sqlite_manager.dart';
 import 'package:reborn/feature/domain/category_summary.dart';
 import 'package:reborn/feature/home/home_widget.dart';
 import 'package:reborn/feature/track_list/track_list_page.dart';
 import 'package:reborn/routing/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:reborn/utility/user_info.dart';
 import 'feature/firebase/firebase_handler.dart';
 import 'firebase_options.dart';
 import 'feature/startup/launch_widget.dart';
 import 'utility/app_theme_data.dart';
 
 void main() async {
-
   runApp(const MainAppWidget());
 }
 
@@ -30,7 +31,6 @@ class MainAppWidget extends StatefulWidget {
 }
 
 class MainAppState extends State<MainAppWidget> {
-
   @override
   void initState() {
     super.initState();
@@ -77,9 +77,9 @@ class MainAppState extends State<MainAppWidget> {
         shadowColor: const Color.fromARGB(150, 200, 200, 200),
         appBarTheme: AppBarTheme(
           elevation: 0,
-
           backgroundColor: Colors.white.withAlpha(200),
-          titleTextStyle: const TextStyle(fontSize: 18.0, fontFamily: "sf_semi", color: Colors.black),
+          titleTextStyle: const TextStyle(
+              fontSize: 18.0, fontFamily: "sf_semi", color: Colors.black),
         ),
         textTheme: TextTheme(
           headline1: CCAppTheme.txtHL1,
@@ -87,7 +87,7 @@ class MainAppState extends State<MainAppWidget> {
           headline3: CCAppTheme.txtHL3,
           bodyText2: CCAppTheme.txt2,
           bodyText1: CCAppTheme.txt1,
-          caption : CCAppTheme.txtReg,
+          caption: CCAppTheme.txtReg,
           // titleSmall: const TextStyle(fontSize: 15.0, fontFamily: "sf_reg"),
           // titleMedium: const TextStyle(fontSize: 17.0, fontFamily: "sf_semi"),
           // titleLarge: const TextStyle(fontSize: 18.0, fontFamily: "sf_heavy"),
@@ -109,7 +109,6 @@ class MainAppState extends State<MainAppWidget> {
   }
 
   Route _getGenerateRoute(RouteSettings settings) {
-
     Widget _widget = const SizedBox();
     if ((settings.name == AppRoutes.home)) {
       _widget = const HomeWidget();
@@ -125,8 +124,6 @@ class MainAppState extends State<MainAppWidget> {
       _widget = AudioPlayerScreen(track: track);
     }
 
-
-
     if (Platform.isIOS) {
       return MaterialPageRoute(
         builder: (context) {
@@ -136,7 +133,7 @@ class MainAppState extends State<MainAppWidget> {
           );
         },
         settings:
-        RouteSettings(name: settings.name, arguments: settings.arguments),
+            RouteSettings(name: settings.name, arguments: settings.arguments),
       );
     }
     return AppRoutes.createRoute(settings, _widget);
@@ -153,6 +150,8 @@ class MainAppState extends State<MainAppWidget> {
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     ).then((value) => firebase.clearDB());
+
+    sqlDatabase.createDatabase().then((value) =>
+        userInfo.getDeviceID().then((did) => firebase.listenFirebase(did)));
   }
 }
-

@@ -51,9 +51,11 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeState extends ThemeState<HomeWidget> {
+
   final BehaviorSubject<List<TabBarData>> _tabBehaviour = BehaviorSubject();
   final RebornFilterBloc _rebornNameBloc = RebornFilterBloc();
   final FirebaseDataBloc _firebaseBloc = FirebaseDataBloc();
+
   @override
   void initState() {
     super.initState();

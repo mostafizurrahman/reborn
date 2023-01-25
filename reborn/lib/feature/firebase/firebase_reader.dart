@@ -13,7 +13,7 @@ class _LocalStorageReader {
 
 class _FirebaseReader {
   final FirebaseFirestore _firebaseStore;
-  _FirebaseReader(this._firebaseStore);
+  const _FirebaseReader(this._firebaseStore);
   Future<List<T>> read<T extends BaseResponse>({required String collectionKey}) async {
     final List<T> dataList = [];
     try {

@@ -5,6 +5,12 @@ class PlayerInfoEntity {
   int totalPlayed;
   PlayerInfoEntity({required this.likeCount, required this.totalPlayed});
   Map<String, dynamic> toJson() => _$PlayerInfoToJson(this);
+
+  PlayerInfoEntity copyWith({final int? like, final int? played}) =>
+      PlayerInfoEntity(
+        likeCount: like ?? likeCount,
+        totalPlayed: played ?? totalPlayed,
+      );
 }
 
 Map<String, dynamic> _$PlayerInfoToJson(PlayerInfoEntity instance) =>

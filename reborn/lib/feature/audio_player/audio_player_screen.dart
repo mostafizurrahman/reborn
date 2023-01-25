@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:reborn/feature/base_widget/base_scaffold_state.dart';
 import 'package:reborn/feature/domain/entities.dart';
-import 'package:reborn/feature/widget/blur_round_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
-import 'dart:ui' as ui;
 import '../home/widgets/author_blur_view.dart';
 import '../widget/view_provider.dart';
-import 'rx_audio/audio_player_bloc.dart';
 import 'widget/audio_player_bottom_view.dart';
-import 'widget/audio_player_view.dart';
 
 class AudioPlayerScreen extends StatefulWidget {
   final TrackEntity track;
@@ -27,9 +22,6 @@ class AudioPlayerScreen extends StatefulWidget {
 }
 
 class _AudioPlayerState extends State<AudioPlayerScreen> {
-
-  final AudioPlayerBloc _playerBloc = AudioPlayerBloc();
-
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +103,6 @@ class _AudioPlayerState extends State<AudioPlayerScreen> {
 
   @override
   void dispose() {
-    _playerBloc.close();
     super.dispose();
   }
 }

@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/audio_player/rx_audio/audio_player_bloc.dart';
 import 'package:reborn/feature/audio_player/rx_audio/audio_player_state.dart';
+import 'package:reborn/feature/firebase/firebase_handler.dart';
 import 'package:reborn/feature/loading/rx_loading.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/screen_data.dart';
+import 'package:reborn/utility/user_info.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../domain/entities.dart';
@@ -187,7 +189,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
                 ),
               ),
               _getTapWidget(
-                _onBackwardAudio,
+                _onSetFavorite,
                 Icons.favorite_border,
                 color: Colors.pinkAccent,
               ),
@@ -209,6 +211,10 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
         ],
       ),
     );
+  }
+
+  void _onSetFavorite() {
+    firebase.setFavorite(trackEntity: widget.track, deviceID: userInfo.deviceID);
   }
 
   Widget _getDurationView(

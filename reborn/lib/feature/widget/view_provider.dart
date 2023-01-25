@@ -10,7 +10,7 @@ class ViewProvider {
     final Color color = Colors.black54,
     final double iconSize = 24,
   }) {
-    IconData iconData = IconData(iconValue, fontFamily: iconFont, fontPackage: iconFontPackage);
+    IconData iconData = IconData(iconValue, fontFamily: iconFont, fontPackage: 'cupertino_icons');
     return Icon(
       iconData,
       color: color,

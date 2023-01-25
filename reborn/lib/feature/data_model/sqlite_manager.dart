@@ -8,17 +8,16 @@ import '../../utility/app_enum.dart';
 import 'contact_service.dart';
 
 class SQLiteManager {
-
-  static String get _tableContact => "contacts";
-  static String get _tableInfo => "contact_info"; //email and phones
-  static String get _tableAddress => "contact_address";
+  static String get _tableTracks => "tracks";
+  static String get _tableAuthors => "authors"; //email and phones
+  // static String get _tableAddress => "contact_address";
   // final List<Contact> contactList = [];
   // final List<Contact> favoriteList = [];
   // final List<Contact> secretList = [];
   // final List<Contact> privateList = [];
-  static int get emailType => 1;
-  static int get phoneType => 2;
-  static int get postalType => 3;
+  // static int get emailType => 1;
+  // static int get phoneType => 2;
+  // static int get postalType => 3;
 
   late final Database database;
   static final _info = SQLiteManager._internal();
@@ -27,33 +26,41 @@ class SQLiteManager {
     return _info;
   }
 
-  Future<void> _createDatabase() async {
+  Future<void> createDatabase() async {
     final database = await openDatabase(
       // Set the path to the database. Note: Using the `join` function from the
       // `path` package is best practice to ensure the path is correctly
       // constructed for each platform.
-      join(await getDatabasesPath(), 'contacts.db'),
+      join(await getDatabasesPath(), 'reborn.db'),
       // When the database is first created, create a table to store dogs.
       onCreate: (db, version) async {
         // Run the CREATE TABLE statement on the database.
-        await db.execute(
-            'CREATE TABLE $_tableContact (id INTEGER PRIMARY KEY,givenName TEXT, middleName TEXT, displayName TEXT, prefix TEXT, suffix TEXT, familyName TEXT, company TEXT, jobTitle TEXT, avatar TEXT, birthday TEXT, androidAccountType INTEGER, identifier TEXT, note TEXT, secret BOOLEAN, favorite BOOLEAN, private BOOLEAN, time INTEGER, androidAccountTypeRaw TEXT, androidAccountName TEXT)');
-        await db.execute(
-          'CREATE TABLE $_tableInfo (id INTEGER PRIMARY KEY, contact_id INTEGER'
-          ', label TEXT, value TEXT, info_type INTEGER)',
-        );
-
-        await db.execute(
-          'CREATE TABLE $_tableAddress (id INTEGER PRIMARY KEY,'
-          ' contact_id INTEGER, label TEXT, street TEXT, city TEXT,'
-          ' postcode TEXT, region TEXT, country TEXT, info_type INTEGER)',
-        );
+        await db.execute('CREATE TABLE $_tableTracks (id INTEGER PRIMARY KEY,'
+            ' jsonContent TEXT NOT NULL, trackID TEXT NOT NULL)');
+        await db.execute('CREATE TABLE $_tableAuthors (id INTEGER PRIMARY KEY,'
+            ' jsonContent TEXT NOT NULL, authorID TEXT NOT NULL)');
       },
       // Set the version. This executes the onCreate function and provides a
       // path to perform database upgrades and downgrades.
       version: 1,
     );
     _info.database = database;
+  }
+
+  Future<bool> saveFavorite(
+      final Map<String, dynamic> data, final String trackID) async {
+    final String jsonString = json.encode(data);
+    final database = _info.database;
+    final info = {'jsonContent': jsonString, 'trackID': trackID};
+    final id = await database.insert(_tableTracks, info,
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    return id == 1;
+  }
+
+  Future<bool> deleteFavorite( final String trackID) async {
+    final database = _info.database;
+    final id = await database.delete(_tableTracks, where: 'trackID = ?', whereArgs: [trackID]);
+    return id == 1;
   }
 
   // Future<void> updateContacts() async {
