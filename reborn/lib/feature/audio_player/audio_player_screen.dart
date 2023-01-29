@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
+import 'package:reborn/feature/ui/widget/view_provider.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 import '../home/widgets/author_blur_view.dart';
-import '../widget/view_provider.dart';
 import 'widget/audio_player_bottom_view.dart';
 
 class AudioPlayerScreen extends StatefulWidget {

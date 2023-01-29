@@ -1,9 +1,8 @@
-import 'package:reborn/feature/contact_add/rx_contact_entry/contact_entry_states.dart';
-import 'package:reborn/feature/widget/ink_widget.dart';
-import 'package:reborn/rx_export.dart';
+
+
+import 'package:reborn/feature/ui/widget/ink_widget.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ContactProfileWidget extends StatefulWidget {
@@ -44,17 +43,17 @@ class _ContactProfileState extends State<ContactProfileWidget> {
   }
 
   Widget _getTextFieldWidgets(final BuildContext context, final AsyncSnapshot<bool> snapshot) {
-    final _hasExtended = snapshot.data ?? false;
-    final List<Widget> _textWidgets = [
+    final hasExtended = snapshot.data ?? false;
+    final List<Widget> textWidgets = [
       Row(
         children: [
-          Expanded(child: const Spacer()),
+          const Expanded(child: Spacer()),
           RIButton(
             dimension: 35,
             iconColor: CCAppTheme.primaryColor,
-            onTap: () => _nameBehavior.sink.add(!_hasExtended),
+            onTap: () => _nameBehavior.sink.add(!hasExtended),
             radius: 17,
-            iconData: _hasExtended ? Icons.remove : Icons.add,
+            iconData: hasExtended ? Icons.remove : Icons.add,
           ),
           const SizedBox(width: 16),
         ],
@@ -77,10 +76,10 @@ class _ContactProfileState extends State<ContactProfileWidget> {
         ),
       ),
     ];
-    if (_hasExtended) {}
+    if (hasExtended) {}
 
     return Column(
-      children: _textWidgets,
+      children: textWidgets,
     );
   }
 }

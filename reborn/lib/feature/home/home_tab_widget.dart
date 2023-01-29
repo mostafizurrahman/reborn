@@ -1,7 +1,6 @@
-import 'package:reborn/feature/widget/blur_round_view.dart';
+import 'package:reborn/feature/ui/widget/blur_round_view.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
 import '../../utility/app_theme_data.dart';
 
 class TabBarData {

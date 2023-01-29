@@ -2,14 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
-import 'package:reborn/feature/track_list/track_list_page.dart';
-import 'package:reborn/feature/widget/blur_round_view.dart';
-import 'package:reborn/feature/widget/profile_view.dart';
+import 'package:reborn/feature/ui/track_list/track_list_page.dart';
+import 'package:reborn/feature/ui/widget/blur_round_view.dart';
+import 'package:reborn/feature/ui/widget/profile_view.dart';
+import 'package:reborn/feature/ui/widget/view_provider.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
-
-import '../../widget/view_provider.dart';
 
 class TrackCategoryView extends StatelessWidget {
   final RebornCategory category;
@@ -100,8 +99,8 @@ class TrackCategoryView extends StatelessWidget {
     for (final author in summary.authors) {
       final profile = ProfileView(imagePath: author.profilePicture);
       final position = Positioned(
-        child: Center(child: profile),
         left: x,
+        child: Center(child: profile),
       );
       profiles.add(position);
       x += 35;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
-import 'package:reborn/feature/widget/view_provider.dart';
+import 'package:reborn/feature/ui/widget/view_provider.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/screen_data.dart';

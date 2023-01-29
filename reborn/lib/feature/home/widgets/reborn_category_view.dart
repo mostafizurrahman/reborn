@@ -2,14 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/domain/firebase/usecase/get_category_track_use_case.dart';
-import 'package:reborn/feature/domain/firebase/usecase/get_summary_use_case.dart';
 import 'package:reborn/feature/home/widgets/cubit/cubit_states.dart';
 import 'package:reborn/feature/home/widgets/track_cover_view.dart';
 import 'package:reborn/feature/home/widgets/track_grid_view.dart';
-import 'package:reborn/feature/track_list/track_list_page.dart';
-import 'package:reborn/feature/widget/base_widget/theme_state.dart';
+import 'package:reborn/feature/ui/track_list/track_list_page.dart';
 import 'package:reborn/utility/screen_data.dart';
-
 import '../../../utility/app_theme_data.dart';
 import '../../domain/entities.dart';
 import '../rx_firebase_bloc/firebase_data_states.dart';

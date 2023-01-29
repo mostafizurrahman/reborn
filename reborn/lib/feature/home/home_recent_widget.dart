@@ -2,12 +2,11 @@ import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/home/rx_recent/recent_bloc.dart';
 import 'package:reborn/feature/home/rx_recent/recent_events.dart';
 import 'package:flutter/material.dart';
-
+import 'package:reborn/feature/ui/widget/service_widget.dart';
+import 'package:reborn/feature/ui/widget/widget_properties.dart';
 import '../../utility/app_theme_data.dart';
 import '../../utility/screen_data.dart';
 import '../data_model/entity/service_entity.dart';
-import '../widget/service_widget.dart';
-import '../widget/widget_properties.dart';
 
 class HomeRecentWidget extends StatelessWidget {
   final RecentBloc recentBloc;

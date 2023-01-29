@@ -1,15 +1,15 @@
 import 'dart:io';
-
-import 'package:reborn/feature/startup/rx_launch/launch_events.dart';
-import 'package:reborn/feature/startup/rx_launch/launch_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:reborn/feature/ui/startup/rx_launch/launch_events.dart';
+import 'package:reborn/feature/ui/startup/rx_launch/launch_states.dart';
+import 'package:reborn/utility/app_channel.dart';
 
-import '../../../utility/app_channel.dart';
 
 
-class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
-  LaunchBloc() : super(LaunchState()) {
+
+class LauncherBloc extends Bloc<LaunchEvent, LaunchState> {
+  LauncherBloc() : super(LaunchState()) {
     on<LaunchEvent>((event, emit) => emit(LaunchState()));
     on<ReadContactEvent>(_onReadContacts);
     on<PermissionRequestEvent>(_onRequestPermission);

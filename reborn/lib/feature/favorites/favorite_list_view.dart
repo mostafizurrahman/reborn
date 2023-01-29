@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:reborn/feature/track_list/widgets/list_cover_view.dart';
-import 'package:reborn/feature/track_list/widgets/track_item_view.dart';
+import 'package:reborn/feature/ui/track_list/widgets/track_item_view.dart';
 import 'package:reborn/utility/screen_data.dart';
-import '../../rx_export.dart';
 import '../domain/entities.dart';
-import '../widget/view_provider.dart';
 
 class TrackListView extends StatefulWidget {
   final List<TrackEntity> tracks;

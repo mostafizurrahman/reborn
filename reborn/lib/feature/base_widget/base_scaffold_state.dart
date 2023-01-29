@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/base_widget/base_loading_view.dart';
 import 'package:reborn/feature/loading/rx_loading.dart';
-import 'package:reborn/feature/widget/base_widget/theme_state.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 

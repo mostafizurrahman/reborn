@@ -1,14 +1,11 @@
 import 'package:reborn/feature/contact_add/rx_contact_entry/contact_entry_bloc.dart';
 import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/menu/app_bar_widget.dart';
+import 'package:reborn/feature/ui/widget/base_widget/base_contact_widget.dart';
 import 'package:reborn/utility/app_enum.dart';
-import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../widget/base_widget/base_contact_widget.dart';
-import '../widget/ink_widget.dart';
 import 'widgets/contact_profile_widget.dart';
 
 class ContactEntryWidget extends BaseContactWidget {
@@ -44,9 +41,9 @@ class _ContactEntryState extends State<ContactEntryWidget> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      ContactProfileWidget(),
-                      Divider(height: 1),
-                      TextField(),
+                      const ContactProfileWidget(),
+                      const Divider(height: 1),
+                      const TextField(),
                       Container(
                         color: Colors.red,
                         height: 880,

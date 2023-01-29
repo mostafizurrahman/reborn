@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:reborn/feature/data_model/entity/recent_entity.dart';
 import 'package:reborn/feature/data_model/entity/service_entity.dart';
 import 'package:reborn/utility/app_theme_data.dart';
@@ -67,7 +65,7 @@ class ServiceWidget extends StatelessWidget {
             width: properties.width,
             height: properties.topHeight,
             child: Column(
-              children: [const Text("Top Widget")],
+              children: const [Text("Top Widget")],
             ),
           ),
         ],
@@ -194,14 +192,6 @@ class ServiceWidget extends StatelessWidget {
 
 
 
-  BoxDecoration get _bottomBox => BoxDecoration(
-        borderRadius: _bottomBorder,
-        border: Border(
-            left: borderSide,
-            top: borderSide,
-            right: borderSide,
-            bottom: borderSide.copyWith(color: Colors.red)),
-      );
 
   BorderSide get borderSide => const BorderSide(
         //                   <--- left side

@@ -43,26 +43,24 @@ class _WelcomeState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<PageData> _pages = StaticData.getPageData();
-    final _widgets =
-        _pages.map((_pageData) => PageWidget(pageData: _pageData)).toList();
+    final List<PageData> pages = StaticData.getPageData();
+    final widgets =
+        pages.map((pageData) => PageWidget(pageData: pageData)).toList();
     return Material(
       color: Colors.transparent,
       child: PageView(
-
         controller: _pageController,
-        children: _widgets,
+        children: widgets,
       ),
     );
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     _pageController.removeListener(_onPageChanged);
     _pageController.dispose();
     _pagerSubscription.cancel();
+    super.dispose();
   }
 }
 

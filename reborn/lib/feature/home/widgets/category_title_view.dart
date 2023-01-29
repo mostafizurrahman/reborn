@@ -1,13 +1,8 @@
-
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/domain/firebase/usecase/get_summary_use_case.dart';
 import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_states.dart';
-import 'package:reborn/feature/track_list/track_list_page.dart';
-import 'package:reborn/feature/widget/view_provider.dart';
+import 'package:reborn/feature/ui/widget/view_provider.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 
 class CategoryTitleView extends StatelessWidget  {
@@ -33,10 +28,10 @@ class CategoryTitleView extends StatelessWidget  {
   }
 
   List<Widget> _addSeeMore(final BuildContext context) {
-    final List<Widget> _widgets = [];
+    final List<Widget> widgets = [];
 
     if (category.seeMore) {
-      final _seeMore = Material(
+      final seeMore = Material(
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         child: Ink(
           height: 30,
@@ -53,10 +48,10 @@ class CategoryTitleView extends StatelessWidget  {
           ),
         ),
       );
-      _widgets.add(_seeMore);
-      _widgets.add(const SizedBox(width: 8));
+      widgets.add(seeMore);
+      widgets.add(const SizedBox(width: 8));
     }
-    return _widgets;
+    return widgets;
   }
 
 }

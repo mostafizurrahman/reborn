@@ -1,7 +1,6 @@
-import 'package:reborn/feature/widget/ink_widget.dart';
+import 'package:reborn/feature/ui/widget/ink_widget.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MenuBar extends AppBar {
   MenuBar(

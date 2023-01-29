@@ -1,5 +1,6 @@
-import 'package:reborn/feature/widget/base_widget/base_contact_widget.dart';
+
 import 'package:flutter/material.dart';
+import 'package:reborn/feature/ui/widget/base_widget/base_contact_widget.dart';
 
 
 class ContactListWidget extends BaseContactWidget {

@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/base_widget/base_scaffold_state.dart';
 import 'package:reborn/feature/domain/entities.dart';
-import 'package:reborn/feature/track_list/widgets/track_item_view.dart';
-import 'package:reborn/feature/widget/base_widget/theme_state.dart';
-import 'package:reborn/feature/widget/view_provider.dart';
+import 'package:reborn/feature/ui/track_list/widgets/track_item_view.dart';
+import 'package:reborn/feature/ui/widget/view_provider.dart';
 import 'package:reborn/utility/screen_data.dart';
 
 import 'widgets/list_cover_view.dart';

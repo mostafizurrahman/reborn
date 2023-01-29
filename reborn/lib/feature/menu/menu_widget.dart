@@ -1,11 +1,11 @@
-import 'package:reborn/feature/widget/base_widget/theme_state.dart';
+
+import 'package:reborn/feature/ui/widget/base_widget/theme_state.dart';
+import 'package:reborn/feature/ui/widget/ink_widget.dart';
 import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'package:reborn/utility/user_info.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
-
-import '../widget/ink_widget.dart';
 import 'menu_item_widget.dart';
 
 class MenuWidget extends StatefulWidget {
@@ -13,7 +13,6 @@ class MenuWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _MenuState();
   }
 }

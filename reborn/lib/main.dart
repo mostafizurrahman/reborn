@@ -1,20 +1,18 @@
 import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:reborn/feature/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/contact_add/contact_entry_widget.dart';
 import 'package:reborn/feature/contact_list/contact_list_widget.dart';
 import 'package:reborn/feature/data_model/sqlite_manager.dart';
-import 'package:reborn/feature/domain/category_summary.dart';
 import 'package:reborn/feature/home/home_widget.dart';
-import 'package:reborn/feature/track_list/track_list_page.dart';
+import 'package:reborn/feature/ui/startup/launch_widget.dart';
+import 'package:reborn/feature/ui/track_list/track_list_page.dart';
 import 'package:reborn/routing/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:reborn/utility/user_info.dart';
 import 'feature/firebase/firebase_handler.dart';
 import 'firebase_options.dart';
-import 'feature/startup/launch_widget.dart';
 import 'utility/app_theme_data.dart';
 
 void main() async {

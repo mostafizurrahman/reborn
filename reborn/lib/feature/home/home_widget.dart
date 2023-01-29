@@ -1,42 +1,23 @@
-import 'dart:math';
-
-import 'package:cached_network_image/cached_network_image.dart';
-
-import 'package:reborn/feature/data_model/entity/service_entity.dart';
 import 'package:reborn/feature/domain/entities.dart';
-import 'package:reborn/feature/home/home_recent_widget.dart';
-import 'package:reborn/feature/home/home_secret_widget.dart';
 import 'package:reborn/feature/home/home_tab_widget.dart';
 import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_bloc.dart';
 import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_events.dart';
 import 'package:reborn/feature/home/rx_firebase_bloc/firebase_data_states.dart';
-import 'package:reborn/feature/home/rx_recent/recent_bloc.dart';
-import 'package:reborn/feature/home/rx_recent/recent_states.dart';
-import 'package:reborn/feature/home/rx_secret/secret_states.dart';
 import 'package:reborn/feature/home/widgets/home_coach_view.dart';
 import 'package:reborn/feature/favorites/home_favorite_view.dart';
 import 'package:reborn/feature/home/widgets/home_profile_view.dart';
 import 'package:reborn/feature/home/widgets/home_sleep_view.dart';
-import 'package:reborn/feature/home/widgets/sub_filter_view.dart';
 import 'package:reborn/feature/menu/menu_widget.dart';
-import 'package:reborn/feature/widget/widget_properties.dart';
-import 'package:reborn/routing/app_route.dart';
+import 'package:reborn/feature/ui/widget/base_widget/theme_state.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
-import 'dart:ui' as ui;
-
 import '../../rx_export.dart';
 import '../base_widget/base_loading_view.dart';
-import '../data/network/firebase_api.dart';
 import '../data_model/static_data.dart';
-import '../loading/rx_loading.dart';
-import '../widget/base_widget/theme_state.dart';
-import '../widget/ink_widget.dart';
 import 'rx_reborn_name/reborn_name_bloc.dart';
-import 'rx_reborn_name/reborn_name_states.dart';
 import 'widgets/bottom_navigation_view.dart';
 import 'widgets/reborn_category_view.dart';
 import 'widgets/reborn_filter_view.dart';

@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/loading/rx_loading.dart';
+import 'package:reborn/feature/ui/widget/blur_round_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
-
-import '../widget/blur_round_view.dart';
 
 class BaseLoadingView extends StatelessWidget {
   final LoadingState loadingState;

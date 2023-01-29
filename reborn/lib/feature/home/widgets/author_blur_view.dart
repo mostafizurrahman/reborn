@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
-import 'package:reborn/feature/widget/blur_round_view.dart';
-import 'package:reborn/feature/widget/profile_view.dart';
+import 'package:reborn/feature/ui/widget/blur_round_view.dart';
+import 'package:reborn/feature/ui/widget/profile_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 
