@@ -26,7 +26,6 @@ class _FirebaseWriter {
     final isSuccess = await _sqlWriter._setFavoriteTrack(entity);
     return Future.value(isSuccess);
   }
-
 }
 
 class _SQLWriter {

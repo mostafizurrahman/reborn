@@ -8,10 +8,9 @@ import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
 
-
 class TrackItemView extends StatelessWidget {
   final TrackEntity track;
-  final double _width = 120;
+  final double _width = 100;
   final double _height = 175;
 
   const TrackItemView({
@@ -21,7 +20,7 @@ class TrackItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 12, bottom: 12),
+      padding: const EdgeInsets.all(12),
       child: Material(
         color: Colors.transparent,
         child: Container(
@@ -30,15 +29,35 @@ class TrackItemView extends StatelessWidget {
           decoration: CCAppTheme.trackDecoration,
           child: Stack(
             children: [
-              Row(
-                children: [
-                  const SizedBox(width: 12),
-                  _getTrackImage(),
-                  const SizedBox(width: 12),
-                  Expanded(child: _getTextContent()),
-                ],
+              SizedBox(
+                width: screenData.width,
+                height: _height,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _getTrackImage(),
+                          const SizedBox(width: 12),
+                          Expanded(child: _getTextContent()),
+                        ],
+                      ),
+                    ),
+                    if (track.trackAuthor != null)
+                      AuthorLeftRoundView(authorData: track.trackAuthor!),
+                  ],
+                ),
               ),
-              Positioned(child: _tapWidget(context), left: 0, right: 0, top: 0, bottom:0,),
+              // Positioned(left: 0, right: 0, top: 0, bottom:0,child: Column(
+
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: _tapWidget(context),
+              ),
             ],
           ),
         ),
@@ -52,11 +71,12 @@ class TrackItemView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 12),
-        Text(track.trackTitle.en, style: CCAppTheme.txtHL2),
+        Text(track.trackTitle.en, style: CCAppTheme.txtHL3),
         const SizedBox(height: 4),
         Text(track.trackSubtitle.en,
-            style: CCAppTheme.txt1
-                .copyWith(fontWeight: FontWeight.bold, color: CCAppTheme.pinkDarkerColor)),
+            style: CCAppTheme.txt.copyWith(
+                fontWeight: FontWeight.bold,
+                color: CCAppTheme.pinkDarkerColor)),
         const SizedBox(height: 12),
         const Expanded(child: SizedBox()),
         _getSummaryText(),
@@ -67,17 +87,24 @@ class TrackItemView extends StatelessWidget {
             color: Colors.pinkAccent,
           ),
         ),
-        if (track.trackAuthor != null) AuthorLeftRoundView(authorData: track.trackAuthor!),
       ],
     );
   }
 
   Widget _getSummaryText() {
-    final duration = DataFormatter.formattedDuration(Duration(seconds: track.trackDuration));
-    final gener = track.generList.isNotEmpty ? track.generList.first : 'Meditation';
+    final duration =
+        DataFormatter.formattedDuration(Duration(seconds: track.trackDuration));
+    final gener =
+        track.generList.isNotEmpty ? track.generList.first : 'Meditation';
     final loved = track.playerInfo.likeCount;
-    final List<String> summary = ["$duration Min", "|", gener.split(" ").first, "|", "$loved ❤"];
-    final List<double> widthList = [75, 2.5, 100, 2.5, 75];
+    final List<String> summary = [
+      "$duration Min",
+      "|",
+      gener.split(" ").first,
+      "|",
+      "$loved ❤"
+    ];
+    final List<double> widthList = [65, 2.5, 95, 2.5, 65];
     final List<Color> colors = [
       Colors.black,
       Colors.pinkAccent,
@@ -100,7 +127,7 @@ class TrackItemView extends StatelessWidget {
           child: Center(
             child: Text(
               summary[index],
-              style: CCAppTheme.txtReg.copyWith(
+              style: CCAppTheme.txt.copyWith(
                 color: colors[index],
                 fontWeight: weights[index],
               ),
@@ -114,38 +141,41 @@ class TrackItemView extends StatelessWidget {
   Widget _getTrackImage() {
     if (track.isLocalTrack) {
       return ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        child: ImageExt.get(track.trackCoverImage, widgetWidth: _width, widgetHeight: _height),
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(12), bottomRight: Radius.circular(12),),
+        child: ImageExt.get(track.trackCoverImage,
+            widgetWidth: _width, widgetHeight: _width),
       );
     }
 
     return ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(8)),
+      borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(12), bottomRight: Radius.circular(12),),
       child: CachedNetworkImage(
         imageUrl: track.trackCoverImage, //  track.trackCoverImage,
         fit: BoxFit.cover,
         width: _width,
-        height: _height,
+        height: _width,
         errorWidget: (_, __, ___) {
-          return ImageExt.getDefaultGrid(width: _width, height: _height);
+          return ImageExt.getDefaultGrid(width: _width, height: _width);
         },
       ),
     );
   }
 
   Widget _tapWidget(BuildContext context) => Material(
-    color: Colors.transparent,
-    child: Ink(
-      child: InkWell(
-        focusColor: CCAppTheme.pinkLightColor.withAlpha(80),
-        splashColor: CCAppTheme.periwinkleDarkColor.withAlpha(110),
-        onTap: () {
-          Navigator.pushNamed(context, AudioPlayerScreen.path, arguments: {
-            "track": track,
-          });
-          debugPrint("track tap on ${track.trackTitle.en}");
-        },
-      ),
-    ),
-  );
+        color: Colors.transparent,
+        child: Ink(
+          child: InkWell(
+            focusColor: CCAppTheme.pinkLightColor.withAlpha(80),
+            splashColor: CCAppTheme.periwinkleDarkColor.withAlpha(110),
+            onTap: () {
+              Navigator.pushNamed(context, AudioPlayerScreen.path, arguments: {
+                "track": track,
+              });
+              debugPrint("track tap on ${track.trackTitle.en}");
+            },
+          ),
+        ),
+      );
 }

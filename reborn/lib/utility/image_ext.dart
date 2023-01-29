@@ -36,7 +36,7 @@ class ImageExt {
       image: getImageAsset("default_cover.jpg"),
       width: width,
       height: height,
-      fit: BoxFit.contain,
+      fit: BoxFit.cover,
     );
   }
 

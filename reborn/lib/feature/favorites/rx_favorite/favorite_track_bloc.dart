@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/firebase/firebase_handler.dart';
+import 'package:reborn/utility/cache_storage.dart';
 
 import '../../domain/firebase/usecase/get_favorite_use_case.dart';
 import 'favorite_track_events.dart';
@@ -15,7 +16,8 @@ class FavoriteTrackBloc extends Bloc<FavoriteTrackEvent, FavoriteTrackState> {
     final GetFavoriteTracksEvent event,
     final Emitter<FavoriteTrackState> emit,
   ) async {
-    final favoriteUseCase = GetFavoriteTracksUseCase();
+    final authors = cacheStorage.rebornAuthors;
+    final favoriteUseCase = GetFavoriteTracksUseCase(authors: authors);
     final idList = firebase.favoriteTracks;
     final favorites = await favoriteUseCase(idList);
     emit(GetFavoriteTracksState(tracks: favorites));

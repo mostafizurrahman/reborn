@@ -33,6 +33,7 @@ class BaseScaffoldState extends StatelessWidget {
     return BlocProvider.value(
       value: loadingBloc,
       child: WillPopScope(
+        onWillPop: onWilPop,
         child: Scaffold(
           drawer: drawer,
           appBar: appBar,
@@ -49,7 +50,6 @@ class BaseScaffoldState extends StatelessWidget {
           floatingActionButton: floating,
           floatingActionButtonLocation: floatLocation,
         ),
-        onWillPop: onWilPop,
       ),
     );
   }

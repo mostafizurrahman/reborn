@@ -17,6 +17,8 @@ class CacheStorage {
     _authors.addAll(author);
   }
 
+  List<RebornAuthor> get rebornAuthors => _authors;
+
 
   static final _storage = CacheStorage._internal();
   factory CacheStorage() {
@@ -29,6 +31,8 @@ class CacheStorage {
     for(final String trackId in tracks) {
       final track = _tracks.firstWhereOrNull((track) => track.trackID == trackId);
       if (track != null) {
+        final author = _authors.firstWhereOrNull((author) => author.authorID == track.authorID);
+        track.trackAuthor = author;
         favorites.add(track);
         await firebase.updateLocalFavorite(track: track);
       }

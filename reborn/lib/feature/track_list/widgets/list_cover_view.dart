@@ -5,7 +5,6 @@ import 'package:reborn/feature/domain/category_summary.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
-
 import '../../../utility/app_theme_data.dart';
 import '../../widget/view_provider.dart';
 
@@ -15,7 +14,9 @@ class ListCoverView extends StatelessWidget {
     Key? key,
     required this.summary,
   }) : super(key: key);
+
   double get _height => screenData.height * 0.24;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -24,8 +25,11 @@ class ListCoverView extends StatelessWidget {
         height: _height,
         child: Stack(
           children: [
-            _backgroundWidget,
+            _backgroundWidget(),
             Container(
+              decoration: decoration,
+              width: screenData.width,
+              height: _height,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -34,9 +38,6 @@ class ListCoverView extends StatelessWidget {
                   const SizedBox(height: 8)
                 ],
               ),
-              decoration: decoration,
-              width: screenData.width,
-              height: _height,
             )
           ],
         ),
@@ -44,16 +45,22 @@ class ListCoverView extends StatelessWidget {
     );
   }
 
-  Widget get _backgroundWidget => CachedNetworkImage(
-        imageUrl: summary.coverImage ?? '', //  track.trackCoverImage,
-        fit: BoxFit.cover,
-        width: screenData.width,
-        height: _height,
-        errorWidget: (_, __, ___) {
-          debugPrint("done");
-          return ImageExt.getDefaultCover(width: screenData.width , height: _height,);
-        },
-      );
+  Widget _backgroundWidget() {
+    return CachedNetworkImage(
+      imageUrl: summary.coverImage ?? '',
+      //  track.trackCoverImage,
+      fit: BoxFit.cover,
+      width: screenData.width,
+      height: _height,
+      errorWidget: (_, __, ___) {
+        debugPrint("done");
+        return ImageExt.getDefaultCover(
+          width: screenData.width,
+          height: _height,
+        );
+      },
+    );
+  }
 
   BoxDecoration get decoration => BoxDecoration(
         gradient: LinearGradient(
@@ -100,7 +107,7 @@ class ListCoverView extends StatelessWidget {
         iconValue: summary.logoData.toInt(),
       );
     }
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.only(top: 16, bottom: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +115,7 @@ class ListCoverView extends StatelessWidget {
           icon,
           const SizedBox(width: 12),
           Text(
-            summary.title.en ,
+            summary.title.en,
             style: CCAppTheme.txtHL2,
           )
         ],

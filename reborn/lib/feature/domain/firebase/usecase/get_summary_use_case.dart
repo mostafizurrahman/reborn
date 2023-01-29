@@ -15,14 +15,14 @@ class GetSummaryUseCase extends BaseUseCase<CategorySummary, RebornCategory> {
 
   @override
   Future<CategorySummary> call(final RebornCategory input) async {
-    final List<TrackEntity> _tracks = input.tracksIdList.map(_getTrack).toList();
-    final List<RebornAuthor> _authors = _getAuthors(_tracks);
-    final List<String> _summaryTxt = _getSummaryText(_tracks);
-    _summaryTxt.add("${_authors.length} Coaches");
+    final List<TrackEntity> tracks = input.tracksIdList.map(_getTrack).toList();
+    final List<RebornAuthor> authors = _getAuthors(tracks);
+    final List<String> summaryTxt = _getSummaryText(tracks);
+    summaryTxt.add("${authors.length} Coaches");
     final CategorySummary summary = CategorySummary(
-      authors: _authors,
-      tracks: _tracks,
-      summary: _summaryTxt,
+      authors: authors,
+      tracks: tracks,
+      summary: summaryTxt,
       title: input.title,
       coverImage: input.categoryCover ?? "",
       logoData: input.logoData.toInt(),
@@ -32,10 +32,8 @@ class GetSummaryUseCase extends BaseUseCase<CategorySummary, RebornCategory> {
 
   TrackEntity _getTrack(final String trackID) {
     final track = tracks.firstWhereOrNull((element) => element.trackID == trackID);
-    print("Track -- ${track?.trackID} -- Author ${track?.authorID}");
     if (track != null) {
-      final author = authors.firstWhereOrNull((element) => element.authorID == track.authorID);
-      track.trackAuthor = author;
+      authors.firstWhereOrNull(track.setAuthor);
       return track;
     }
     return tracks.last;

@@ -58,6 +58,14 @@ class TrackEntity {
   });
 
   Map<String, dynamic> toJson() => _$TrackEntityToJson(this);
+
+  bool setAuthor(final RebornAuthor author) {
+    if (author.authorID == authorID) {
+      trackAuthor = author;
+      return true;
+    }
+    return false;
+  }
 }
 
 Map<String, dynamic> _$TrackEntityToJson(TrackEntity instance) =>

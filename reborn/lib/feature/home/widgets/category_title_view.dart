@@ -13,7 +13,8 @@ import 'package:reborn/utility/app_theme_data.dart';
 class CategoryTitleView extends StatelessWidget  {
   final RebornCategory category;
   final FirebaseDataState firebaseState;
-  const CategoryTitleView({Key? key, required this.category, required this.firebaseState}) : super(key: key);
+  final Function(CategorySummary) onSummaryCreated;
+  const CategoryTitleView({Key? key, required this.category, required this.firebaseState, required this.onSummaryCreated}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +42,11 @@ class CategoryTitleView extends StatelessWidget  {
           height: 30,
           width: 70,
           child: InkWell(
-            onTap: () async {
+            onTap: () {
               if (firebaseState is FirebaseDataReadyState) {
                 final state = firebaseState as FirebaseDataReadyState;
                 final useCase = GetSummaryUseCase(tracks: state.tracks, authors: state.authors);
-                final CategorySummary summary = await useCase(category);
-                Navigator.of(context).pushNamed(TrackListPage.path, arguments:  {"summary" : summary});
+                useCase(category).then(onSummaryCreated);
               }
             },
             child: Center(child: Text(category.seeMoreTitle.en, style: CCAppTheme.txt)),

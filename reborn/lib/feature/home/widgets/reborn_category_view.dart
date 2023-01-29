@@ -6,6 +6,7 @@ import 'package:reborn/feature/domain/firebase/usecase/get_summary_use_case.dart
 import 'package:reborn/feature/home/widgets/cubit/cubit_states.dart';
 import 'package:reborn/feature/home/widgets/track_cover_view.dart';
 import 'package:reborn/feature/home/widgets/track_grid_view.dart';
+import 'package:reborn/feature/track_list/track_list_page.dart';
 import 'package:reborn/feature/widget/base_widget/theme_state.dart';
 import 'package:reborn/utility/screen_data.dart';
 
@@ -49,6 +50,7 @@ class _RebornCategoryState extends State<RebornCategoryView> {
             child: CategoryTitleView(
               category: widget.category,
               firebaseState: widget.firebaseState,
+              onSummaryCreated: _onSummaryCreated,
             ),
           ),
           SizedBox(
@@ -58,6 +60,10 @@ class _RebornCategoryState extends State<RebornCategoryView> {
         ],
       ),
     );
+  }
+
+  void _onSummaryCreated(final CategorySummary summary) {
+    Navigator.of(context).pushNamed(TrackListPage.path, arguments:  {"summary" : summary});
   }
 
   Widget _getSummaryWidget(final BuildContext ctx, final CubitBaseState state) {

@@ -65,7 +65,7 @@ class SQLiteManager {
     return id == 1;
   }
   
-  Future<List<TrackEntity>> getFavoriteList() async {
+  Future<List<TrackEntity>> getFavoriteList({required final List<RebornAuthor> authors}) async {
     final database = _info.database;
     final List<Map> jsonTracks = await database.query(_tableTracks);
     final List<TrackEntity> tracks = [];
@@ -74,6 +74,7 @@ class SQLiteManager {
         final jsonContent = jsonTrack['jsonContent'];
         final Map<String, dynamic> data = (json.decode(jsonContent) as Map).map(_castEntry);
         final track = FBTrackResponse.fromJson(data).toEntity();
+        authors.firstWhereOrNull(track.setAuthor);
         tracks.add(track);
       }
     }

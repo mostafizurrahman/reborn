@@ -28,16 +28,15 @@ class AuthorLeftRoundView extends AuthorBlurView {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 12),
-
                 Text(
                   "${authorData.firstName} ${authorData.lastName}",
-                  style: CCAppTheme.txtHL3,
+                  style: CCAppTheme.txt2,
                 ),
                 const SizedBox(height: 4),
                 Expanded(
                   child: Text(
                     authorData.biography.en,
-                    style: CCAppTheme.txt1.copyWith(color: Colors.white),
+                    style: CCAppTheme.txt.copyWith(color: Colors.white),
                   ),
                 ),
               ],
@@ -50,7 +49,7 @@ class AuthorLeftRoundView extends AuthorBlurView {
         viewHeight:64,
       color: Colors.grey.withAlpha(100),
       content: content,
-      radius: const BorderRadius.only(topLeft: radius),
+      radius: const BorderRadius.only(topLeft: radius, bottomLeft: radius, bottomRight:Radius.circular(12) ),
     );
   }
 }
@@ -90,7 +89,7 @@ class AuthorBlurView extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   "${authorData.firstName} ${authorData.lastName}",
-                  style: CCAppTheme.txt2.copyWith(
+                  style: CCAppTheme.txtHL1.copyWith(
                     color: authorTitleColor,
                   ),
                 ),

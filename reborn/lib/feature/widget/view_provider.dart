@@ -23,10 +23,11 @@ class ViewProvider {
       color: Colors.transparent,
       borderRadius: const BorderRadius.all(Radius.circular(100)),
       child: Ink(
-
+        decoration: CCAppTheme.trackDecoration,
         width: 40,
         height: 40,
         child: InkWell(
+
           onTap: () {
             if (onBack != null) {
               onBack();
