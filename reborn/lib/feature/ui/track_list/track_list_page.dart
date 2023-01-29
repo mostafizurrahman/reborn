@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reborn/feature/base_widget/base_scaffold_state.dart';
 import 'package:reborn/feature/domain/entities.dart';
+import 'package:reborn/feature/ui/base_widget/base_scaffold_state.dart';
 import 'package:reborn/feature/ui/track_list/widgets/track_item_view.dart';
 import 'package:reborn/feature/ui/widget/view_provider.dart';
 import 'package:reborn/utility/screen_data.dart';
@@ -32,7 +31,7 @@ class _TrackListState extends State<TrackListPage> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffoldState(
-      body: Container(
+      body: SizedBox(
         width: screenData.width,
         height: screenData.height,
         child: CustomScrollView(

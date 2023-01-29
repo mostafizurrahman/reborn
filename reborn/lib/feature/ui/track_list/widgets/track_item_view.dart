@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:reborn/feature/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/domain/entities.dart';
-import 'package:reborn/feature/home/widgets/author_blur_view.dart';
+import 'package:reborn/feature/ui/audio_player/audio_player_screen.dart';
+import 'package:reborn/feature/ui/home/widgets/author_blur_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/image_ext.dart';

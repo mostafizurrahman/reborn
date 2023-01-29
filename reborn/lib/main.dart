@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:reborn/feature/audio_player/audio_player_screen.dart';
-import 'package:reborn/feature/contact_add/contact_entry_widget.dart';
-import 'package:reborn/feature/contact_list/contact_list_widget.dart';
 import 'package:reborn/feature/data_model/sqlite_manager.dart';
-import 'package:reborn/feature/home/home_widget.dart';
+import 'package:reborn/feature/ui/audio_player/audio_player_screen.dart';
+import 'package:reborn/feature/ui/contact_add/contact_entry_widget.dart';
+import 'package:reborn/feature/ui/contact_list/contact_list_widget.dart';
+import 'package:reborn/feature/ui/home/home_widget.dart';
 import 'package:reborn/feature/ui/startup/launch_widget.dart';
 import 'package:reborn/feature/ui/track_list/track_list_page.dart';
 import 'package:reborn/routing/app_route.dart';
@@ -107,19 +107,19 @@ class MainAppState extends State<MainAppWidget> {
   }
 
   Route _getGenerateRoute(RouteSettings settings) {
-    Widget _widget = const SizedBox();
+    Widget widget = const SizedBox();
     if ((settings.name == AppRoutes.home)) {
-      _widget = const HomeWidget();
+      widget = const HomeWidget();
     } else if (settings.name == AppRoutes.list) {
-      _widget = ContactListWidget(args: settings.arguments);
+      widget = ContactListWidget(args: settings.arguments);
     } else if (settings.name == AppRoutes.entry) {
-      _widget = ContactEntryWidget(args: settings.arguments);
+      widget = ContactEntryWidget(args: settings.arguments);
     } else if (settings.name == TrackListPage.path) {
       final summary = TrackListPage.getSummary(settings.arguments as Map);
-      _widget = TrackListPage(summary: summary);
+      widget = TrackListPage(summary: summary);
     } else if (settings.name == AudioPlayerScreen.path) {
       final track = AudioPlayerScreen.getTrack(settings.arguments as Map);
-      _widget = AudioPlayerScreen(track: track);
+      widget = AudioPlayerScreen(track: track);
     }
 
     if (Platform.isIOS) {
@@ -127,14 +127,14 @@ class MainAppState extends State<MainAppWidget> {
         builder: (context) {
           return WillPopScope(
             onWillPop: () => _onPop(context),
-            child: _widget,
+            child: widget,
           );
         },
         settings:
             RouteSettings(name: settings.name, arguments: settings.arguments),
       );
     }
-    return AppRoutes.createRoute(settings, _widget);
+    return AppRoutes.createRoute(settings, widget);
   }
 
   Future<bool> _onPop(BuildContext context) async {
