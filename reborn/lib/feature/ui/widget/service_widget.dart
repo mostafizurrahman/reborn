@@ -192,14 +192,7 @@ class ServiceWidget extends StatelessWidget {
     );
   }
 
-  BoxDecoration get _topBox => BoxDecoration(
-        borderRadius: _topBorder,
-        border: Border(
-            left: borderSide,
-            top: borderSide,
-            right: borderSide,
-            bottom: borderSide),
-      );
+
 
   BoxDecoration get _bottomBox => BoxDecoration(
         borderRadius: _bottomBorder,
