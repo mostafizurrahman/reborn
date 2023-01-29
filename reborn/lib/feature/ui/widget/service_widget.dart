@@ -1,12 +1,10 @@
 import 'dart:math';
 
 import 'package:reborn/feature/data_model/entity/recent_entity.dart';
-import 'package:reborn/feature/home/rx_recent/recent_events.dart';
+import 'package:reborn/feature/data_model/entity/service_entity.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/image_ext.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
-import '../data_model/entity/service_entity.dart';
 import 'widget_properties.dart';
 
 class ServiceWidget extends StatelessWidget {
@@ -25,6 +23,8 @@ class ServiceWidget extends StatelessWidget {
     final _onTap = onTapped;
     return Container(
       decoration: CCAppTheme.shadowDec,
+      width: properties.width,
+      height: properties.height,
       child: Material(
         color: Colors.transparent,
         child: Ink(
@@ -37,8 +37,6 @@ class ServiceWidget extends StatelessWidget {
           ),
         ),
       ),
-      width: properties.width,
-      height: properties.height,
     );
   }
 
@@ -171,7 +169,10 @@ class ServiceWidget extends StatelessWidget {
       height: 45,
       child: Stack(
         children: images.map((e) {
-          final _widget = Positioned(
+          final widget = Positioned(
+            top: 0,
+            bottom: 0,
+            right: pad,
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(120)),
               child: Container(
@@ -183,12 +184,9 @@ class ServiceWidget extends StatelessWidget {
                 child: e,
               ),
             ),
-            top: 0,
-            bottom: 0,
-            right: pad,
           );
           pad += 35;
-          return _widget;
+          return widget;
         }).toList(),
       ),
     );

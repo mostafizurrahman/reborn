@@ -1,10 +1,12 @@
 
 
 
+import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/utility/app_enum.dart';
 import 'package:flutter/material.dart';
 
-import '../../data_model/static_data.dart';
+
+
 
 abstract class BaseContactWidget extends StatefulWidget {
 
