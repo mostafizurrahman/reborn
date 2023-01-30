@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
+import 'package:reborn/feature/ui/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/ui/base_widget/base_scaffold_state.dart';
 import 'package:reborn/feature/ui/track_list/widgets/track_item_view.dart';
 import 'package:reborn/feature/ui/widget/view_provider.dart';
@@ -50,13 +51,24 @@ class _TrackListState extends State<TrackListPage> {
 
   List<SliverToBoxAdapter> _getSlivers() {
     final List<SliverToBoxAdapter> slivers = [];
-    for(final track in widget.summary.tracks) {
+    for (final track in widget.summary.tracks) {
       final SliverToBoxAdapter adapter = SliverToBoxAdapter(
-        child: TrackItemView(track: track),
+        child: TrackItemView(
+          track: track,
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              AudioPlayerScreen.path,
+              arguments: {
+                "track": track,
+              },
+            );
+            debugPrint("track tap on ${track.trackTitle.en}");
+          },
+        ),
       );
       slivers.add(adapter);
     }
     return slivers;
   }
-
 }

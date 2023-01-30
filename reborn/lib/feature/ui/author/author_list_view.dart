@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/domain/entities.dart';
+import 'package:reborn/feature/ui/author/author_details_page.dart';
 import 'package:reborn/feature/ui/author/instructor_view.dart';
 import 'package:reborn/feature/ui/author/rx_author/author_bloc.dart';
 import 'package:reborn/feature/ui/author/rx_author/author_events.dart';
@@ -91,7 +92,23 @@ class _AuthorListState extends State<AuthorListView> {
     return InstructorView(author: author, onTapAuthor: _onTapAuthor);
   }
 
-  void _onTapAuthor(final RebornAuthor author) {}
+  Route _onTapAuthor(final RebornAuthor author) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => AuthorDetailsPage(author: author),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 
   @override
   void dispose() {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/ui/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/ui/home/widgets/author_blur_view.dart';
+import 'package:reborn/feature/ui/widget/action_widget.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/image_ext.dart';
@@ -12,11 +13,13 @@ class TrackItemView extends StatelessWidget {
   final TrackEntity track;
   final double _width = 100;
   final double _height = 175;
-
+  final Function? onTap;
   const TrackItemView({
     Key? key,
     required this.track,
+    this.onTap,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,7 +59,7 @@ class TrackItemView extends StatelessWidget {
                 right: 0,
                 top: 0,
                 bottom: 0,
-                child: _tapWidget(context),
+                child: ActionWidget(onTap: onTap),
               ),
             ],
           ),
@@ -98,7 +101,7 @@ class TrackItemView extends StatelessWidget {
         track.generList.isNotEmpty ? track.generList.first : 'Meditation';
     final loved = track.playerInfo.likeCount;
     final List<String> summary = [
-      "$duration Min",
+      duration,
       "|",
       gener.split(" ").first,
       "|",
@@ -163,19 +166,6 @@ class TrackItemView extends StatelessWidget {
     );
   }
 
-  Widget _tapWidget(BuildContext context) => Material(
-        color: Colors.transparent,
-        child: Ink(
-          child: InkWell(
-            focusColor: CCAppTheme.pinkLightColor.withAlpha(80),
-            splashColor: CCAppTheme.periwinkleDarkColor.withAlpha(110),
-            onTap: () {
-              Navigator.pushNamed(context, AudioPlayerScreen.path, arguments: {
-                "track": track,
-              });
-              debugPrint("track tap on ${track.trackTitle.en}");
-            },
-          ),
-        ),
-      );
+
+
 }
