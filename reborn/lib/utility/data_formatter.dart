@@ -10,15 +10,28 @@ import 'package:intl/intl.dart';
 
 
 class DataFormatter{
-  static String formattedDuration(Duration duration) {
+  static String formattedDuration(Duration duration, {final bool shouldNewLine = false}) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     if (duration.inHours > 0) {
-      return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+      return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds ${shouldNewLine? '\n' : ''}Hrs";
     }
-    return "$twoDigitMinutes:$twoDigitSeconds";
+    return "$twoDigitMinutes:$twoDigitSeconds  ${shouldNewLine? '\n' : ''}Min";
   }
+
+  static String getFormatted({required final int number}) {
+    double value = number.toDouble();
+    if (value < 1000) {
+      return number.toString();
+    }
+    if (value > 1000000) {
+      return '${(value/1000000).toStringAsFixed(2)} M';
+    }
+    return '${(value/1000).toStringAsFixed(2)} K';
+  }
+
+
   static List shuffle(List items) {
     var random = Random();
 

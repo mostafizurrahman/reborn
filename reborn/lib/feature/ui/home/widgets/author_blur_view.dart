@@ -89,7 +89,7 @@ class AuthorBlurView extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   "${authorData.firstName} ${authorData.lastName}",
-                  style: CCAppTheme.txtHL1.copyWith(
+                  style: CCAppTheme.txtReg.copyWith(
                     color: authorTitleColor,
                   ),
                 ),
