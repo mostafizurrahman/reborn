@@ -92,22 +92,41 @@ class _AuthorListState extends State<AuthorListView> {
     return InstructorView(author: author, onTapAuthor: _onTapAuthor);
   }
 
-  Route _onTapAuthor(final RebornAuthor author) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => AuthorDetailsPage(author: author),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 1.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
+  void _onTapAuthor(final RebornAuthor author) {
+    final route = MaterialPageRoute(builder: (BuildContext ctx){
+      return AuthorDetailsPage(author: author);
+    });
 
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
-    );
+    // PageRouteBuilder(
+    //   pageBuilder: (context, animation, secondaryAnimation) => ,
+    //   transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //     const begin = Offset(0.0, 1.0);
+    //     const end = Offset.zero;
+    //     const curve = Curves.ease;
+    //
+    //     var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //     return SlideTransition(
+    //       position: animation.drive(tween),
+    //       child: child,
+    //     );
+    //   },
+    // );
+    Navigator.of(context).push(route);
+
   }
 
   @override

@@ -34,6 +34,7 @@ class BaseScaffoldState extends StatelessWidget {
       child: WillPopScope(
         onWillPop: onWilPop,
         child: Scaffold(
+          extendBodyBehindAppBar : true,
           drawer: drawer,
           appBar: appBar,
           body: Container(
