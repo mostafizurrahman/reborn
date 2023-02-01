@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/ui/base_widget/base_scaffold_state.dart';
 import 'package:reborn/feature/ui/widget/profile_view.dart';
-import 'package:reborn/feature/ui/widget/view_provider.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/screen_data.dart';
@@ -108,16 +107,6 @@ class _AuthorDetailsState extends State<AuthorDetailsPage> {
           text: 'Favorites ',
           data: favorite,
         ),
-        // Row(
-        //   children: [
-        //     Padding(
-        //       padding: EdgeInsets.symmetric(horizontal: 12),
-        //       child: Icon(CupertinoIcons.heart_fill),
-        //     ),
-        //     SizedBox(width: 120, child: Text('Favorites ')),
-        //     Expanded(child: Text(favorite)),
-        //   ],
-        // )
       ],
     );
   }

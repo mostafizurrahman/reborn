@@ -19,7 +19,9 @@ class _FirebaseReader {
     try {
       final collection = await _firebaseStore.collection(collectionKey).get();
       for (final element in collection.docs) {
-        dataList.add(_getConcreteResponse(element.data(), collectionKey) as T);
+        final data = element.data();
+        data['documentId'] = element.id;
+        dataList.add(_getConcreteResponse(data, collectionKey) as T);
       }
     } on FirebaseException catch (e) {
       // Caught an exception from Firebase.

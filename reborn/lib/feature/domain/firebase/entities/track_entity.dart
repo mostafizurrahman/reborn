@@ -36,10 +36,11 @@ class TrackEntity {
   final int trackIconData;
   final bool isPremium;
   final PlayerInfoEntity playerInfo;
-
+  final String documentId;
   RebornAuthor? trackAuthor;
 
   TrackEntity({
+    required this.documentId,
     required this.trackID,
     required this.trackTitle,
     required this.trackSubtitle,

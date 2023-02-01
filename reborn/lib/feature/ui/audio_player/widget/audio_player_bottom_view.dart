@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/domain/firebase/entities/track_entity.dart';
+import 'package:reborn/feature/domain/firebase/usecase/update_player_info_use_case.dart';
 import 'package:reborn/feature/firebase/firebase_handler.dart';
 import 'package:reborn/feature/ui/audio_player/rx_audio/audio_player_bloc.dart';
 import 'package:reborn/feature/ui/audio_player/rx_audio/audio_player_state.dart';
@@ -17,9 +18,11 @@ import 'progress_circle_painter.dart';
 
 class AudioPlayerBottomView extends StatefulWidget {
   final TrackEntity track;
+  final BehaviorSubject<PlayerInfoEntity> infoBehavior;
   const AudioPlayerBottomView({
     Key? key,
     required this.track,
+    required this.infoBehavior,
   }) : super(key: key);
 
   @override
@@ -30,10 +33,12 @@ class AudioPlayerBottomView extends StatefulWidget {
 
 class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   static const int audioLength = 5000;
+  int likeCount = 0;
+  int duration = 0;
+  double _sliderValue = 0;
   final BehaviorSubject<double> _sliderBehavior = BehaviorSubject.seeded(0);
   final PublishSubject<bool> _audioLoaderPublisher = PublishSubject();
   final AudioPlayerBloc _audioBloc = AudioPlayerBloc();
-  double _sliderValue = 0;
   static const double _playerDimension = 130;
   late final StreamSubscription _subscription;
 
@@ -48,9 +53,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
     if (audioState is StartTrackAudioState) {
       _sliderValue = audioState.totalDuration;
       _audioLoaderPublisher.sink.add(true);
-    } else if (audioState is FinishTrackAudioState) {
-
-    }
+    } else if (audioState is FinishTrackAudioState) {}
   }
 
   @override
@@ -212,7 +215,13 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   }
 
   void _onSetFavorite() {
-    firebase.setFavorite(trackEntity: widget.track, deviceID: userInfo.deviceID);
+    if (likeCount == 0) {
+      likeCount = 1;
+    } else {
+      likeCount = 0;
+    }
+    firebase.setFavorite(
+        trackEntity: widget.track, deviceID: userInfo.deviceID);
   }
 
   Widget _getDurationView(
@@ -242,12 +251,13 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
 
   Widget _getAudioSliderView(
       BuildContext ctx, final AsyncSnapshot<double> snapshot) {
+    final value = snapshot.data ?? 0.0;
     return Slider(
       min: 0,
-      max: _sliderValue,
+      max: _sliderValue + 0.1,
       onChangeStart: _onChangeStared,
       onChangeEnd: _onChangeEnded,
-      value: snapshot.data ?? 0.1,
+      value: value,
       onChanged: _sliderBehavior.sink.add,
       inactiveColor: Colors.blueGrey,
       thumbColor: Colors.white,
@@ -309,6 +319,16 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   void dispose() {
     _subscription.cancel();
     _audioBloc.close();
+    _updatePlayerInfo();
     super.dispose();
+  }
+
+  void _updatePlayerInfo() {
+    duration = _sliderBehavior.value.toInt() ~/ 1000;
+    if (likeCount == 1 || duration > 0) {
+      final PlayerInfoEntity infoEntity =
+          PlayerInfoEntity(likeCount: likeCount, totalPlayed: duration);
+      widget.infoBehavior.sink.add(infoEntity);
+    }
   }
 }

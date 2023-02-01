@@ -10,14 +10,16 @@ part 'fb_track_response.g.dart';
 class PlayerInfo {
   int? likeCount;
   int? totalPlayed;
+
   PlayerInfo({required this.likeCount, this.totalPlayed});
 
-  factory PlayerInfo.fromJson(Map<String, dynamic> json) => _$PlayerInfoFromJson(json);
+  factory PlayerInfo.fromJson(Map<String, dynamic> json) =>
+      _$PlayerInfoFromJson(json);
 
   Map<String, dynamic> toJson() => {};
 
-  PlayerInfoEntity toEntity() =>
-      PlayerInfoEntity(likeCount: likeCount ?? 0, totalPlayed: totalPlayed ?? 0);
+  PlayerInfoEntity toEntity() => PlayerInfoEntity(
+      likeCount: likeCount ?? 0, totalPlayed: totalPlayed ?? 0);
 }
 
 @JsonSerializable(createToJson: false)
@@ -26,7 +28,8 @@ class FBTrackResponse extends BaseResponse {
   final LocalizedResponse? trackSubtitle;
   final int? trackDuration;
 
-  final List<String>? generList; //["Popular", "Mediation", "Sleep", "Music" ... ]
+  final List<String>?
+      generList; //["Popular", "Mediation", "Sleep", "Music" ... ]
   final LocalizedResponse? story;
   final String? authorID;
   final String? trackType;
@@ -38,7 +41,10 @@ class FBTrackResponse extends BaseResponse {
   final bool? isPremium;
   final PlayerInfo? playerInfo;
   final String? trackID;
+  final String? documentId;
+
   FBTrackResponse({
+    required this.documentId,
     required this.trackTitle,
     required this.trackSubtitle,
     required this.trackDuration,
@@ -56,11 +62,13 @@ class FBTrackResponse extends BaseResponse {
     required this.trackID,
   });
 
-  factory FBTrackResponse.fromJson(Map<String, dynamic> json) => _$FBTrackResponseFromJson(json);
+  factory FBTrackResponse.fromJson(Map<String, dynamic> json) =>
+      _$FBTrackResponseFromJson(json);
 
   Map<String, dynamic> toJson() => {};
 
   TrackEntity toEntity() => TrackEntity(
+        documentId: documentId ?? '--',
         trackTitle: trackTitle?.toEntity() ?? emptyTxt,
         trackSubtitle: trackSubtitle?.toEntity() ?? emptyTxt,
         trackDuration: trackDuration ?? 0,
@@ -70,11 +78,12 @@ class FBTrackResponse extends BaseResponse {
         isPremium: isPremium ?? false,
         generList: generList ?? [],
         trackIconData: trackIconData ?? 0,
-        playerInfo: playerInfo?.toEntity() ?? PlayerInfoEntity(likeCount: 0, totalPlayed: 0),
+        playerInfo: playerInfo?.toEntity() ??
+            PlayerInfoEntity(likeCount: 0, totalPlayed: 0),
         story: story?.toEntity() ?? emptyTxt,
         isLocalTrack: isLocalTrack ?? false,
         trackSecret: trackSecret ?? '',
         trackAudio: trackAudio ?? '',
-    trackID: trackID ?? '',
+        trackID: trackID ?? '',
       );
 }

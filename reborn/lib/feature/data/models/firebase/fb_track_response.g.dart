@@ -13,6 +13,7 @@ PlayerInfo _$PlayerInfoFromJson(Map<String, dynamic> json) => PlayerInfo(
 
 FBTrackResponse _$FBTrackResponseFromJson(Map<String, dynamic> json) =>
     FBTrackResponse(
+      documentId: json['documentId'] as String?,
       trackTitle: json['trackTitle'] == null
           ? null
           : LocalizedResponse.fromJson(
