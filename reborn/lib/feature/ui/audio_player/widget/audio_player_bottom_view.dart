@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/domain/firebase/entities/track_entity.dart';
@@ -8,6 +9,7 @@ import 'package:reborn/feature/firebase/firebase_handler.dart';
 import 'package:reborn/feature/ui/audio_player/rx_audio/audio_player_bloc.dart';
 import 'package:reborn/feature/ui/audio_player/rx_audio/audio_player_state.dart';
 import 'package:reborn/feature/ui/loading/rx_loading.dart';
+import 'package:reborn/feature/ui/widget/loader/loading_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/data_formatter.dart';
 import 'package:reborn/utility/screen_data.dart';
@@ -37,6 +39,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   int duration = 0;
   double _sliderValue = 0;
   final BehaviorSubject<double> _sliderBehavior = BehaviorSubject.seeded(0);
+  final BehaviorSubject<bool> _favoriteBehavior = BehaviorSubject();
   final PublishSubject<bool> _audioLoaderPublisher = PublishSubject();
   final AudioPlayerBloc _audioBloc = AudioPlayerBloc();
   static const double _playerDimension = 130;
@@ -47,6 +50,13 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
     super.initState();
     _subscription = _audioBloc.stream.listen(_onAudioBlocChanged);
     _audioBloc.add(LoadAudioEvent(trackEntity: widget.track));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _favoriteBehavior.sink
+        .add(firebase.favoriteTracks.contains(widget.track.trackID));
   }
 
   void _onAudioBlocChanged(final AudioState audioState) {
@@ -151,9 +161,9 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
       children: [
         const SizedBox(width: 24),
         _getTapWidget(_onBackwardAudio, Icons.fast_rewind),
-        const Expanded(child: SizedBox(), flex: 2),
+        const Expanded(flex: 2, child: SizedBox()),
         _getTapWidget(_onPlayAudio, icon, dimension: 70),
-        const Expanded(child: SizedBox(), flex: 2),
+        const Expanded(flex: 2, child: SizedBox()),
         _getTapWidget(_onForwardAudio, Icons.fast_forward),
         const SizedBox(width: 24),
       ],
@@ -189,18 +199,12 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
                   fontSize: 19,
                 ),
               ),
-              _getTapWidget(
-                _onSetFavorite,
-                Icons.favorite_border,
-                color: Colors.pinkAccent,
+              StreamBuilder<bool>(
+                builder: _getFavoriteButton,
+                stream: _favoriteBehavior.stream,
               ),
               BlocBuilder(
-                builder: (ctx, state) {
-                  return StreamBuilder(
-                    builder: _getDurationView,
-                    stream: _sliderBehavior.stream,
-                  );
-                },
+                builder: _getBlocBuilder,
                 bloc: _audioBloc,
               ),
             ],
@@ -214,14 +218,41 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
     );
   }
 
-  void _onSetFavorite() {
+  Widget _getBlocBuilder(final BuildContext ctx, AudioState state) {
+    return StreamBuilder(
+      builder: _getDurationView,
+      stream: _sliderBehavior.stream,
+    );
+  }
+
+  Widget _getFavoriteButton(
+      final BuildContext ctx, final AsyncSnapshot<bool> data) {
+    final isFavorite = data.hasData && (data.data ?? false);
+    final iconData =
+        isFavorite ? CupertinoIcons.heart_fill : Icons.favorite_border;
+    final color = isFavorite ? Colors.pinkAccent : Colors.black;
+    return _getTapWidget(
+      _onSetFavorite,
+      iconData,
+      color: color,
+    );
+  }
+
+  void _onSetFavorite() async {
+    startLoading(context);
     if (likeCount == 0) {
       likeCount = 1;
     } else {
       likeCount = 0;
     }
-    firebase.setFavorite(
-        trackEntity: widget.track, deviceID: userInfo.deviceID);
+    firebase
+        .setFavorite(trackEntity: widget.track, deviceID: userInfo.deviceID)
+        .then((value) {
+      _favoriteBehavior.sink.add(value);
+      // stopLoading(context);
+    }).catchError((_) {
+      // stopLoading(context);
+    });
   }
 
   Widget _getDurationView(

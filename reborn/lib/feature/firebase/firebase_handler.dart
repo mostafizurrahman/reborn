@@ -8,7 +8,6 @@ import 'package:reborn/feature/data/models/firebase/fb_user_response.dart';
 import 'package:reborn/feature/data/network/firebase_api.dart';
 import 'package:reborn/feature/data_model/sqlite_manager.dart';
 import 'package:reborn/feature/domain/entities.dart';
-import 'package:reborn/utility/user_info.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../data/models/firebase/fb_error_response.dart';
@@ -47,7 +46,6 @@ class FirebaseHandler {
 
   Future<bool> updatePlayerInfo(TrackEntity track, final int playCount, final int likes) async {
     final snap = await _data.reader._firebaseStore.collection(BaseApi.tracks).doc(track.documentId).get();
-    debugPrint('out of the world ${track.documentId}');
     final playerInfo = snap.data()?['playerInfo'];
     if (playerInfo != null) {
       final int totalPlayed = playCount + playerInfo['totalPlayed'] as int? ?? 0;
