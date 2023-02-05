@@ -51,7 +51,7 @@ class StaticData {
           onTap: onTabBarItemTap,
         )..isSelected = false,
         TabBarData(
-          iconData: Icons.stream,
+          iconData: CupertinoIcons.sun_haze_fill,
           tabID: tabReborn,
           name: "Reborn",
           onTap: onTabBarItemTap,

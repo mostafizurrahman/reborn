@@ -13,7 +13,7 @@ class TrackItemView extends StatelessWidget {
   final TrackEntity track;
   final double _width = 100;
   final double _height = 175;
-  final Function? onTap;
+  final Function(TrackEntity)? onTap;
   const TrackItemView({
     Key? key,
     required this.track,
@@ -59,13 +59,20 @@ class TrackItemView extends StatelessWidget {
                 right: 0,
                 top: 0,
                 bottom: 0,
-                child: ActionWidget(onTap: onTap),
+                child: ActionWidget(onTap: startTrack),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void startTrack(){
+    final tapFunc = onTap;
+    if (tapFunc != null) {
+      tapFunc(track);
+    }
   }
 
   Widget _getTextContent() {

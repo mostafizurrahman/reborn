@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/firebase/entities/track_entity.dart';
+import 'package:reborn/feature/ui/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/ui/track_list/widgets/track_item_view.dart';
 import 'package:reborn/utility/screen_data.dart';
 
@@ -37,12 +38,19 @@ class _TrackListViewState extends State<TrackListView> {
     final List<SliverToBoxAdapter> slivers = [];
     for(final track in widget.tracks) {
       final SliverToBoxAdapter adapter = SliverToBoxAdapter(
-        child: TrackItemView(track: track),
+        child: TrackItemView(track: track, onTap: _onTapAuthor),
       );
       slivers.add(adapter);
     }
     return slivers;
   }
 
+
+  void _onTapAuthor(final TrackEntity trackEntity) {
+    final route = MaterialPageRoute(builder: (BuildContext ctx){
+      return AudioPlayerScreen(track: trackEntity);
+    });
+    Navigator.of(context).push(route);
+  }
 
 }

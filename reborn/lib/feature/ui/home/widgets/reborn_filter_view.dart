@@ -54,7 +54,6 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
                         radius: 20),
                   ),
                   const Spacer(),
-                  Text("Reborn", style: headStyle1),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Image(

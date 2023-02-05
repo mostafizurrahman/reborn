@@ -26,12 +26,26 @@ class _LoadingView extends StatelessWidget {
                 ),
               ),
               height: 259,
-              child: LoadingAnimationWidget.twistingDots(
-                leftDotColor: const Color(0xFF1A1A3F),
-                rightDotColor: const Color(0xFFEA3799),
-                size: 200,
+              child:Column(
+                children: [
+                  SizedBox(height: screenData.width * 0.15,),
+                  const Text('LOADING'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(width: screenData.width * 0.25,),
+                      SizedBox(
+                        child: LoadingAnimationWidget.stretchedDots (
+                          color: CCAppTheme.pinkDarkerColor,
+                          size: 100,
+                        ),
+                      ),
+                      SizedBox(width: screenData.width * 0.25,)
+                    ],
+                  )
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),

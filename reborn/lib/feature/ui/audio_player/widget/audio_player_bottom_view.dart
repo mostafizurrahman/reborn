@@ -249,9 +249,9 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
         .setFavorite(trackEntity: widget.track, deviceID: userInfo.deviceID)
         .then((value) {
       _favoriteBehavior.sink.add(value);
-      // stopLoading(context);
+      stopLoading(context);
     }).catchError((_) {
-      // stopLoading(context);
+      stopLoading(context);
     });
   }
 

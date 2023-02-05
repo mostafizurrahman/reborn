@@ -55,20 +55,22 @@ class _TrackListState extends State<TrackListPage> {
       final SliverToBoxAdapter adapter = SliverToBoxAdapter(
         child: TrackItemView(
           track: track,
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              AudioPlayerScreen.path,
-              arguments: {
-                "track": track,
-              },
-            );
-            debugPrint("track tap on ${track.trackTitle.en}");
-          },
+          onTap: onTapItem,
         ),
       );
       slivers.add(adapter);
     }
     return slivers;
+  }
+
+  void onTapItem(TrackEntity track) {
+    Navigator.pushNamed(
+      context,
+      AudioPlayerScreen.path,
+      arguments: {
+        "track": track,
+      },
+    );
+    debugPrint("track tap on ${track.trackTitle.en}");
   }
 }
