@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>840943017720-8o8es85dpbo4ej73c1sr9ndp4cs8h12f.apps.googleusercontent.com</string>
+	<string>840943017720-3v823u2dj4n839iiiotsl7671q84qrc3.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.840943017720-8o8es85dpbo4ej73c1sr9ndp4cs8h12f</string>
+	<string>com.googleusercontent.apps.840943017720-3v823u2dj4n839iiiotsl7671q84qrc3</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>840943017720-rfiapa870151qnkdm88vh9lbl47jl1ft.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAT4S5vQDFyc6RZZs4JUICNLLSmkcjsP74</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.reborn.reborn</string>
+	<string>com.reborn.world</string>
 	<key>PROJECT_ID</key>
 	<string>reborn-1b03e</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:840943017720:ios:90608f767715657dee650d</string>
+	<string>1:840943017720:ios:bad8bfb790d3f7b6ee650d</string>
 </dict>
 </plist>

@@ -65,6 +65,6 @@ class DefaultFirebaseOptions {
     storageBucket: 'reborn-1b03e.appspot.com',
     androidClientId: '840943017720-rfiapa870151qnkdm88vh9lbl47jl1ft.apps.googleusercontent.com',
     iosClientId: '840943017720-8o8es85dpbo4ej73c1sr9ndp4cs8h12f.apps.googleusercontent.com',
-    iosBundleId: 'com.reborn.reborn',
+    iosBundleId: 'com.reborn.world',
   );
 }
