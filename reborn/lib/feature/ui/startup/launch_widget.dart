@@ -1,9 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:reborn/feature/data_model/sqlite_manager.dart';
 import 'package:reborn/feature/data_model/static_data.dart';
+import 'package:reborn/feature/firebase/firebase_handler.dart';
 import 'package:reborn/feature/ui/widget/index_widget.dart';
+import 'package:reborn/firebase_options.dart';
 import 'package:reborn/routing/app_route.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:reborn/utility/screen_data.dart';
+import 'package:reborn/utility/user_info.dart';
 import 'package:rxdart/rxdart.dart';
 import '../widget/base_widget/theme_state.dart';
 import '../widget/ink_widget.dart';
@@ -20,14 +25,12 @@ class LaunchWidget extends StatefulWidget {
 }
 
 class _LaunchState extends ThemeState<LaunchWidget> {
-  final _launchBloc = LauncherBloc();
+
   final BehaviorSubject<int> _pageBehaviour = BehaviorSubject();
   @override
   void initState() {
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,8 @@ class _LaunchState extends ThemeState<LaunchWidget> {
         child: SafeArea(
           child: Column(
             children: [
-              SizedBox(
+              // if (_pageBehaviour.value >= 0)
+                SizedBox(
                 width: screenData.width,
                 height: screenData.height * 0.75,
                 child: WelcomePage(pageBehaviour: _pageBehaviour),

@@ -69,3 +69,5 @@ void startLoading(final BuildContext context) {
 Future<void> stopLoading(final BuildContext context) async {
   Navigator.of(context).pop();
 }
+
+Widget get defaultLoader => const _LoadingView();

@@ -4,11 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/domain/firebase/entities/track_entity.dart';
-import 'package:reborn/feature/domain/firebase/usecase/update_player_info_use_case.dart';
 import 'package:reborn/feature/firebase/firebase_handler.dart';
 import 'package:reborn/feature/ui/audio_player/rx_audio/audio_player_bloc.dart';
 import 'package:reborn/feature/ui/audio_player/rx_audio/audio_player_state.dart';
-import 'package:reborn/feature/ui/loading/rx_loading.dart';
 import 'package:reborn/feature/ui/widget/loader/loading_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/data_formatter.dart';
@@ -178,10 +176,6 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   }
 
   Widget _getAudioStatusPanel() {
-    final state = _audioBloc.state;
-    if (state is LoadingStartState) {
-      return const CircularProgressIndicator();
-    }
     final duration = DataFormatter.formattedDuration(
       Duration(milliseconds: _sliderValue.toInt()),
     );
@@ -282,10 +276,15 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
 
   Widget _getAudioSliderView(
       BuildContext ctx, final AsyncSnapshot<double> snapshot) {
-    final value = snapshot.data ?? 0.0;
+    double value = snapshot.data ?? 0.0;
+    if (value < 0) {
+      value = 0;
+    } else if (value >= _sliderValue) {
+      value = _sliderValue;
+    }
     return Slider(
       min: 0,
-      max: _sliderValue + 0.1,
+      max: _sliderValue,
       onChangeStart: _onChangeStared,
       onChangeEnd: _onChangeEnded,
       value: value,

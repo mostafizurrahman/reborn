@@ -6,6 +6,7 @@ import 'package:reborn/feature/ui/contact_add/contact_entry_widget.dart';
 import 'package:reborn/feature/ui/contact_list/contact_list_widget.dart';
 import 'package:reborn/feature/ui/home/home_widget.dart';
 import 'package:reborn/feature/ui/startup/launch_widget.dart';
+import 'package:reborn/feature/ui/startup_page.dart';
 import 'package:reborn/feature/ui/track_list/track_list_page.dart';
 import 'package:reborn/routing/app_route.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,6 @@ class MainAppState extends State<MainAppWidget> {
   @override
   void initState() {
     super.initState();
-    _setFirebase();
   }
 
   @override
@@ -101,7 +101,7 @@ class MainAppState extends State<MainAppWidget> {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const LaunchWidget(),
+      home: StartupPage(),
       onGenerateRoute: _getGenerateRoute,
     );
   }
@@ -142,14 +142,5 @@ class MainAppState extends State<MainAppWidget> {
       return Future<bool>.value(false);
     }
     return Future<bool>.value(true);
-  }
-
-  void _setFirebase() {
-    Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    ).then((value) => firebase.clearDB());
-
-    sqlDatabase.createDatabase().then((value) =>
-        userInfo.getDeviceID().then((did) => firebase.listenFirebase(did)));
   }
 }

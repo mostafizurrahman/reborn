@@ -11,12 +11,12 @@ import 'package:reborn/feature/ui/home/widgets/home_profile_view.dart';
 import 'package:reborn/feature/ui/home/widgets/home_sleep_view.dart';
 import 'package:reborn/feature/ui/menu/menu_widget.dart';
 import 'package:reborn/feature/ui/widget/base_widget/theme_state.dart';
+import 'package:reborn/feature/ui/widget/loader/loading_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
-import '../base_widget/base_loading_view.dart';
 import 'rx_reborn_name/reborn_name_bloc.dart';
 import 'widgets/bottom_navigation_view.dart';
 import 'widgets/reborn_category_view.dart';
@@ -40,12 +40,12 @@ class _HomeState extends ThemeState<HomeWidget> {
   @override
   void initState() {
     super.initState();
+
     _firebaseBloc.add(LoadFirebaseDataEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    screenData.setScreenData(context);
 
     return MultiBlocProvider(
       providers: [
@@ -82,23 +82,7 @@ class _HomeState extends ThemeState<HomeWidget> {
 
   Widget _onBuildGridFilter(final BuildContext _context, final FirebaseDataState firebaseState) {
     if (firebaseState is FirebaseDataLoadingState) {
-      return SizedBox(
-        height: screenData.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //const RebornFilterView(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: BaseLoadingView.loader,
-            ),
-            Text(
-              "Loading...",
-              style: CCAppTheme.txtHL2,
-            ),
-          ],
-        ),
-      );
+      return defaultLoader;
     }
     if (firebaseState is FirebaseDataReadyState) {
       final List<TabBarData> tabList = _tabBehaviour.valueOrNull ?? [];

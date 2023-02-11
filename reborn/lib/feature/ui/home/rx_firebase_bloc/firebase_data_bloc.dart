@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/domain/firebase/entities/reborn_author.dart';
 import 'package:reborn/feature/domain/firebase/entities/reborn_category.dart';
@@ -18,6 +19,7 @@ class FirebaseDataBloc extends Bloc<FirebaseDataEvent, FirebaseDataState> {
   Future<void> _onLoadFirebaseData(
       final LoadFirebaseDataEvent event, final Emitter<FirebaseDataState> emit) async {
     emit(FirebaseDataLoadingState());
+    await Firebase.initializeApp();
     final CategorySearchData searchData = CategorySearchData();
     final categoryUseCase = GetCategoryUseCase();
     final List<RebornCategory> categoryList = await categoryUseCase(searchData);
