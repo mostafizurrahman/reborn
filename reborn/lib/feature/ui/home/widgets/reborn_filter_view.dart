@@ -33,32 +33,33 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
       color: Colors.transparent,
       child: SizedBox(
         width: screenData.width,
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SizedBox(
               height: 65,
               width: screenData.width,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-
+              child: Stack(
                 children: [
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Image(
+                        image:
+                            ImageExt.getImageAsset("reborn_banner_small.png"),
+                        height: 50,
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: RIButton(
-                        onTap: () => Scaffold.of(context).openDrawer(),
-                        iconData: Icons.menu_rounded,
-                        iconColor: CCAppTheme.pinkDarkColor,
-                        dimension: 40,
-                        radius: 20),
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Image(
-                      image: ImageExt.getImageAsset("reborn_circle.png"),
-                      width: 40,),
+                      onTap: () => Scaffold.of(context).openDrawer(),
+                      iconData: Icons.menu_rounded,
+                      iconColor: CCAppTheme.pinkDarkColor,
+                      dimension: 40,
+                      radius: 20,
+                    ),
                   ),
                 ],
               ),
@@ -77,7 +78,8 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
     );
   }
 
-  Widget _onBuildGridFilter(final BuildContext context, final RebornFilterState filterState) {
+  Widget _onBuildGridFilter(
+      final BuildContext context, final RebornFilterState filterState) {
     return SizedBox(
       height: 90,
       child: ListView.builder(
@@ -106,7 +108,8 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
                           Icon(filterList[index].iconData ?? Icons.favorite,
                               color: CCAppTheme.pinkLightColor),
                           const SizedBox(height: 12),
-                          Text(filterList[index].displayName, style: CCAppTheme.txt1),
+                          Text(filterList[index].displayName,
+                              style: CCAppTheme.txt1),
                         ],
                       ),
                     ),
@@ -122,6 +125,4 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
       ),
     );
   }
-
-
 }

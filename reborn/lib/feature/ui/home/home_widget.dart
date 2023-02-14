@@ -112,13 +112,13 @@ class _HomeState extends ThemeState<HomeWidget> {
     return const SizedBox();
   }
 
-  Widget _getCategoryView(final BuildContext listContext, final int _index) {
-    if (_index == 0) {
+  Widget _getCategoryView(final BuildContext listContext, final int index) {
+    if (index == 0) {
       return const RebornFilterView();
     }
     final FirebaseDataReadyState firebaseState = _firebaseBloc.state as FirebaseDataReadyState;
-    final RebornCategory category = firebaseState.categories[_index - 1];
-    final padding = screenData.getHomeVerticalPadding(firebaseState.categories.length, _index - 1);
+    final RebornCategory category = firebaseState.categories[index - 1];
+    final padding = screenData.getHomeVerticalPadding(firebaseState.categories.length, index - 1);
     return Padding(
       padding: padding,
       child: RebornCategoryView(
