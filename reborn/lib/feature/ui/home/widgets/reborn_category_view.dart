@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/domain/firebase/usecase/get_category_track_use_case.dart';
+import 'package:reborn/feature/ui/home/rx_firebase_bloc/firebase_data_bloc.dart';
 import 'package:reborn/feature/ui/home/rx_firebase_bloc/firebase_data_states.dart';
 import 'package:reborn/feature/ui/home/widgets/cubit/cubit_states.dart';
 import 'package:reborn/feature/ui/home/widgets/track_cover_view.dart';
@@ -15,11 +16,9 @@ import 'cubit/summary_cubit.dart';
 import 'track_category_view.dart';
 
 class RebornCategoryView extends StatefulWidget {
-  final FirebaseDataReadyState firebaseState;
   final RebornCategory category;
   const RebornCategoryView({
     Key? key,
-    required this.firebaseState,
     required this.category,
   }) : super(key: key);
 
@@ -46,7 +45,6 @@ class _RebornCategoryState extends State<RebornCategoryView> {
             height: 50,
             child: CategoryTitleView(
               category: widget.category,
-              firebaseState: widget.firebaseState,
               onSummaryCreated: _onSummaryCreated,
             ),
           ),
@@ -76,9 +74,12 @@ class _RebornCategoryState extends State<RebornCategoryView> {
   }
 
   Widget _getListWidget(final double height) {
-    final List<TrackEntity> tracks = widget.firebaseState.tracks;
+
+    final firebaseState = BlocProvider.of<FirebaseDataBloc>(context).state as FirebaseDataReadyState;
+
+    final List<TrackEntity> tracks = firebaseState.tracks;
     final List<String> trackIdList = widget.category.tracksIdList;
-    final List<RebornAuthor> authors = widget.firebaseState.authors;
+    final List<RebornAuthor> authors = firebaseState.authors;
     if (widget.category.categoryType == "home/tracks") {
       cubit.emitCategorySummary(tracks, authors, widget.category);
       return BlocBuilder<SummaryCubit, CubitBaseState>(

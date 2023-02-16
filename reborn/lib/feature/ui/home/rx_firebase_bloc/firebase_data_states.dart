@@ -10,10 +10,12 @@ class FirebaseDataLoadingState extends FirebaseDataState {}
 
 class FirebaseDataReadyState extends FirebaseDataState {
   final List<RebornCategory> categories;
+  final List<RebornCategory> sleepCategories;
   final List<RebornAuthor> authors;
   final List<TrackEntity> tracks;
   FirebaseDataReadyState({
     required this.categories,
+    required this.sleepCategories,
     required this.tracks,
     required this.authors,
   });

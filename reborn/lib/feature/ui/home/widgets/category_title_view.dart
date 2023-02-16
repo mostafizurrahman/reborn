@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/domain/firebase/usecase/get_summary_use_case.dart';
+import 'package:reborn/feature/ui/home/rx_firebase_bloc/firebase_data_bloc.dart';
 import 'package:reborn/feature/ui/home/rx_firebase_bloc/firebase_data_states.dart';
 import 'package:reborn/feature/ui/widget/view_provider.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 
 class CategoryTitleView extends StatelessWidget {
   final RebornCategory category;
-  final FirebaseDataState firebaseState;
   final Function(CategorySummary) onSummaryCreated;
   const CategoryTitleView({
     Key? key,
     required this.category,
-    required this.firebaseState,
     required this.onSummaryCreated,
   }) : super(key: key);
 
@@ -49,10 +49,10 @@ class CategoryTitleView extends StatelessWidget {
           width: 70,
           child: InkWell(
             onTap: () {
+              final firebaseState = BlocProvider.of<FirebaseDataBloc>(context).state;
               if (firebaseState is FirebaseDataReadyState) {
-                final state = firebaseState as FirebaseDataReadyState;
                 final useCase = GetSummaryUseCase(
-                    tracks: state.tracks, authors: state.authors);
+                    tracks: firebaseState.tracks, authors: firebaseState.authors);
                 useCase(category).then(onSummaryCreated);
               }
             },

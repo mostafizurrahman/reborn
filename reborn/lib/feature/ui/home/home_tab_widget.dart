@@ -1,5 +1,7 @@
 import 'package:reborn/feature/ui/widget/blur_round_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
+import 'package:reborn/utility/image_ext.dart';
+import 'package:reborn/utility/reborn_constant.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +10,14 @@ class TabBarData {
   final String name;
   final String tabID;
   final IconData iconData;
+  final String? iconPath;
   final Function(String) onTap;
   TabBarData({
     required this.tabID,
     required this.name,
     required this.iconData,
     required this.onTap,
+    this.iconPath,
   });
 }
 
@@ -65,7 +69,7 @@ class HomeTabWidget extends StatelessWidget {
     if (tabData.isSelected) {
       return [
         const SizedBox(height: 12),
-        Icon(tabData.iconData, color: CCAppTheme.pinkDarkColor, size: 22),
+        _getIcon(tabData),
         const SizedBox(height: 12),
         Text(
           tabData.name,
@@ -78,9 +82,22 @@ class HomeTabWidget extends StatelessWidget {
     }
     return [
       const SizedBox(height: 12),
-      Icon(tabData.iconData, color: Colors.black, size: 22),
+      _getIcon(tabData),
       const SizedBox(height: 12),
       Text(tabData.name, style: CCAppTheme.txt),
     ];
   }
+
+  Widget _getIcon(final TabBarData data) {
+    if (data.iconPath == null) {
+      return Icon(data.iconData, color: CCAppTheme.pinkDarkColor, size: RebornConstant.TabIconSize);
+    }
+    return Image(
+      image:
+      ImageExt.getImageAsset(data.iconPath!),
+      width:  RebornConstant.TabIconSize,
+      height:  RebornConstant.TabIconSize,
+    );
+  }
+
 }

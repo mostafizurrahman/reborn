@@ -55,6 +55,7 @@ class StaticData {
           tabID: tabReborn,
           name: "Reborn",
           onTap: onTabBarItemTap,
+          iconPath: 'icon_circle_small.png',
         )..isSelected = true,
         TabBarData(
           iconData: Icons.account_circle_outlined,

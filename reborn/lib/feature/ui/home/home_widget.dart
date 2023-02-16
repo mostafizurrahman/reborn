@@ -11,6 +11,7 @@ import 'package:reborn/feature/ui/home/widgets/home_profile_view.dart';
 import 'package:reborn/feature/ui/home/widgets/home_sleep_view.dart';
 import 'package:reborn/feature/ui/menu/menu_widget.dart';
 import 'package:reborn/feature/ui/widget/base_widget/theme_state.dart';
+import 'package:reborn/feature/ui/widget/category_list_view.dart';
 import 'package:reborn/feature/ui/widget/loader/loading_view.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
@@ -91,7 +92,8 @@ class _HomeState extends ThemeState<HomeWidget> {
         if (tabId == StaticData.tabFavorite) {
           return const HomeFavoriteView();
         } else if (tabId == StaticData.tabSleeping) {
-          return const HomeSleepView();
+          final categories = firebaseState.sleepCategories;
+          return HomeSleepView(categories: categories, key: GlobalKey(),);
         } else if (tabId == StaticData.tabCoaches) {
           return const HomeCoachView();
         } else if (tabId == StaticData.tabProfile) {
@@ -99,34 +101,12 @@ class _HomeState extends ThemeState<HomeWidget> {
         }
       }
       final categories = firebaseState.categories;
-      return ScrollConfiguration(
-        behavior: HorizontalScrollBehavior(),
-        child: ListView.builder(
-          itemBuilder: _getCategoryView,
-          itemCount: categories.length + 1,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-        ),
-      );
+      return CategoryListView(categories: categories);
     }
     return const SizedBox();
   }
 
-  Widget _getCategoryView(final BuildContext listContext, final int index) {
-    if (index == 0) {
-      return const RebornFilterView();
-    }
-    final FirebaseDataReadyState firebaseState = _firebaseBloc.state as FirebaseDataReadyState;
-    final RebornCategory category = firebaseState.categories[index - 1];
-    final padding = screenData.getHomeVerticalPadding(firebaseState.categories.length, index - 1);
-    return Padding(
-      padding: padding,
-      child: RebornCategoryView(
-        firebaseState: firebaseState,
-        category: category,
-      ),
-    );
-  }
+
 
   @override
   void dispose() {

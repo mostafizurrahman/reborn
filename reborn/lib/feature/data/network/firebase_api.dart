@@ -11,6 +11,7 @@ part 'fb_author_api.dart';
 part 'fb_track_api.dart';
 part 'fb_category_api.dart';
 part 'fb_config_api.dart';
+part 'fb_sleep_api.dart';
 
 
 class BaseResponse {
@@ -22,6 +23,7 @@ abstract class BaseApi {
   static const String category = "categories";
   static const String author = "authors";
   static const String users = "users";
+  static const String sleep = "sleep";
 
   final String _apiPath ;
   BaseApi(this._apiPath);
