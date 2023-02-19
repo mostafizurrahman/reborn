@@ -44,14 +44,22 @@ class FirebaseHandler {
     );
   }
 
-  Future<bool> updatePlayerInfo(TrackEntity track, final int playCount, final int likes) async {
-    final snap = await _data.reader._firebaseStore.collection(BaseApi.tracks).doc(track.documentId).get();
+  Future<bool> updatePlayerInfo(
+      TrackEntity track, final int playCount, final int likes) async {
+    final snap = await _data.reader._firebaseStore
+        .collection(BaseApi.tracks)
+        .doc(track.documentId)
+        .get();
     final playerInfo = snap.data()?['playerInfo'];
     if (playerInfo != null) {
-      final int totalPlayed = playCount + playerInfo['totalPlayed'] as int? ?? 0;
+      final int totalPlayed =
+          playCount + playerInfo['totalPlayed'] as int? ?? 0;
       final int totalLiked = likes + playerInfo['likeCount'] as int? ?? 0;
       final mapData = <String, dynamic>{};
-      mapData['playerInfo'] = {'totalPlayed' : totalPlayed, 'likeCount' : totalLiked,};
+      mapData['playerInfo'] = {
+        'totalPlayed': totalPlayed,
+        'likeCount': totalLiked,
+      };
       await snap.reference.update(mapData);
       return Future.value(true);
     }
@@ -73,12 +81,12 @@ class FirebaseHandler {
         .doc('tracks')
         .snapshots()
         .listen((event) {
-          final data = event.data();
+      final data = event.data();
       debugPrint('${event.data()}');
       if (data != null) {
         final trackIdList = data['favorite_tracks'];
         if (trackIdList is List) {
-          for(final id in trackIdList) {
+          for (final id in trackIdList) {
             if (!favoriteTracks.contains(id)) {
               favoriteTracks.add(id.toString());
             }

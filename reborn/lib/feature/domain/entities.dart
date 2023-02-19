@@ -3,6 +3,7 @@ export 'package:reborn/feature/domain/firebase/entities/search_data.dart';
 export 'package:reborn/feature/domain/firebase/entities/reborn_category.dart';
 export 'package:reborn/feature/domain/firebase/entities/reborn_author.dart';
 export 'package:reborn/feature/domain/firebase/entities/track_entity.dart';
+export 'package:reborn/feature/domain/firebase/entities/reborn_name_data.dart';
 export 'category_summary.dart';
 
 enum CategoryTrackType {

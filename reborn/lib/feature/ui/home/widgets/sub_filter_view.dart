@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reborn/feature/data_model/static_data.dart';
-import 'package:reborn/feature/ui/home/rx_reborn_name/reborn_name_bloc.dart';
+import 'package:reborn/feature/ui/filtering/rx_filter/reborn_name_bloc.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/screen_data.dart';
 

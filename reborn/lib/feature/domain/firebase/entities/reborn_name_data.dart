@@ -1,8 +1,13 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reborn/feature/ui/home/rx_reborn_name/reborn_name_events.dart';
-import 'package:reborn/feature/ui/home/rx_reborn_name/reborn_name_states.dart';
+
+class RebornNameData {
+  final String userName;
+  RebornNameData({required this.userName});
+}
+
 
 class RebornFilterData {
   final String filterID;
@@ -10,12 +15,15 @@ class RebornFilterData {
   final int displayOrder;
   final IconData? iconData;
   final String? iconPath;
+  bool isSelected;
   RebornFilterData(
       {required this.filterID,
-      required this.displayName,
-      required this.displayOrder,
-      this.iconData,
-      this.iconPath});
+        required this.displayName,
+        required this.displayOrder,
+        this.iconData,
+        this.iconPath,
+        this.isSelected = false,
+      });
 
   static List<RebornFilterData> generateGridData() {
     List<RebornFilterData> data = [];
@@ -37,22 +45,12 @@ class RebornFilterData {
     int i = 0;
     _titles.forEach((key, value) {
       data.add(RebornFilterData(
-          displayOrder: i++,
-          filterID: "${key.toLowerCase()}_$i",
-          displayName: key,
-          iconData: value));
+        displayOrder: i++,
+        filterID: "${key.toLowerCase()}_$i",
+        displayName: key,
+        iconData: value,
+      ));
     });
     return data;
-  }
-}
-
-class RebornFilterBloc extends Bloc<RebornFitlerEvent, RebornFilterState> {
-  RebornFilterBloc() : super(RebornFilterState()) {
-    on<FilterGridRebornEvent>(
-        (event, emit) => emit(RebornGridFilterState(gridFilterID: event.girdFilterID)));
-
-    on<FilterListRebornEvent>(
-        (event, emit) => emit(RebornListFilterState(listFilterID: event.listFilterID)));
-    on<RebornFitlerEvent>((event, emit) => emit(RebornFilterState()));
   }
 }

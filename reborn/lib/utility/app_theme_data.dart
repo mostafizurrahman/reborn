@@ -63,6 +63,7 @@ class CCAppTheme {
   }
 
   static BorderRadius get borderRadius => const BorderRadius.all(Radius.circular(10));
+  static TextStyle get txtNormal => CCAppTheme.txtReg.copyWith(fontSize: 12.75);
   static TextStyle get txt => TextStyle(
         fontSize: 12.0,
         fontFamily: 'sf_light',

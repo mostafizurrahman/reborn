@@ -1,7 +1,6 @@
 import 'package:reborn/feature/domain/entities.dart';
 
 class RebornCategory {
-
   final String categoryID;
   final bool hasLogo;
   final bool isVisible;
@@ -31,4 +30,21 @@ class RebornCategory {
     required this.categoryType,
     required this.categoryCover,
   });
+
+  RebornCategory copyWith({required final List<String> tracks}) =>
+      RebornCategory(
+        tracksIdList: tracks,
+        categoryID: categoryID,
+        displayOrder: displayOrder,
+        isVisible: isVisible,
+        title: title,
+        hasLogo: hasLogo,
+        logoData: logoData,
+        seeMore: seeMore,
+        seeMoreTitle: seeMoreTitle,
+        tracksType: tracksType,
+        description: description,
+        categoryType: categoryType,
+        categoryCover: categoryCover,
+      );
 }

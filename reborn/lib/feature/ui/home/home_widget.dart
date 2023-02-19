@@ -18,10 +18,10 @@ import 'package:reborn/utility/screen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
-import 'rx_reborn_name/reborn_name_bloc.dart';
+import '../filtering/rx_filter/reborn_name_bloc.dart';
 import 'widgets/bottom_navigation_view.dart';
 import 'widgets/reborn_category_view.dart';
-import 'widgets/reborn_filter_view.dart';
+import '../filtering/reborn_filter_view.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
