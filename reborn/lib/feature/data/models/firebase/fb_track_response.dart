@@ -76,7 +76,7 @@ class FBTrackResponse extends BaseResponse {
         trackType: trackType ?? '',
         trackCoverImage: trackCoverImage ?? '',
         isPremium: isPremium ?? false,
-        generList: generList ?? [],
+        generList: generList?.map((e) => e.toLowerCase()).toList() ?? [],
         trackIconData: trackIconData ?? 0,
         playerInfo: playerInfo?.toEntity() ??
             PlayerInfoEntity(likeCount: 0, totalPlayed: 0),

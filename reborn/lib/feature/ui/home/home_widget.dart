@@ -34,10 +34,10 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeState extends ThemeState<HomeWidget> {
-
   final BehaviorSubject<List<TabBarData>> _tabBehaviour = BehaviorSubject();
   final RebornFilterBloc _rebornNameBloc = RebornFilterBloc();
   final FirebaseDataBloc _firebaseBloc = FirebaseDataBloc();
+  final BehaviorSubject<bool> _filterClearBehavior = BehaviorSubject();
 
   @override
   void initState() {
@@ -48,14 +48,13 @@ class _HomeState extends ThemeState<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return MultiBlocProvider(
       providers: [
         BlocProvider<RebornFilterBloc>.value(value: _rebornNameBloc),
         BlocProvider<FirebaseDataBloc>.value(value: _firebaseBloc),
       ],
       child: BaseScaffoldState(
-        floating: BottomNavigationView(tabBarBehaviour: _tabBehaviour),
+        bottom: BottomNavigationView(tabBarBehaviour: _tabBehaviour),
         floatLocation: FloatingActionButtonLocation.centerDocked,
         drawer: const MenuWidget(),
         body: SafeArea(
@@ -82,8 +81,10 @@ class _HomeState extends ThemeState<HomeWidget> {
     return tabList.firstWhere((element) => element.isSelected).tabID;
   }
 
-  Widget _onBuildGridFilter(final BuildContext _context, final FirebaseDataState firebaseState) {
-
+  Widget _onBuildGridFilter(
+    final BuildContext context,
+    final FirebaseDataState firebaseState,
+  ) {
     if (firebaseState is FirebaseDataLoadingState) {
       return defaultLoader;
     }
@@ -95,19 +96,26 @@ class _HomeState extends ThemeState<HomeWidget> {
           return const HomeFavoriteView();
         } else if (tabId == StaticData.tabSleeping) {
           final categories = firebaseState.sleepCategories;
-          return HomeSleepView(categories: categories, key: GlobalKey(),);
+          return HomeSleepView(
+            categories: categories,
+            key: GlobalKey(),
+          );
         } else if (tabId == StaticData.tabCoaches) {
           return const HomeCoachView();
         } else if (tabId == StaticData.tabProfile) {
           return const HomeProfileView();
         }
       }
-      return BlocBuilder(builder: _getFilterCategories, bloc: _rebornNameBloc);
+      return BlocBuilder(
+        builder: _getFilterCategories,
+        bloc: _rebornNameBloc,
+      );
     }
     return const SizedBox();
   }
 
-  Widget _getFilterCategories(final BuildContext context, final RebornFilterState state) {
+  Widget _getFilterCategories(
+      final BuildContext context, final RebornFilterState state) {
     final firebaseState = _firebaseBloc.state as FirebaseDataReadyState;
     if (state is FilterLoadingState) {
       return defaultLoader;
@@ -124,6 +132,7 @@ class _HomeState extends ThemeState<HomeWidget> {
   void dispose() {
     _rebornNameBloc.close();
     _firebaseBloc.close();
+    _filterClearBehavior.close();
     super.dispose();
   }
 }

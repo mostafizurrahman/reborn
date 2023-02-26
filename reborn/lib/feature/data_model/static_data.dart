@@ -165,7 +165,7 @@ class StaticData {
 
   static AudioAuthor get audioAuthor {
     return AudioAuthor(
-        authorEmail: "abc@yahoo.com", authorName: "Katie Krimitsos", authorId: "xaya...r");
+        authorEmail: "abc@yahoo.com", authorName: "Katie Krimitsos", authorId: "xayar");
   }
 
   static RebornMeditationData get rebornMeditationData {

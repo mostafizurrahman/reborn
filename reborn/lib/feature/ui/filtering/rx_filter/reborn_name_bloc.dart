@@ -42,8 +42,9 @@ class RebornFilterBloc extends Bloc<RebornFitlerEvent, RebornFilterState> {
     if (searchData.gridData.isNotEmpty) {
       for(final category in searchData.categories) {
         final List<String> trackList = [];
+        final List<TrackEntity> tracks = searchData.tracks.where((e) => category.tracksIdList.contains(e.trackID)).toList();
         for(final String trackID in category.tracksIdList) {
-          if(searchData.tracks.firstWhereOrNull(_hasItem) != null) {
+          if(tracks.firstWhereOrNull(_hasItem) != null) {
             trackList.add(trackID);
           }
         }
@@ -57,8 +58,10 @@ class RebornFilterBloc extends Bloc<RebornFitlerEvent, RebornFilterState> {
     return categories;
   }
 
+
   bool _hasItem(final TrackEntity track) {
     final Set<String> genre = track.generList.toSet();
+    debugPrint('----$genre---$keys');
     return genre.intersection(keys).isNotEmpty;
   }
 }
