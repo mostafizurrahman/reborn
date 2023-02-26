@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:reborn/feature/domain/entities.dart';
@@ -17,7 +18,10 @@ class RebornFilterBloc extends Bloc<RebornFitlerEvent, RebornFilterState> {
 
   Future<void> _onFilterCategory(final FilterRebornEvent event,
       final Emitter<RebornFilterState> emit) async {
+
     emit(FilterLoadingState());
+    await Future.delayed(Duration(seconds: 1));
+
     if (event.searchData.listData.isEmpty &&
         event.searchData.gridData.isEmpty) {
       emit(RebornClearFilterState());
@@ -26,6 +30,7 @@ class RebornFilterBloc extends Bloc<RebornFitlerEvent, RebornFilterState> {
       final state =  FilterRebornState(categories: categories);
       emit(state);
     }
+    debugPrint(state.toString());
   }
 
   Future<List<RebornCategory>> _getCategories(
@@ -38,11 +43,12 @@ class RebornFilterBloc extends Bloc<RebornFitlerEvent, RebornFilterState> {
       for(final category in searchData.categories) {
         final List<String> trackList = [];
         for(final String trackID in category.tracksIdList) {
-          if(searchData.tracks.firstWhereOrNull(_hasItem) == null) {
+          if(searchData.tracks.firstWhereOrNull(_hasItem) != null) {
             trackList.add(trackID);
           }
         }
         if (trackList.isNotEmpty) {
+          assert(trackList.length == category.tracksIdList.length, "Your search is working");
           categories.add(category.copyWith(tracks: trackList));
         }
       }

@@ -2,6 +2,7 @@ import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/ui/base_widget/base_scaffold_state.dart';
 import 'package:reborn/feature/ui/favorites/home_favorite_view.dart';
+import 'package:reborn/feature/ui/filtering/rx_filter/reborn_name_states.dart';
 import 'package:reborn/feature/ui/home/home_tab_widget.dart';
 import 'package:reborn/feature/ui/home/rx_firebase_bloc/firebase_data_bloc.dart';
 import 'package:reborn/feature/ui/home/rx_firebase_bloc/firebase_data_events.dart';
@@ -82,6 +83,7 @@ class _HomeState extends ThemeState<HomeWidget> {
   }
 
   Widget _onBuildGridFilter(final BuildContext _context, final FirebaseDataState firebaseState) {
+
     if (firebaseState is FirebaseDataLoadingState) {
       return defaultLoader;
     }
@@ -100,13 +102,23 @@ class _HomeState extends ThemeState<HomeWidget> {
           return const HomeProfileView();
         }
       }
-      final categories = firebaseState.categories;
-      return CategoryListView(categories: categories);
+      return BlocBuilder(builder: _getFilterCategories, bloc: _rebornNameBloc);
     }
     return const SizedBox();
   }
 
-
+  Widget _getFilterCategories(final BuildContext context, final RebornFilterState state) {
+    final firebaseState = _firebaseBloc.state as FirebaseDataReadyState;
+    if (state is FilterLoadingState) {
+      return defaultLoader;
+    }
+    if (state is FilterRebornState) {
+      final categories = state.categories;
+      return CategoryListView(categories: categories);
+    }
+    final categories = firebaseState.categories;
+    return CategoryListView(categories: categories);
+  }
 
   @override
   void dispose() {

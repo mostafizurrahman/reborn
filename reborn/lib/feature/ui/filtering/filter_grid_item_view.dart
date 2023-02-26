@@ -90,7 +90,7 @@ class FilterGridItemView extends StatelessWidget {
       // useCase(category).then(onSummaryCreated);
 
       if (filterState is FilterRebornState) {
-        final list = filterState.gridFilter;
+        final list = List<RebornFilterData>.from(filterState.gridFilter);
         if (filterData.isSelected) {
           list.add(filterData);
         } else {

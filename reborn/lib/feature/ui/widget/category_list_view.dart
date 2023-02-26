@@ -32,6 +32,7 @@ class CategoryListView extends StatelessWidget {
     final padding =
         screenData.getHomeVerticalPadding(categories.length, index - 1);
 
+
     return Padding(
       padding: padding,
       child: RebornCategoryView(

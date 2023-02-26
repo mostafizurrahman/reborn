@@ -89,6 +89,7 @@ class _RebornCategoryState extends State<RebornCategoryView> {
     }
     final useCase = GetCategoryTrackUseCase(trackList: tracks, authorList: authors);
     final List<TrackEntity> trackList = useCase.getFilterList(trackIdList);
+
     return ListView.builder(
       itemBuilder: (final listContext, final _index) {
         final track = trackList[_index];
