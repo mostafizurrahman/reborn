@@ -35,7 +35,7 @@ class BaseScaffoldState extends StatelessWidget {
         appBar: appBar,
         body: Container(
           width: screenData.width,
-          height: screenData.height,
+          height: screenData.height+screenData.bottom,
           decoration: rebornTheme.decoration,
           child: body ?? Container(),
         ),

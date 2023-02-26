@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 class ScreenData {
   late final Size _size;
   late final double _top;
+  late final double _bottom;
   Size get size => _size;
   double get width => _size.width;
   double get height => _size.height;
   double get top => _top;
+  double get bottom => _bottom;
   bool isInit = false;
   void setScreenData(final BuildContext context) {
     if (!isInit) {
       isInit = true;
       _size = MediaQuery.of(context).size;
       _top =  MediaQuery.of(context).padding.top;
+      _bottom = MediaQuery.of(context).padding.bottom;
       debugPrint("done");
     }
   }

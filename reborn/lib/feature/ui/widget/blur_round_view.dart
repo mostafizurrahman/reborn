@@ -23,7 +23,7 @@ class BlurRoundView extends StatelessWidget {
       child: BackdropFilter(
         filter: ui.ImageFilter.blur(sigmaX: 12, sigmaY: 12),
         child: Material(
-          color: color,
+          color: Colors.transparent,
           child: SizedBox(
             height: viewHeight,
             width: screenData.width,

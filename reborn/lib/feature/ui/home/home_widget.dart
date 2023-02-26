@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/ui/base_widget/base_scaffold_state.dart';
 import 'package:reborn/feature/ui/favorites/home_favorite_view.dart';
+import 'package:reborn/feature/ui/filtering/rx_filter/reborn_name_events.dart';
 import 'package:reborn/feature/ui/filtering/rx_filter/reborn_name_states.dart';
 import 'package:reborn/feature/ui/home/home_tab_widget.dart';
 import 'package:reborn/feature/ui/home/rx_firebase_bloc/firebase_data_bloc.dart';
@@ -42,7 +44,6 @@ class _HomeState extends ThemeState<HomeWidget> {
   @override
   void initState() {
     super.initState();
-
     _firebaseBloc.add(LoadFirebaseDataEvent());
   }
 
@@ -55,15 +56,14 @@ class _HomeState extends ThemeState<HomeWidget> {
       ],
       child: BaseScaffoldState(
         bottom: BottomNavigationView(tabBarBehaviour: _tabBehaviour),
-        floatLocation: FloatingActionButtonLocation.centerDocked,
+        floating: StreamBuilder(builder: _getFilterClearWidget, stream: _filterClearBehavior.stream,),
+        floatLocation: FloatingActionButtonLocation.endFloat,
         drawer: const MenuWidget(),
-        body: SafeArea(
-          child: SizedBox(
-            height: screenData.height,
-            child: StreamBuilder<List<TabBarData>>(
-              stream: _tabBehaviour.stream,
-              builder: _onBuildTabView,
-            ),
+        body: SizedBox(
+          height: screenData.height,
+          child: StreamBuilder<List<TabBarData>>(
+            stream: _tabBehaviour.stream,
+            builder: _onBuildTabView,
           ),
         ),
       ),
@@ -71,6 +71,7 @@ class _HomeState extends ThemeState<HomeWidget> {
   }
 
   Widget _onBuildTabView(_, __) {
+
     return BlocBuilder<FirebaseDataBloc, FirebaseDataState>(
       builder: _onBuildGridFilter,
       bloc: _firebaseBloc,
@@ -81,10 +82,38 @@ class _HomeState extends ThemeState<HomeWidget> {
     return tabList.firstWhere((element) => element.isSelected).tabID;
   }
 
+  Widget _getFilterClearWidget(
+    final BuildContext context,
+    final AsyncSnapshot<bool> filterActive,
+  ){
+    if (filterActive.data == true) {
+      return ClipRRect(borderRadius: BorderRadius.all(Radius.circular(24)),
+      child: Material(
+        color: Colors.redAccent,
+        child: Ink(
+          width: 120,
+          height: 48,
+          child: InkWell(
+            onTap: () {
+              _filterClearBehavior.sink.add(false);
+              _rebornNameBloc.add(FilterRebornEvent(searchData: LocalSearchData(categories: [], tracks: [],)));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text('CLEAR'), SizedBox(width: 12), Icon(CupertinoIcons.clear_circled, color: CCAppTheme.pinkDarkerColor),],
+            ),
+          ),
+        ),
+      ),
+      );
+    }
+    return SizedBox();
+  }
   Widget _onBuildGridFilter(
     final BuildContext context,
     final FirebaseDataState firebaseState,
   ) {
+    _filterClearBehavior.sink.add(true);
     if (firebaseState is FirebaseDataLoadingState) {
       return defaultLoader;
     }
