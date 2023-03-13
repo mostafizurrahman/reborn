@@ -36,10 +36,13 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeState extends ThemeState<HomeWidget> {
+
+  final filterList = RebornFilterData.generateGridData();
   final BehaviorSubject<List<TabBarData>> _tabBehaviour = BehaviorSubject();
   final RebornFilterBloc _rebornNameBloc = RebornFilterBloc();
   final FirebaseDataBloc _firebaseBloc = FirebaseDataBloc();
-  final BehaviorSubject<bool> _filterClearBehavior = BehaviorSubject();
+  final BehaviorSubject<bool> _filterClearBehavior =
+      BehaviorSubject.seeded(false);
 
   @override
   void initState() {
@@ -56,8 +59,11 @@ class _HomeState extends ThemeState<HomeWidget> {
       ],
       child: BaseScaffoldState(
         bottom: BottomNavigationView(tabBarBehaviour: _tabBehaviour),
-        floating: StreamBuilder(builder: _getFilterClearWidget, stream: _filterClearBehavior.stream,),
-        floatLocation: FloatingActionButtonLocation.endFloat,
+        floating: StreamBuilder(
+          builder: _getFilterClearWidget,
+          stream: _filterClearBehavior.stream,
+        ),
+        floatLocation: FloatingActionButtonLocation.centerFloat,
         drawer: const MenuWidget(),
         body: SizedBox(
           height: screenData.height,
@@ -71,7 +77,6 @@ class _HomeState extends ThemeState<HomeWidget> {
   }
 
   Widget _onBuildTabView(_, __) {
-
     return BlocBuilder<FirebaseDataBloc, FirebaseDataState>(
       builder: _onBuildGridFilter,
       bloc: _firebaseBloc,
@@ -85,35 +90,54 @@ class _HomeState extends ThemeState<HomeWidget> {
   Widget _getFilterClearWidget(
     final BuildContext context,
     final AsyncSnapshot<bool> filterActive,
-  ){
+  ) {
     if (filterActive.data == true) {
-      return ClipRRect(borderRadius: BorderRadius.all(Radius.circular(24)),
-      child: Material(
-        color: Colors.redAccent,
-        child: Ink(
-          width: 120,
-          height: 48,
-          child: InkWell(
-            onTap: () {
-              _filterClearBehavior.sink.add(false);
-              _rebornNameBloc.add(FilterRebornEvent(searchData: LocalSearchData(categories: [], tracks: [],)));
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text('CLEAR'), SizedBox(width: 12), Icon(CupertinoIcons.clear_circled, color: CCAppTheme.pinkDarkerColor),],
+      return Material(
+        color: Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Ink(
+            decoration: CCAppTheme.shadowNoBorder.copyWith(borderRadius: BorderRadius.all(Radius.circular(24))),
+            width: 240,
+            height: 48,
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(24)),
+              child: InkWell(
+                splashColor: CCAppTheme.periwinkleDarkColor.withAlpha(130),
+                onTap: () {
+                  _filterClearBehavior.sink.add(false);
+                  _rebornNameBloc.add(
+                    FilterRebornEvent(
+                      searchData: LocalSearchData(
+                        categories: [],
+                        tracks: [],
+                      ),
+                    ),
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Clear Filter'),
+                    const SizedBox(width: 12),
+                    Icon(CupertinoIcons.clear_circled,
+                        color: CCAppTheme.pinkDarkerColor,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
-      ),
       );
     }
-    return SizedBox();
+    return const SizedBox();
   }
+
   Widget _onBuildGridFilter(
     final BuildContext context,
     final FirebaseDataState firebaseState,
   ) {
-    _filterClearBehavior.sink.add(true);
     if (firebaseState is FirebaseDataLoadingState) {
       return defaultLoader;
     }
@@ -151,10 +175,11 @@ class _HomeState extends ThemeState<HomeWidget> {
     }
     if (state is FilterRebornState) {
       final categories = state.categories;
-      return CategoryListView(categories: categories);
+      _filterClearBehavior.sink.add(true);
+      return CategoryListView(categories: categories,filterList: filterList,);
     }
     final categories = firebaseState.categories;
-    return CategoryListView(categories: categories);
+    return CategoryListView(categories: categories,filterList: filterList,);
   }
 
   @override

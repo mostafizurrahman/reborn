@@ -49,6 +49,7 @@ class FilterGridItemView extends StatelessWidget {
     required final RebornFilterBloc filterBloc,
     required final FirebaseDataBloc dataBloc,
   }) {
+    debugPrint(filterData.isSelected.toString());
     return Ink(
       color: Colors.transparent,
       width: 85,
@@ -62,13 +63,13 @@ class FilterGridItemView extends StatelessWidget {
           children: [
             Icon(
               filterData.iconData ?? Icons.favorite,
-              color: CCAppTheme.pinkLightColor,
-              size: 24,
+              color: filterData.isSelected ?  CCAppTheme.pinkDarkerColor : CCAppTheme.pinkLightColor,
+              size: filterData.isSelected ? 30 : 24,
             ),
             const SizedBox(height: 12),
             Text(
               filterData.displayName,
-              style: CCAppTheme.txtNormal,
+              style: filterData.isSelected ? CCAppTheme.txtReg.copyWith(color: Colors.green) : CCAppTheme.txtNormal,
             ),
           ],
         ),

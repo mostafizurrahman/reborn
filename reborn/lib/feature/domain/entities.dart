@@ -4,6 +4,7 @@ export 'package:reborn/feature/domain/firebase/entities/reborn_category.dart';
 export 'package:reborn/feature/domain/firebase/entities/reborn_author.dart';
 export 'package:reborn/feature/domain/firebase/entities/track_entity.dart';
 export 'package:reborn/feature/domain/firebase/entities/reborn_name_data.dart';
+export 'package:reborn/feature/domain/firebase/entities/reborn_subscription.dart';
 export 'category_summary.dart';
 
 enum CategoryTrackType {
@@ -34,7 +35,7 @@ extension TrackDsiplayType on String {
 class LocalizedText {
   final String en;
   final String ru;
-  LocalizedText({required this.en, required this.ru});
+  const LocalizedText({required this.en, required this.ru});
   Map<String, dynamic> toJson() => _$LocalizedTextToJson(this);
 }
 

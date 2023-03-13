@@ -16,19 +16,19 @@ import '../home/widgets/sub_filter_view.dart';
 import 'rx_filter/reborn_name_states.dart';
 
 class RebornFilterView extends StatefulWidget {
-  const RebornFilterView({Key? key}) : super(key: key);
+  final List<RebornFilterData> filterList;
+  const RebornFilterView({Key? key, required this.filterList}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return RebornHomeFilterState();
   }
 }
 
+
 class RebornHomeFilterState extends ThemeState<RebornFilterView> {
-  late final List<RebornFilterData> filterList;
   @override
   void initState() {
     super.initState();
-    filterList = RebornFilterData.generateGridData();
   }
 
   @override
@@ -88,12 +88,12 @@ class RebornHomeFilterState extends ThemeState<RebornFilterView> {
     final BuildContext context,
     final RebornFilterState filterState,
   ) {
-    final itemCount = filterList.length;
+    final itemCount = widget.filterList.length;
     return SizedBox(
       height: 90,
       child: ListView.builder(
         itemBuilder: (final listContext, final index) {
-          final data = filterList[index];
+          final data = widget.filterList[index];
           return FilterGridItemView(
             filterData: data,
             dataCount: itemCount,

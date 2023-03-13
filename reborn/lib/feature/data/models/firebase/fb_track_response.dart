@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:reborn/feature/data/models/localized_response.dart';
 import 'package:reborn/feature/data/network/firebase_api.dart';
 import 'package:reborn/feature/domain/entities.dart';
-import 'package:reborn/feature/domain/firebase/entities/track_entity.dart';
 
 part 'fb_track_response.g.dart';
 

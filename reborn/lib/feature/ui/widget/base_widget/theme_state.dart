@@ -4,7 +4,7 @@
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:flutter/material.dart';
 
-class ThemeState<T> extends State {
+class ThemeState<T extends StatefulWidget> extends State<T> {
 
   BoxDecoration get shadowBorder => CCAppTheme.shadowDec;
   TextTheme get txtTheme => Theme.of(context).textTheme;

@@ -7,6 +7,7 @@ import 'package:reborn/feature/ui/contact_list/contact_list_widget.dart';
 import 'package:reborn/feature/ui/home/home_widget.dart';
 import 'package:reborn/feature/ui/startup/launch_widget.dart';
 import 'package:reborn/feature/ui/startup_page.dart';
+import 'package:reborn/feature/ui/subscription/subscription_page.dart';
 import 'package:reborn/feature/ui/track_list/track_list_page.dart';
 import 'package:reborn/routing/app_route.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +102,7 @@ class MainAppState extends State<MainAppWidget> {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: StartupPage(),
+      home: SubscriptionPage(),
       onGenerateRoute: _getGenerateRoute,
     );
   }

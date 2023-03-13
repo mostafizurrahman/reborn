@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
-import 'package:reborn/feature/domain/firebase/entities/reborn_category.dart';
 import 'package:reborn/feature/ui/home/widgets/reborn_category_view.dart';
 import 'package:reborn/feature/ui/filtering/reborn_filter_view.dart';
 import 'package:reborn/utility/screen_data.dart';
 
+import '../../domain/entities.dart';
+
 class CategoryListView extends StatelessWidget {
   final List<RebornCategory> categories;
+  final List<RebornFilterData> filterList;
   const CategoryListView({
     Key? key,
     required this.categories,
+    required this.filterList,
   }) : super(key: key);
 
   @override
@@ -26,7 +29,7 @@ class CategoryListView extends StatelessWidget {
 
   Widget _getCategoryView(final BuildContext listContext, final int index) {
     if (index == 0) {
-      return const RebornFilterView();
+      return RebornFilterView(filterList: filterList);
     }
     final RebornCategory category = categories[index - 1];
     final padding =
