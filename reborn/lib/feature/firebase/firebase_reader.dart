@@ -42,7 +42,7 @@ class _FirebaseReader {
     } else if (key == BaseApi.sleep) {
       return FBCategoryResponse.fromJson(_data);
     } else if (key == BaseApi.subscription) {
-      return FBCategoryResponse.fromJson(_data);
+      return FeedbackResponse.fromJson(_data);
     }
     throw FirebaseException(
       plugin: "plugin.firebase",

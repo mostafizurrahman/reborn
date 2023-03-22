@@ -11,6 +11,7 @@ import 'package:reborn/feature/domain/entities.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../data/models/firebase/fb_error_response.dart';
+import '../data/models/firebase/fb_subscription_response.dart';
 import '../data/models/firebase/fb_track_response.dart';
 
 part 'firebase_reader.dart';
