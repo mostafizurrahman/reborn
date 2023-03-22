@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'widget/status_content_view.dart';
 import 'widget/subscription_top_bar.dart';
+import 'widget/subscription_view.dart';
 import 'widget/trial_title_view.dart';
 
 class SubscriptionPage extends StatefulWidget {
@@ -56,7 +57,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 ),
                 SizedBox(height: 12),
                 Divider(height: 2),
-
+                Padding(
+                  padding: EdgeInsets.all(12),
+                  child: SubscriptionView(due: '\$0.00',price: '\$4.99'),
+                ),
+                Divider(height: 2),
               ],
             ),
           ),

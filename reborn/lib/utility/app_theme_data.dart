@@ -182,6 +182,31 @@ class CCAppTheme {
         ],
       );
 
+  static BoxDecoration get subscriptionDecoration => BoxDecoration(
+
+    color: CCAppTheme.periwinkleLightColor.withAlpha(100),
+    // image: const DecorationImage(
+    //   image: AssetImage('lib/assets/track_background.png'),
+    //   fit: BoxFit.cover,
+    // ),
+
+    gradient: LinearGradient(
+      colors: [Colors.white.withAlpha(100), CCAppTheme.periwinkleDarkColor],
+      begin: FractionalOffset(0.0, 0.30),
+      end: FractionalOffset(0.0, 1.0),
+      stops: [0.0, 1.0],
+      tileMode: TileMode.clamp,
+    ),
+    borderRadius: const BorderRadius.all(Radius.circular(12)),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withAlpha(100),
+        spreadRadius: 12,
+        blurRadius: 24,
+      ),
+    ],
+  );
+
   static Color get primaryColor => Colors.blueAccent.shade200;
 
   static final _rebornTheme = CCAppTheme._internal();
