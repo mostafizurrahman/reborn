@@ -9,7 +9,6 @@ class SubscriptionLoadingState extends SubscriptionState {
 
 }
 
-
 class SubscriptionDataState extends SubscriptionState {
   final RebornSubscription subscription;
   SubscriptionDataState({required this.subscription});
