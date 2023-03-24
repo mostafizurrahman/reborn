@@ -123,6 +123,8 @@ class StatusCard extends StatelessWidget {
     final playStore =
         LocalizedText(en: 'Play Store Review', ru: 'Обзор игрового магазина');
     return Container(
+      width: screenData.width * 0.4,
+      height: screenData.width * 0.4,
       decoration: CCAppTheme.shadowNoBorder.copyWith(boxShadow: [
         BoxShadow(
           color: Colors.grey.withAlpha(100),
@@ -131,12 +133,14 @@ class StatusCard extends StatelessWidget {
         )
       ]),
       child: Column(
+
         children: [
           SizedBox(height: 24),
           Icon(CupertinoIcons.heart_fill, color: Colors.redAccent),
-          Row(children: List.generate(5, getStar)),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(5, getStar), ),
           Text('5 Stars'),
-          Text(Platform.isIOS ? appStore.txt : playStore.txt),
+
+          Padding(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4), child: Text(Platform.isIOS ? appStore.txt : playStore.txt,textAlign: TextAlign.center, style: CCAppTheme.txt,),),
           SizedBox(height: 24),
         ],
       ),
@@ -149,6 +153,8 @@ class StatusCard extends StatelessWidget {
         ? subscription.appStoreDownloads
         : subscription.playStoreDownloads;
     return Container(
+      width: screenData.width * 0.4,
+      height: screenData.width * 0.4,
       decoration: CCAppTheme.shadowNoBorder.copyWith(boxShadow: [
         BoxShadow(
           color: Colors.grey.withAlpha(100),
