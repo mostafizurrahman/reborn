@@ -77,7 +77,7 @@ class InstructorView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 3, horizontal: 12),
                         child: Text(
-                          author.description.en,
+                          author.description.txt,
                           textAlign: TextAlign.justify,
                           style: CCAppTheme.txt.copyWith(color: Colors.white),
                         ),

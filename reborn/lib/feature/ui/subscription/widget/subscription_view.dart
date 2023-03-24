@@ -29,8 +29,8 @@ class SubscriptionView extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(8)),
       child: Column(
         children: [
-          Text(totalDue.en),
-          Text(instruction.en),
+          Text(totalDue.txt),
+          Text(instruction.txt),
           SizedBox(height: 36),
           _getSubscriptionButton(context),
           Padding(
@@ -43,7 +43,7 @@ class SubscriptionView extends StatelessWidget {
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(12),
-                  child: Text(forget.en),
+                  child: Text(forget.txt),
                 ),
               ),
             ),
@@ -54,13 +54,13 @@ class SubscriptionView extends StatelessWidget {
   }
 
   Widget _getSubscriptionButton(context) {
-    const trial = LocalizedText(en: 'Start Free Trial', ru: 'Start Free Trial');
+    const trial = LocalizedText(en: 'Start Free Trial', ru: 'Начать бесплатную пробную версию');
     final priceTxt = LocalizedText(
       en: 'Try 7-days for free, then $price',
-      ru: 'Try 7-days for free, then $price',
+      ru: 'TПопробуйте 7 дней бесплатно, затем $price',
     );
     final monthPrice =
-        const LocalizedText(en: '(Only \$4.99/mo)', ru: '(Only \$4.99/mo)');
+        const LocalizedText(en: '(Only \$4.99/mo)', ru: '(Только \$4.99/mo)');
     return Material(
       borderRadius: BorderRadius.all(Radius.circular(12)),
       // color: Colors.white,
@@ -76,11 +76,11 @@ class SubscriptionView extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 24),
-              Text(trial.en),
+              Text(trial.txt),
               SizedBox(height: 8),
-              Text(priceTxt.en),
+              Text(priceTxt.txt),
               SizedBox(height: 8),
-              Text(monthPrice.en),
+              Text(monthPrice.txt),
               SizedBox(height: 24),
             ],
           ),

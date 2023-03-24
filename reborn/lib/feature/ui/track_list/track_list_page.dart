@@ -71,6 +71,6 @@ class _TrackListState extends State<TrackListPage> {
         "track": track,
       },
     );
-    debugPrint("track tap on ${track.trackTitle.en}");
+    debugPrint("track tap on ${track.trackTitle.txt}");
   }
 }

@@ -39,7 +39,7 @@ class TrackGridContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ViewProvider.getCupertinoIcon(iconValue: trackEntity.trackIconData),
-          Text(trackEntity.trackTitle.en, style: CCAppTheme.txtHL2)
+          Text(trackEntity.trackTitle.txt, style: CCAppTheme.txtHL2)
         ],
       ),
     );
@@ -47,7 +47,7 @@ class TrackGridContent extends StatelessWidget {
       const SizedBox(height: 4),
     );
     widgets.add(
-      Text(trackEntity.trackSubtitle.en, style: CCAppTheme.txt2),
+      Text(trackEntity.trackSubtitle.txt, style: CCAppTheme.txt2),
     );
     return widgets;
   }
@@ -86,7 +86,7 @@ class TrackCoverContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ViewProvider.getCupertinoIcon(iconValue: trackEntity.trackIconData),
-          Text(trackEntity.trackTitle.en, style: CCAppTheme.txtHL2)
+          Text(trackEntity.trackTitle.txt, style: CCAppTheme.txtHL2)
         ],
       ),
     );
@@ -94,7 +94,7 @@ class TrackCoverContent extends StatelessWidget {
       const SizedBox(height: 8),
     );
     widgets.add(
-      Text(trackEntity.trackSubtitle.en, style: CCAppTheme.txt2),
+      Text(trackEntity.trackSubtitle.txt, style: CCAppTheme.txt2),
     );
     final duration = DataFormatter.formattedDuration(Duration(seconds: trackEntity.trackDuration));
     widgets.add(

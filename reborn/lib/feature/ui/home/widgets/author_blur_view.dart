@@ -35,7 +35,7 @@ class AuthorLeftRoundView extends AuthorBlurView {
                 const SizedBox(height: 4),
                 Expanded(
                   child: Text(
-                    authorData.biography.en,
+                    authorData.biography.txt,
                     style: CCAppTheme.txt.copyWith(color: Colors.white),
                   ),
                 ),
@@ -96,7 +96,7 @@ class AuthorBlurView extends StatelessWidget {
                 const SizedBox(height: 8),
                 Expanded(
                   child: Text(
-                    authorData.biography.en,
+                    authorData.biography.txt,
                     style: CCAppTheme.txt.copyWith(color: Colors.white),
                   ),
                 ),

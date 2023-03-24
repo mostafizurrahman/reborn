@@ -30,7 +30,7 @@ class StatusCard extends StatelessWidget {
           ],
         ),
         SizedBox(height: 48),
-        Text(review.en),
+        Text(review.txt),
         SizedBox(height: 12),
         SizedBox(
           width: screenData.width,
@@ -71,7 +71,7 @@ class StatusCard extends StatelessWidget {
 
             Expanded(
                 child: Text(
-              feedback.review.en,
+              feedback.review.txt,
               style: CCAppTheme.txt
                   .copyWith(fontWeight: FontWeight.w500, fontSize: 13.6),
             ),),
@@ -101,8 +101,8 @@ class StatusCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(feedback.name.en),
-                    Text(feedback.title.en, style: CCAppTheme.txt,),
+                    Text(feedback.name.txt),
+                    Text(feedback.title.txt, style: CCAppTheme.txt,),
                   ],
                 )),            SizedBox(width: 12),
                 //   ),
@@ -136,7 +136,7 @@ class StatusCard extends StatelessWidget {
           Icon(CupertinoIcons.heart_fill, color: Colors.redAccent),
           Row(children: List.generate(5, getStar)),
           Text('5 Stars'),
-          Text(Platform.isIOS ? appStore.en : playStore.en),
+          Text(Platform.isIOS ? appStore.txt : playStore.txt),
           SizedBox(height: 24),
         ],
       ),
@@ -162,7 +162,7 @@ class StatusCard extends StatelessWidget {
           Icon(CupertinoIcons.group, color: Colors.green),
           Row(children: List.generate(5, _getEmptyTxt)),
           Text(count),
-          Text(download.en),
+          Text(download.txt),
           SizedBox(height: 24),
         ],
       ),

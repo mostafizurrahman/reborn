@@ -122,7 +122,7 @@ class TrackCategoryView extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Text(
-              category.title.en,
+              category.title.txt,
               style: CCAppTheme.txtHL2.copyWith(color: Colors.pinkAccent),
             )
           ],
@@ -160,7 +160,7 @@ class TrackCategoryView extends StatelessWidget {
               Navigator.pushNamed(context, TrackListPage.path, arguments: {
                 "summary": summary,
               });
-              debugPrint("filter tap on ${category.title.en}");
+              debugPrint("filter tap on ${category.title.txt}");
             },
           ),
         ),

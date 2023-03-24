@@ -25,7 +25,7 @@ class CategoryTitleView extends StatelessWidget {
           child: ViewProvider.getCupertinoIcon(
               iconValue: category.logoData.toInt()),
         ),
-        Text(category.title.en,
+        Text(category.title.txt,
             style: CCAppTheme.txt2.copyWith(fontWeight: FontWeight.w800)),
         const Expanded(
           child: Divider(
@@ -57,7 +57,7 @@ class CategoryTitleView extends StatelessWidget {
               }
             },
             child: Center(
-                child: Text(category.seeMoreTitle.en, style: CCAppTheme.txt)),
+                child: Text(category.seeMoreTitle.txt, style: CCAppTheme.txt)),
           ),
         ),
       );

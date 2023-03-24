@@ -154,7 +154,7 @@ class _AuthorDetailsState extends State<AuthorDetailsPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8, right: 16),
                   child: Text(
-                    widget.author.motivation.en,
+                    widget.author.motivation.txt,
                     style: CCAppTheme.txtReg,
                   ),
                 ),
@@ -162,7 +162,7 @@ class _AuthorDetailsState extends State<AuthorDetailsPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8, right: 16),
                     child: Text(
-                      widget.author.description.en,
+                      widget.author.description.txt,
                       textAlign: TextAlign.justify,
                       style: CCAppTheme.txt.copyWith(color: Colors.white),
                     ),

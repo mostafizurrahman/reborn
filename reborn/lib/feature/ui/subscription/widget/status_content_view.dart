@@ -75,8 +75,8 @@ class _StatusContentState extends State<StatusContentView> {
   }
 
   Widget _getStatusWidget({required final SVData data}) {
-    final title = Text(data.title.en);
-    final description = Text(data.description.en);
+    final title = Text(data.title.txt);
+    final description = Text(data.description.txt);
     return Row(
       children: [
         StatusVerticleView(

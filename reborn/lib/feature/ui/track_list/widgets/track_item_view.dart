@@ -81,9 +81,9 @@ class TrackItemView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 12),
-        Text(track.trackTitle.en, style: CCAppTheme.txtHL3),
+        Text(track.trackTitle.txt, style: CCAppTheme.txtHL3),
         const SizedBox(height: 4),
-        Text(track.trackSubtitle.en,
+        Text(track.trackSubtitle.txt,
             style: CCAppTheme.txt.copyWith(
                 fontWeight: FontWeight.bold,
                 color: CCAppTheme.pinkDarkerColor)),

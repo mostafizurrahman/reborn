@@ -58,7 +58,7 @@ class _AudioPlayerState extends State<AudioPlayerScreen> {
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      widget.track.trackTitle.en,
+                      widget.track.trackTitle.txt,
                       style: CCAppTheme.txtHL1,
                     )
                   ],
@@ -66,7 +66,7 @@ class _AudioPlayerState extends State<AudioPlayerScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 24, top: 8),
                   child: Text(
-                    widget.track.story.en,
+                    widget.track.story.txt,
                     style: CCAppTheme.txtReg.copyWith(
                         color: Colors.black54, fontWeight: FontWeight.bold),
                   ),

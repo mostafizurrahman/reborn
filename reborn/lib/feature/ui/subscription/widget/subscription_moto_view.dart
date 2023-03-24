@@ -33,7 +33,7 @@ class SubscriptionMotoView extends StatelessWidget {
               ),
             ),
             SizedBox(width: 12),
-            Expanded(child: Text(txt.en)),
+            Expanded(child: Text(txt.txt)),
           ],
         )
       );

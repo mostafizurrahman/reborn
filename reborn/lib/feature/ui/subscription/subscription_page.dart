@@ -103,12 +103,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               SubscriptionMotoView(moto:subscription.moto),
               StatusCard(subscription: subscription),
               SizedBox(height: 12),
-              Text(cancelTitle.en),
+              Text(cancelTitle.txt),
               SizedBox(height: 24),
 
               Row(
                 children: [
-                  Expanded(child: Text('After free trial, Aura yearly subscription is \$59.99 and automatically renews unless auto-renew is turned off at least 24h before current period ends. Payment is charged to your iTunes account.', textAlign: TextAlign.justify,),)
+                  Expanded(child: Text('After free trial, Reborn yearly subscription is \$59.99 and automatically renews unless auto-renew is turned off at least 24h before current period ends. Payment is charged to your iTunes account.', textAlign: TextAlign.justify,),)
 
                 ],
               ),

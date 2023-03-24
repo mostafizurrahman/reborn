@@ -116,7 +116,7 @@ class ListCoverView extends StatelessWidget {
           icon,
           const SizedBox(width: 12),
           Text(
-            summary.title.en,
+            summary.title.txt,
             style: CCAppTheme.txtHL2,
           )
         ],
