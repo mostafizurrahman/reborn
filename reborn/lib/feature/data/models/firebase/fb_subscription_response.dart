@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:reborn/feature/data/models/localized_response.dart';
 import 'package:reborn/feature/data/network/firebase_api.dart';
@@ -38,26 +38,33 @@ class FeedbackResponse extends BaseResponse {
 
 @JsonSerializable(createToJson: false)
 class FBCSubscriptionResponse extends BaseResponse {
-  final String? appStoreDownloads;
-  final String? discount;
+
   final String? due;
-  final List<FeedbackResponse>? feedback;
-  final List<LocalizedResponse>? moto;
-  final String? playStoreDownloads;
-  final String? reviewPlayStore;
+  final String? discount;
+  final String? productID;
+  final String? basePlanID;
+  final num? subscriptionId;
   final String? subscription;
   final String? reviewAppStore;
+  final String? reviewPlayStore;
+  final String? appStoreDownloads;
+  final String? playStoreDownloads;
+  final List<LocalizedResponse>? moto;
+  final List<FeedbackResponse>? feedback;
 
   FBCSubscriptionResponse({
-    required this.feedback,
+    required this.due,
     required this.moto,
+    required this.feedback,
+    required this.discount,
+    required this.productID,
+    required this.basePlanID,
+    required this.subscription,
+    required this.subscriptionId,
+    required this.reviewAppStore,
+    required this.reviewPlayStore,
     required this.appStoreDownloads,
     required this.playStoreDownloads,
-    required this.reviewPlayStore,
-    required this.subscription,
-    required this.due,
-    required this.discount,
-    required this.reviewAppStore,
   });
 
   factory FBCSubscriptionResponse.fromJson(Map<String, dynamic> json) =>
@@ -75,5 +82,8 @@ class FBCSubscriptionResponse extends BaseResponse {
         moto: moto?.map((e) => e.toEntity()).toList() ?? [],
         discount: discount ?? '',
         subscription: subscription ?? '',
+        basePlanID: basePlanID ?? '',
+        productID: productID ?? '',
+        subscriptionId: subscriptionId?.toInt() ?? 0,
       );
 }

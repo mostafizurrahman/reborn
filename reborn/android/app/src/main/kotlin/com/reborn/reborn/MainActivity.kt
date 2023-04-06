@@ -1,4 +1,4 @@
-package com.reborn.world
+package com.reborn.reborn
 
 import io.flutter.embedding.android.FlutterActivity
 

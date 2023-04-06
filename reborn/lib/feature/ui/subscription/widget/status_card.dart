@@ -68,16 +68,15 @@ class StatusCard extends StatelessWidget {
           children: [
             SizedBox(height: 8),
             Row(children: List.generate(5, getStar)),
-
             Expanded(
-                child: Text(
-              feedback.review.txt,
-              style: CCAppTheme.txt
-                  .copyWith(fontWeight: FontWeight.w500, fontSize: 13.6),
-            ),),
+              child: Text(
+                feedback.review.txt,
+                style: CCAppTheme.txt
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 13.6),
+              ),
+            ),
             SizedBox(height: 8),
             Row(
-              
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -96,20 +95,24 @@ class StatusCard extends StatelessWidget {
                 //   child: SizedBox(
                 //     // width: screenData.width - 120,
                 //     height: 120,
-                Expanded(child: Column(
+                Expanded(
+                    child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(feedback.name.txt),
-                    Text(feedback.title.txt, style: CCAppTheme.txt,),
+                    Text(
+                      feedback.title.txt,
+                      style: CCAppTheme.txt,
+                    ),
                   ],
-                )),            SizedBox(width: 12),
+                )),
+                SizedBox(width: 12),
                 //   ),
                 // )
               ],
             ),
-
             SizedBox(height: 12),
           ],
         ),
@@ -133,14 +136,22 @@ class StatusCard extends StatelessWidget {
         )
       ]),
       child: Column(
-
         children: [
           SizedBox(height: 24),
           Icon(CupertinoIcons.heart_fill, color: Colors.redAccent),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(5, getStar), ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(5, getStar),
+          ),
           Text('5 Stars'),
-
-          Padding(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4), child: Text(Platform.isIOS ? appStore.txt : playStore.txt,textAlign: TextAlign.center, style: CCAppTheme.txt,),),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            child: Text(
+              Platform.isIOS ? appStore.txt : playStore.txt,
+              textAlign: TextAlign.center,
+              style: CCAppTheme.txt,
+            ),
+          ),
           SizedBox(height: 24),
         ],
       ),

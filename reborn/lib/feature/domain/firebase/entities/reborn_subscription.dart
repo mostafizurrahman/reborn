@@ -21,6 +21,9 @@ class RebornFeedback {
 class RebornSubscription {
   final String due;
   final String discount;
+  final String productID;
+  final String basePlanID;
+  final int subscriptionId;
   final String subscription;
   final String reviewAppStore;
   final String reviewPlayStore;
@@ -34,6 +37,9 @@ class RebornSubscription {
     required this.moto,
     required this.discount,
     required this.feedback,
+    required this.productID,
+    required this.basePlanID,
+    required this.subscriptionId,
     required this.subscription,
     required this.reviewAppStore,
     required this.reviewPlayStore,

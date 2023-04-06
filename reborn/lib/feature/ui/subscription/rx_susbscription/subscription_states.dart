@@ -1,26 +1,31 @@
 
 
+import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:reborn/feature/data_model/base/base_state.dart';
+import 'package:reborn/feature/domain/entities.dart';
 
-
-
-import 'package:reborn/feature/data_model/base/base_event.dart';
-
-class SubscriptionEvent extends CCBaseEvent {
-
-}
-
-class SubscriptionLoadingEvent extends CCBaseEvent {
+class SubscriptionState extends CCBaseState {
 
 }
 
-class GetSubscriptionDataEvent extends SubscriptionEvent {
+class SubscriptionLoadingState extends SubscriptionState {
 
 }
 
-class SubscribePremiumContentEvent extends SubscriptionEvent {
+class ProductLoadingState extends SubscriptionState {
 
 }
 
-class RestoreSubscriptionEvent extends SubscriptionEvent {
+class SubscriptionDataState extends SubscriptionState {
+  final RebornSubscription subscription;
+  SubscriptionDataState({required this.subscription});
+}
+
+class SubscribeProductState extends SubscriptionState {
+  final ProductDetailsResponse product;
+  SubscribeProductState({required this.product});
+}
+
+class RestoreSubscriptionState extends SubscriptionState {
 
 }

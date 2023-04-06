@@ -22,7 +22,9 @@ class SubscriptionView extends StatelessWidget {
       ru: 'You won\'t be charged until after your free trial.',
     );
     final forget = LocalizedText(
-        en: 'What if I forget to cancel?', ru: 'What if I forget to cancel?');
+      en: 'What if I forget to cancel?',
+      ru: 'What if I forget to cancel?',
+    );
     return Material(
       color: Colors.transparent,
       shadowColor: Colors.greenAccent,
@@ -38,9 +40,7 @@ class SubscriptionView extends StatelessWidget {
             child: Ink(
               decoration: CCAppTheme.shadowNoBorder,
               child: InkWell(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: Text(forget.txt),
@@ -54,7 +54,8 @@ class SubscriptionView extends StatelessWidget {
   }
 
   Widget _getSubscriptionButton(context) {
-    const trial = LocalizedText(en: 'Start Free Trial', ru: 'Начать бесплатную пробную версию');
+    const trial = LocalizedText(
+        en: 'Start Free Trial', ru: 'Начать бесплатную пробную версию');
     final priceTxt = LocalizedText(
       en: 'Try 7-days for free, then $price',
       ru: 'TПопробуйте 7 дней бесплатно, затем $price',
@@ -66,7 +67,8 @@ class SubscriptionView extends StatelessWidget {
       // color: Colors.white,
       child: Container(
         width: screenData.width,
-        decoration: CCAppTheme.subscriptionDecoration.copyWith(color: Colors.white),
+        decoration:
+            CCAppTheme.subscriptionDecoration.copyWith(color: Colors.white),
         child: InkWell(
           borderRadius: BorderRadius.all(Radius.circular(12)),
           onTap: () {

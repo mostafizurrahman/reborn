@@ -24,8 +24,8 @@ class SubscriptionPage extends StatefulWidget {
 }
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
-
   final subscriber = SubscriptionBloc();
+  final product = SubscriptionCubit();
   @override
   void initState() {
     super.initState();
@@ -45,7 +45,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     );
   }
 
-  Widget _getSubscriptionContent(final BuildContext ctx, final SubscriptionState state) {
+  Widget _getSubscriptionContent(
+      final BuildContext ctx, final SubscriptionState state) {
     if (state is SubscriptionLoadingState) {
       return defaultLoader;
     }
@@ -54,7 +55,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     }
     return const SizedBox();
   }
-
 
   Widget _getSubscriptionBody(final RebornSubscription subscription) {
     final items = [
@@ -78,13 +78,15 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           iconSize: 50,
           status: SVStatus.incomplete),
     ];
-    final cancelTitle =
-    LocalizedText(en: 'No commitments, cancel anytime', ru: 'Никаких обязательств, отменить в любое время');
-    return  SafeArea(
+    final cancelTitle = LocalizedText(
+      en: 'No commitments, cancel anytime',
+      ru: 'Никаких обязательств, отменить в любое время',
+    );
+    return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          child:  Column(
+          child: Column(
             children: [
               const SubscriptionTopBar(),
               SizedBox(height: 24),
@@ -97,10 +99,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               Divider(height: 2),
               Padding(
                 padding: EdgeInsets.all(12),
-                child: SubscriptionView(due: '\$0.00',price: '\$4.99'),
+                child: SubscriptionView(due: '\$0.00', price: '\$4.99'),
               ),
               Divider(height: 2),
-              SubscriptionMotoView(moto:subscription.moto),
+              SubscriptionMotoView(moto: subscription.moto),
               StatusCard(subscription: subscription),
               SizedBox(height: 12),
               Text(cancelTitle.txt),
@@ -108,8 +110,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
               Row(
                 children: [
-                  Expanded(child: Text('After free trial, Reborn yearly subscription is \$59.99 and automatically renews unless auto-renew is turned off at least 24h before current period ends. Payment is charged to your iTunes account.', textAlign: TextAlign.justify,),)
-
+                  Expanded(
+                    child: Text(
+                      'After free trial, Reborn yearly subscription is \$59.99 and automatically renews unless auto-renew is turned off at least 24h before current period ends. Payment is charged to your iTunes account.',
+                      textAlign: TextAlign.justify,
+                    ),
+                  )
                 ],
               ),
               SizedBox(height: 48),
