@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
 
@@ -8,45 +9,57 @@ class SubscriptionTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey,
+            width: 0.5,
+          ),
+        ),
+      ),
       width: screenData.width,
-      height: 81,
+      height: 100,
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 0),
+                padding: EdgeInsets.zero,
                 child: Ink(
-                  height: 50,
-                  width: 50,
+                  decoration: CCAppTheme.shadowNoBorder
+                      .copyWith(borderRadius: BorderRadius.circular(40),
+                  ),
+                  width: 60,
+                  height: 35,
                   child: InkWell(
-                    child: const Icon(
-                      CupertinoIcons.arrow_left_circle,
-                      color: Colors.black,
-                      size: 35,
+                    child: const Center(
+                      child: Text('  SKIP '),
                     ),
                     onTap: () => Navigator.pop(context),
                   ),
                 ),
               ),
               Expanded(
-                child: Container(
-                  child: Image(
-                    image: ImageExt.getImageAsset('icon_circle_small.png'),
-                    width: 50,
-                    height: 50,
-                  ),
+                child: Image(
+                  image: ImageExt.getImageAsset('icon_circle_small.png'),
+                  width: 60,
+                  height: 60,
                 ),
               ),
               const SizedBox(
-                width: 62,
+                width: 72,
               ),
             ],
           ),
-          SizedBox(height: 12,),
-          Text('REBORN SUBSCRIPTION'),
+          const SizedBox(
+            height: 12,
+          ),
+          const Text(
+            'REBORN SUBSCRIPTION',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );

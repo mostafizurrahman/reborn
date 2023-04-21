@@ -25,17 +25,20 @@ FeedbackResponse _$FeedbackResponseFromJson(Map<String, dynamic> json) =>
 FBCSubscriptionResponse _$FBCSubscriptionResponseFromJson(
         Map<String, dynamic> json) =>
     FBCSubscriptionResponse(
-      feedback: (json['feedback'] as List<dynamic>?)
-          ?.map((e) => FeedbackResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      due: json['due'] as String?,
       moto: (json['moto'] as List<dynamic>?)
           ?.map((e) => LocalizedResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
+      feedback: (json['feedback'] as List<dynamic>?)
+          ?.map((e) => FeedbackResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      discount: json['discount'] as String?,
+      productID: json['productID'] as String?,
+      basePlanID: json['basePlanID'] as String?,
+      subscription: json['subscription'] as String?,
+      subscriptionId: json['subscriptionId'] as num?,
+      reviewAppStore: json['reviewAppStore'] as String?,
+      reviewPlayStore: json['reviewPlayStore'] as String?,
       appStoreDownloads: json['appStoreDownloads'] as String?,
       playStoreDownloads: json['playStoreDownloads'] as String?,
-      reviewPlayStore: json['reviewPlayStore'] as String?,
-      subscription: json['subscription'] as String?,
-      due: json['due'] as String?,
-      discount: json['discount'] as String?,
-      reviewAppStore: json['reviewAppStore'] as String?,
     );

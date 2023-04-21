@@ -12,6 +12,11 @@ class CCAppTheme {
     return false;
   }
 
+  static const topRound12 = BorderRadius.only(
+    topRight: Radius.circular(12),
+    topLeft: Radius.circular(12),
+  );
+
   BorderRadius get topRound {
     return const BorderRadius.only(
       topLeft: Radius.circular(7),
@@ -25,6 +30,8 @@ class CCAppTheme {
       bottomRight: Radius.circular(7),
     );
   }
+
+  static const circleRadius = BorderRadius.all(Radius.circular(1000));
 
   static Color get pinkDarkerColor => const Color(0xFF7827E6);
   static Color get pinkMediumColor => const Color(0xFFAA4FF6);

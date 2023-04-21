@@ -8,6 +8,9 @@ import 'package:reborn/feature/ui/home/home_tab_widget.dart';
 import 'package:reborn/utility/app_enum.dart';
 import 'package:flutter/material.dart';
 
+import '../domain/entities.dart';
+import '../ui/subscription/widget/status_content_view.dart';
+
 class PageData {
   final String title;
   final String subTitle;
@@ -15,18 +18,36 @@ class PageData {
   final String iconPath;
   final String description;
 
-  PageData(
-      {required this.title,
-      required this.iconPath,
-      required this.subTitle,
-      required this.imagePath,
-      this.description = ""});
+  PageData({
+    required this.title,
+    required this.iconPath,
+    required this.subTitle,
+    required this.imagePath,
+    this.description = "",
+  });
+}
+
+class TabBarData {
+  late bool isSelected;
+  final String name;
+  final String tabID;
+  final IconData iconData;
+  final String? iconPath;
+  final Function(String) onTap;
+  TabBarData({
+    required this.tabID,
+    required this.name,
+    required this.iconData,
+    required this.onTap,
+    this.iconPath,
+  });
 }
 
 class StaticData {
   static List<SecretTapType> get parentTypes =>
       [SecretTapType.tapParent, SecretTapType.tapParentPrivate];
-  static List<SecretTapType> get secretTypes => [SecretTapType.tapParent, SecretTapType.tapRight];
+  static List<SecretTapType> get secretTypes =>
+      [SecretTapType.tapParent, SecretTapType.tapRight];
 
   static String get idFavoriteContacts => "id_favorite_contacts";
   static String get idDeletedContacts => "recent_deleted_contacts";
@@ -37,7 +58,9 @@ class StaticData {
   static String get tabCoaches => "3_coaches";
   static String get tabProfile => "4_profile";
 
-  static List<TabBarData> getTabBarData(final Function(String) onTabBarItemTap) => [
+  static List<TabBarData> getTabBarData(
+          final Function(String) onTabBarItemTap) =>
+      [
         TabBarData(
           iconData: Icons.star,
           tabID: tabFavorite,
@@ -157,15 +180,21 @@ class StaticData {
           subFilterID: "filter_coach_id",
           iconName: CupertinoIcons.rectangle_stack_person_crop),
       SubFilterData(
-          displayName: "Gender", subFilterID: "filter_gender_id", iconName: Icons.person_outline),
+          displayName: "Gender",
+          subFilterID: "filter_gender_id",
+          iconName: Icons.person_outline),
       SubFilterData(
-          displayName: "Country", subFilterID: "filter_country_id", iconName: Icons.flag_outlined),
+          displayName: "Country",
+          subFilterID: "filter_country_id",
+          iconName: Icons.flag_outlined),
     ];
   }
 
   static AudioAuthor get audioAuthor {
     return AudioAuthor(
-        authorEmail: "abc@yahoo.com", authorName: "Katie Krimitsos", authorId: "xayar");
+        authorEmail: "abc@yahoo.com",
+        authorName: "Katie Krimitsos",
+        authorId: "xayar");
   }
 
   static RebornMeditationData get rebornMeditationData {
@@ -216,13 +245,19 @@ class StaticData {
     return List.generate(
         12,
         (index) => MeditationCategoryData(
-            categoryID: "${index}_category",
-            categoryTitle: titles[index % titles.length],
-            rebornMeditationList: List.generate(2 + rng.nextInt(7), (index) => rebornMeditation),
-            subFilterList: ["filter_gender_id", "filter_country_id", "filter_coach_id"]));
+                categoryID: "${index}_category",
+                categoryTitle: titles[index % titles.length],
+                rebornMeditationList: List.generate(
+                    2 + rng.nextInt(7), (index) => rebornMeditation),
+                subFilterList: [
+                  "filter_gender_id",
+                  "filter_country_id",
+                  "filter_coach_id"
+                ]));
   }
 
-  static List<String> gridImages = ["https://i.imgur.com/whbe83G.jpg",
+  static List<String> gridImages = [
+    "https://i.imgur.com/whbe83G.jpg",
     "https://i.imgur.com/wXMqHQ2.jpg",
     "https://i.imgur.com/9CtCQO6.jpg",
     "https://i.imgur.com/j8fuLNM.jpg",
@@ -234,13 +269,76 @@ class StaticData {
     "https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067_1280.png",
     "https://cdn.pixabay.com/photo/2016/12/11/12/02/mountains-1899264_1280.jpg",
   ];
+
+  static List<SVData> getStatusItemList() {
+    final items = [
+      SVData(
+        order: 0,
+        iconData: CupertinoIcons.check_mark_circled,
+        iconSize: 50,
+        title: const LocalizedText(
+          en: 'Install the app',
+          ru: 'Установите приложение',
+        ),
+        description: const LocalizedText(
+          en: 'You successfully created the signature',
+          ru: 'Вы успешно создали подпись',
+        ),
+      ),
+      SVData(
+        order: 1,
+        iconData: CupertinoIcons.check_mark_circled,
+        iconSize: 50,
+        title: const LocalizedText(
+          en: 'Get Instant Access',
+          ru: 'Получить мгновенный доступ',
+        ),
+        description: const LocalizedText(
+          en: 'Start your full access to the premium contents',
+          ru: 'Получите полный доступ к премиум-контенту',
+        ),
+      ),
+      SVData(
+        order: 2,
+        iconData: CupertinoIcons.arrow_2_circlepath,
+        iconSize: 50,
+        status: SVStatus.active,
+        title: const LocalizedText(
+          en: 'Get 7 Days Free Trial',
+          ru: 'Бесплатная пробная версия',
+        ),
+        description: const LocalizedText(
+          en: 'Unlock all premium contents for 7 days free trial',
+          ru: 'Разблокируйте весь премиальный контент на 7 дней бесплатной пробной версии',
+        ),
+      ),
+      SVData(
+        order: 3,
+        iconData: CupertinoIcons.arrow_down_circle_fill,
+        iconSize: 50,
+        status: SVStatus.incomplete,
+        title: const LocalizedText(
+          en: 'Boost Your Mental Health',
+          ru: 'Укрепите свое психическое здоровье',
+        ),
+        description: const LocalizedText(
+          en: 'Sleep well, feel good! Become the master of your mind.',
+          ru: 'Спи спокойно, чувствуй себя хорошо! Станьте хозяином своего ума.',
+        ),
+      ),
+    ];
+    return items;
+  }
 }
 
 class SubFilterData {
   final String subFilterID;
   final String displayName;
   final IconData iconName;
-  SubFilterData({required this.subFilterID, required this.displayName, required this.iconName});
+  SubFilterData(
+      {required this.subFilterID,
+      required this.displayName,
+      required this.iconName});
 }
 
 class ArgsKey {
@@ -305,7 +403,8 @@ class AudioAuthor {
       {required this.authorId,
       required this.authorName,
       required this.authorEmail,
-      this.authorImage = "https://theproductivewoman.com/wp-content/uploads/2017/05/Katie-59c.jpg",
+      this.authorImage =
+          "https://theproductivewoman.com/wp-content/uploads/2017/05/Katie-59c.jpg",
       this.authorDescription =
           "Mama, Adventurer, Podcaster. Listen to daily guided meditation here 🎧👇🏽💗",
       this.authorQualification = "Creator of the Women’s Meditation Network.",

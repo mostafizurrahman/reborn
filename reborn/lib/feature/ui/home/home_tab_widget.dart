@@ -5,21 +5,9 @@ import 'package:reborn/utility/reborn_constant.dart';
 import 'package:reborn/utility/screen_data.dart';
 import 'package:flutter/material.dart';
 
-class TabBarData {
-  late bool isSelected;
-  final String name;
-  final String tabID;
-  final IconData iconData;
-  final String? iconPath;
-  final Function(String) onTap;
-  TabBarData({
-    required this.tabID,
-    required this.name,
-    required this.iconData,
-    required this.onTap,
-    this.iconPath,
-  });
-}
+import '../../data_model/static_data.dart';
+
+
 
 class HomeTabWidget extends StatelessWidget {
   final List<TabBarData> tabDataList;
