@@ -170,27 +170,27 @@ class _SubscriptionPageState extends State<SubscriptionPage>
   @override
   void onTapSubscription() {
     // TODO: implement onTapSubscription
-    final content = DialogContent(
-      title: LocalizedText(
-        en: 'Something went wrong',
-        ru: 'Something went wrong',
-      ),
-      description: LocalizedText(
-        en: 'Yes you are right, I am done!',
-        ru: 'Yes you are right, I am done!',
-      ),
-    );
     showModalBottomSheet(
         backgroundColor: Colors.transparent,
         isDismissible: false,
         context: context,
-        builder: (builder) {
-          return BottomDialogWidget(content: content, tapInterface: this);
-        });
-    // final product = subscriptionHandler?.productDetails[productIndex];
-    // if (product  != null) {
-    //   subscriptionHandler?.purchaseProductFrom(productDetails: product);
-    // }
+        builder:  _getDialogBody,
+    );
+  }
+
+  Widget _getDialogBody(_) {
+    final content = DialogContent(
+      title: const LocalizedText(
+        en: 'Something went wrong',
+        ru: 'Something went wrong',
+      ),
+      description: const LocalizedText(
+        en: 'Yes you are right, I am done!',
+        ru: 'Yes you are right, I am done!',
+      ),
+    );
+    return BottomDialogWidget(content: content, tapInterface: this);
+
   }
 
   @override
@@ -208,6 +208,7 @@ class _SubscriptionPageState extends State<SubscriptionPage>
   void onTapClose() {
     // TODO: implement onTapClose title_view cross button
     debugPrint('I am title cross tap');
+    Navigator.pop(context);
   }
 
   @override

@@ -6,7 +6,6 @@ import 'dart:ui';
 
 import 'package:reborn/utility/screen_data.dart';
 
-import '../subscription/subscription_constant.dart';
 
 class DialogContent {
   final LocalizedText title;
@@ -249,7 +248,7 @@ class _ActionView extends StatelessWidget {
       final yesWidget =
           _getActionWidget(content.yesTitle.txt, tapInterface.onTapYes);
       final noWidget =
-          _getActionWidget(content.yesTitle.txt, tapInterface.onTapYes);
+          _getActionWidget(content.noTitle.txt, tapInterface.onTapNo);
       widgets.add(
         Expanded(
           flex: 2,
