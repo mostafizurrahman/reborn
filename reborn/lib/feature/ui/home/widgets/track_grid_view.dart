@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/ui/audio_player/audio_player_screen.dart';
 import 'package:reborn/feature/ui/home/widgets/author_blur_view.dart';
+import 'package:reborn/feature/ui/widget/view_provider.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
+import 'package:reborn/utility/user_info.dart';
+import '../../subscription/subscription_page.dart';
 import 'track_grid_content.dart';
 
 class TrackGridView extends StatelessWidget {
@@ -49,7 +52,7 @@ class TrackGridView extends StatelessWidget {
                 if (author != null) AuthorBlurView(authorData: author),
               ],
             ),
-            if (track.isPremium) _getPremiumWidget(),
+            if (track.isPremium && !userInfo.isSubscribed) ViewProvider.getPremiumWidget(),
             Material(
               color: Colors.transparent,
               child: Ink(
@@ -57,7 +60,11 @@ class TrackGridView extends StatelessWidget {
                   focusColor: CCAppTheme.pinkLightColor.withAlpha(80),
                   splashColor: CCAppTheme.periwinkleDarkColor.withAlpha(110),
                   onTap: () {
-                    Navigator.of(context).pushNamed(AudioPlayerScreen.path, arguments: {"track" : track});
+                    if (track.isPremium && !userInfo.isSubscribed) {
+                      Navigator.push(context, MaterialPageRoute(builder: (_){return SubscriptionPage();}));
+                    } else {
+                      Navigator.of(context).pushNamed(AudioPlayerScreen.path, arguments: {"track" : track});
+                    }
                   },
                 ),
               ),
@@ -65,18 +72,6 @@ class TrackGridView extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _getPremiumWidget() {
-    return Row(
-      children: const [
-        Expanded(child: SizedBox()),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-          child: Icon(Icons.lock_outline_rounded, size: 18),
-        ),
-      ],
     );
   }
 }

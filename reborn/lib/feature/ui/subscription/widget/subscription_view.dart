@@ -35,8 +35,8 @@ class SubscriptionView extends StatelessWidget {
       ru: 'You won\'t be charged until after your free trial.',
     );
     const forget = LocalizedText(
-      en: 'What if I forget to cancel?',
-      ru: 'What if I forget to cancel?',
+      en: 'Restore Subscription',
+      ru: 'Восстановить подписку',
     );
     return Material(
       color: Colors.transparent,
@@ -53,7 +53,7 @@ class SubscriptionView extends StatelessWidget {
             child: Ink(
               decoration: CCAppTheme.shadowNoBorder,
               child: InkWell(
-                onTap: tapHandler.onForgetToCancel,
+                onTap: tapHandler.onTapRestoreSubscription,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: Text(forget.txt),
@@ -97,7 +97,7 @@ class SubscriptionView extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 24),
-            Text(trial.txt),
+            Text(trial.txt, style: CCAppTheme.txt),
             SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -132,6 +132,7 @@ class SubscriptionView extends StatelessWidget {
     return Text(
       priceTxt.txt,
       textAlign: TextAlign.center,
+      style: CCAppTheme.txt2,
     );
   }
 
@@ -149,6 +150,7 @@ class SubscriptionView extends StatelessWidget {
     return Text(
       monthPrice.txt,
       textAlign: TextAlign.center,
+      style: CCAppTheme.txtHL3,
     );
   }
 

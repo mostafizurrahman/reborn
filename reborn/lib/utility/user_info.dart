@@ -7,6 +7,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 
 class UserInfo {
   final _deviceInfo = DeviceInfoPlugin();
+  bool isSubscribed = false;
   String userName = "mostafizur.rahman";
   String displayName = "Mostafizur";
   late String deviceID;

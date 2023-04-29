@@ -47,4 +47,4 @@ Map<String, dynamic> _$LocalizedTextToJson(LocalizedText instance) =>
       'en': instance.en,
       'ru': instance.ru,
     };
-final emptyTxt = LocalizedText(en: '', ru: '');
+const emptyTxt =  LocalizedText(en: '', ru: '');

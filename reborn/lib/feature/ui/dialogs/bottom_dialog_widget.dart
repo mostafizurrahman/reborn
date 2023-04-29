@@ -20,7 +20,7 @@ class DialogContent {
     required this.title,
     required this.description,
     this.subtitle,
-    this.useDoneOnly = false,
+    this.useDoneOnly = true,
     this.noTitle = const LocalizedText(ru: 'НЕТ', en: 'NO'),
     this.yesTitle = const LocalizedText(ru: 'ДА', en: 'YES'),
     this.doneTitle = const LocalizedText(ru: 'ДА', en: 'DONE'),

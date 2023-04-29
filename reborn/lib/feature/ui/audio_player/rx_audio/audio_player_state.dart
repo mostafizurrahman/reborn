@@ -58,6 +58,10 @@ class FinishTrackAudioState extends AudioState {
 
 }
 
+class DisposeAudioState extends AudioState {
+
+}
+
 class AudioDurationState extends AudioState {
   final Duration duration;
   AudioDurationState({required this.duration});

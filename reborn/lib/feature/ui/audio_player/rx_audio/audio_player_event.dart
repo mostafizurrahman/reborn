@@ -68,3 +68,7 @@ class FinishListAudioEvent extends AudioEvent {
 class FinishAlbumAudioEvent extends AudioEvent {
 
 }
+
+class DisposeAudioEvent extends AudioEvent {
+
+}

@@ -42,4 +42,23 @@ class ViewProvider {
       ),
     );
   }
+
+  static Widget getPremiumWidget() {
+    return Row(
+      children: [
+        const Expanded(child: SizedBox()),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+          child: Container(
+            decoration: CCAppTheme.circleBorderDec,
+            child: const Icon(
+              Icons.lock_outline_rounded,
+              size: 22,
+              color: Colors.redAccent,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }

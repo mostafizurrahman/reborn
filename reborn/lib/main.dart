@@ -102,7 +102,7 @@ class MainAppState extends State<MainAppWidget> {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: SubscriptionPage(),
+      home: const LaunchWidget(),
       onGenerateRoute: _getGenerateRoute,
     );
   }

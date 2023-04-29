@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:reborn/feature/data_model/static_data.dart';
 import 'package:reborn/feature/domain/entities.dart';
 import 'package:reborn/feature/ui/audio_player/audio_player_screen.dart';
+import 'package:reborn/feature/ui/widget/view_provider.dart';
 import 'package:reborn/utility/app_theme_data.dart';
 import 'package:reborn/utility/image_ext.dart';
 import 'package:reborn/utility/screen_data.dart';
+import 'package:reborn/utility/user_info.dart';
 import 'author_blur_view.dart';
 import 'track_grid_content.dart';
 
 class TrackCoverView extends StatelessWidget {
-
   final TrackEntity track;
+
   const TrackCoverView({Key? key, required this.track}) : super(key: key);
 
   @override
@@ -34,11 +36,17 @@ class TrackCoverView extends StatelessWidget {
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(7)),
               child: CachedNetworkImage(
-                imageUrl: StaticData.coverImages[index], //  track.trackCoverImage,
+                imageUrl:
+                StaticData.coverImages[index],
+                //  track.trackCoverImage,
                 fit: BoxFit.cover,
                 width: width * 0.8,
                 height: width,
-                errorWidget: (_, __, ___) => ImageExt.getDefaultCover(width: width * 0.8, height: width,),
+                errorWidget: (_, __, ___) =>
+                    ImageExt.getDefaultCover(
+                      width: width * 0.8,
+                      height: width,
+                    ),
               ),
             ),
             Column(
@@ -48,10 +56,14 @@ class TrackCoverView extends StatelessWidget {
                 Expanded(
                   child: TrackCoverContent(trackEntity: track),
                 ),
-                if (author != null) AuthorBlurView(authorData: author, authorTitleColor: Colors.white,),
+                if (author != null)
+                  AuthorBlurView(
+                    authorData: author,
+                    authorTitleColor: Colors.white,
+                  ),
               ],
             ),
-            if (track.isPremium) _getPremiumWidget(),
+            if (track.isPremium && !userInfo.isSubscribed) ViewProvider.getPremiumWidget(),
             Material(
               color: Colors.transparent,
               child: Ink(
@@ -59,7 +71,8 @@ class TrackCoverView extends StatelessWidget {
                   focusColor: CCAppTheme.pinkLightColor.withAlpha(80),
                   splashColor: CCAppTheme.periwinkleDarkColor.withAlpha(110),
                   onTap: () {
-                    Navigator.of(context).pushNamed(AudioPlayerScreen.path, arguments: {"track" : track});
+                    Navigator.of(context).pushNamed(AudioPlayerScreen.path,
+                        arguments: {"track": track});
                   },
                 ),
               ),
@@ -70,46 +83,5 @@ class TrackCoverView extends StatelessWidget {
     );
   }
 
-  Widget _getPremiumWidget() {
-    return Row(
-      children: const [
-        Expanded(child: SizedBox()),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-          child: Icon(Icons.lock_outline_rounded, size: 18),
-        ),
-      ],
-    );
-  }
 
-
-  // @override
-  // Widget build(BuildContext context) {
-  //
-  //   return  Material(
-  //     borderRadius: const BorderRadius.all(Radius.circular(9)),
-  //     color: Colors.transparent,
-  //     child: Ink(
-  //       color: Colors.transparent,
-  //       width: screenData.width * 0.75,
-  //
-  //       child: InkWell(
-  //         focusColor: CCAppTheme.pinkLightColor,
-  //         splashColor: CCAppTheme.periwinkleDarkColor,
-  //         onTap: () {
-  //           debugPrint("filter tap on ${track.trackTitle.en}");
-  //         },
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             Icon(Icons.music_note_sharp,
-  //                 color: CCAppTheme.pinkLightColor),
-  //             const SizedBox(height: 12),
-  //             Text(track.trackTitle.en, style: CCAppTheme.txt1),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

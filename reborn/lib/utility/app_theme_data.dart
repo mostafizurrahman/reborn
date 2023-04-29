@@ -69,7 +69,8 @@ class CCAppTheme {
     return periwinkleLightColor;
   }
 
-  static BorderRadius get borderRadius => const BorderRadius.all(Radius.circular(10));
+  static BorderRadius get borderRadius =>
+      const BorderRadius.all(Radius.circular(10));
   static TextStyle get txtNormal => CCAppTheme.txtReg.copyWith(fontSize: 12.75);
   static TextStyle get txt => TextStyle(
         fontSize: 12.0,
@@ -122,11 +123,20 @@ class CCAppTheme {
 
   static BoxDecoration get circleBorderDec => BoxDecoration(
         color: Colors.transparent,
-        border: Border.all(color: CCAppTheme.periwinkleDarkColor, width: 1.5),
+        // border: Border.all(color: CCAppTheme.periwinkleDarkColor, width: 1.5),
         borderRadius: brCircle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withAlpha(200),
+            spreadRadius: 3,
+            blurRadius: 8,
+            // changes position of shadow
+          ),
+        ],
       );
 
-  static BorderRadius get brCircle => const BorderRadius.all(Radius.circular(1000));
+  static BorderRadius get brCircle =>
+      const BorderRadius.all(Radius.circular(1000));
 
   static BoxDecoration get shadowNoBorder => BoxDecoration(
         color: Colors.white.withAlpha(200),
@@ -166,8 +176,7 @@ class CCAppTheme {
       );
 
   static BoxDecoration get trackDecoration => BoxDecoration(
-
-    color: CCAppTheme.periwinkleLightColor.withAlpha(100),
+        color: CCAppTheme.periwinkleLightColor.withAlpha(100),
         // image: const DecorationImage(
         //   image: AssetImage('lib/assets/track_background.png'),
         //   fit: BoxFit.cover,
@@ -179,7 +188,7 @@ class CCAppTheme {
         //   stops: [0.0, 1.0],
         //   tileMode: TileMode.clamp,
         // ),
-    borderRadius: const BorderRadius.all(Radius.circular(12)),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withAlpha(100),
@@ -190,29 +199,31 @@ class CCAppTheme {
       );
 
   static BoxDecoration get subscriptionDecoration => BoxDecoration(
+        color: CCAppTheme.periwinkleLightColor.withAlpha(100),
+        // image: const DecorationImage(
+        //   image: AssetImage('lib/assets/track_background.png'),
+        //   fit: BoxFit.cover,
+        // ),
 
-    color: CCAppTheme.periwinkleLightColor.withAlpha(100),
-    // image: const DecorationImage(
-    //   image: AssetImage('lib/assets/track_background.png'),
-    //   fit: BoxFit.cover,
-    // ),
-
-    gradient: LinearGradient(
-      colors: [Colors.white.withAlpha(100), CCAppTheme.periwinkleDarkColor],
-      begin: FractionalOffset(0.0, 0.30),
-      end: FractionalOffset(0.0, 1.0),
-      stops: [0.0, 1.0],
-      tileMode: TileMode.clamp,
-    ),
-    borderRadius: const BorderRadius.all(Radius.circular(12)),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.grey.withAlpha(100),
-        spreadRadius: 12,
-        blurRadius: 24,
-      ),
-    ],
-  );
+        gradient: LinearGradient(
+          colors: [
+            Colors.redAccent.withAlpha(100),
+            CCAppTheme.periwinkleDarkColor
+          ],
+          begin: FractionalOffset(0.0, 0.30),
+          end: FractionalOffset(0.0, 1.0),
+          stops: [0.0, 1.0],
+          tileMode: TileMode.clamp,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withAlpha(100),
+            spreadRadius: 12,
+            blurRadius: 24,
+          ),
+        ],
+      );
 
   static Color get primaryColor => Colors.blueAccent.shade200;
 
@@ -256,7 +267,8 @@ class CCAppTheme {
   BoxDecoration get decoration {
     return BoxDecoration(
       image: DecorationImage(
-        image: AssetImage(isDark ? "lib/assets/bg_dark.jpg" : "lib/assets/bg_light.jpg"),
+        image: AssetImage(
+            isDark ? "lib/assets/bg_dark.jpg" : "lib/assets/bg_light.jpg"),
         fit: BoxFit.cover,
       ),
     );

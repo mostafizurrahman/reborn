@@ -4,7 +4,7 @@
 import 'package:rxdart/rxdart.dart';
 
 class RebornLanguage {
-  final BehaviorSubject<String> _behaviorSubject = BehaviorSubject.seeded('ru');
+  final BehaviorSubject<String> _behaviorSubject = BehaviorSubject.seeded('en');
   String get code => _behaviorSubject.valueOrNull ?? 'en';
   Stream get codeStream => _behaviorSubject.stream;
   set languageCode(final String code) {

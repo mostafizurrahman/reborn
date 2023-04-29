@@ -36,6 +36,7 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
     on<ShuffleAudioEvent>(_onShuffleAudioEvent);
     on<LoopAudioEvent>(_onLoopAudioEvent);
     on<FinishAlbumAudioEvent>((event, emit) => emit(FinishAlbumAudioState()));
+    on<DisposeAudioEvent>((event, emit) => emit(DisposeAudioState()));
     on<FinishTrackAudioEvent>((event, emit) => emit(FinishTrackAudioState()));
     on<FinishListAudioEvent>((event, emit) =>
         emit(FinishListAudioState(isLooping: event.isLooping)));
@@ -126,13 +127,16 @@ class AudioPlayerBloc extends Bloc<AudioEvent, AudioState> {
         ? Audio(event.trackEntity.trackAudio)
         : Audio.network(
             '${event.trackEntity.trackAudio}${event.trackEntity.trackSecret}');
-    await _audioPlayer.open(audio, showNotification: true);
-    final duration =
-        _audioPlayer.current.valueOrNull?.audio.duration.inMilliseconds ?? 0;
-    emit(StartTrackAudioState(
-      trackEntity: event.trackEntity,
-      totalDuration: duration.toDouble(),
-    ));
+    await Future.delayed(const Duration(microseconds: 100));
+    if (state is! DisposeAudioState) {
+      await _audioPlayer.open(audio, showNotification: true);
+      final duration =
+          _audioPlayer.current.valueOrNull?.audio.duration.inMilliseconds ?? 0;
+      emit(StartTrackAudioState(
+        trackEntity: event.trackEntity,
+        totalDuration: duration.toDouble(),
+      ));
+    }
   }
 
   Future<void> _onPlayerAudioEvent(

@@ -15,7 +15,9 @@ enum RestorePurchaseType {
 }
 
 abstract class SubscriptionInterface {
+  bool isDialogOpened = false;
   void showPendingUI();
+  void showEmptySubscription();
   void handleError(final IAPError? error);
   void deliverProduct(final PurchaseDetails productDetails);
   void handleInvalidPurchase(final PurchaseDetails productDetails);
@@ -47,28 +49,36 @@ class SubscriptionHandler {
 
   Future<void> _onGetPurchasedProduct(
       final List<PurchaseDetails> purchaseDetailsList) async {
-    for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-      if (purchaseDetails.status == PurchaseStatus.pending) {
-        interface.showPendingUI();
-      } else {
-        if (purchaseDetails.status == PurchaseStatus.error) {
-          interface.handleError(purchaseDetails.error);
-        } else if (purchaseDetails.status == PurchaseStatus.purchased ||
-            purchaseDetails.status == PurchaseStatus.restored) {
-          final bool isValidProduct = await _verifyPurchase(purchaseDetails);
-          if (isValidProduct) {
-            restoreType = RestorePurchaseType.completed;
-            _deliverProduct(purchaseDetails);
-          } else {
-            restoreType = RestorePurchaseType.error;
-            interface.handleInvalidPurchase(purchaseDetails);
-            return;
+    if (purchaseDetailsList.isEmpty) {
+      interface.showEmptySubscription();
+    } else {
+      for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
+        if (purchaseDetails.status == PurchaseStatus.pending) {
+          interface.showPendingUI();
+        } else {
+          if (purchaseDetails.status == PurchaseStatus.error) {
+            interface.handleError(purchaseDetails.error);
+          } else if (purchaseDetails.status == PurchaseStatus.purchased ||
+              purchaseDetails.status == PurchaseStatus.restored) {
+            _handlePurchase(purchaseDetails);
+          }
+          if (purchaseDetails.pendingCompletePurchase) {
+            await _inAppPurchase.completePurchase(purchaseDetails);
           }
         }
-        if (purchaseDetails.pendingCompletePurchase) {
-          await _inAppPurchase.completePurchase(purchaseDetails);
-        }
       }
+    }
+  }
+
+  Future<void> _handlePurchase(final PurchaseDetails purchaseDetails) async {
+    final bool isValidProduct = await _verifyPurchase(purchaseDetails);
+    if (isValidProduct) {
+      restoreType = RestorePurchaseType.completed;
+      _deliverProduct(purchaseDetails);
+    } else {
+      restoreType = RestorePurchaseType.error;
+      interface.handleInvalidPurchase(purchaseDetails);
+      return;
     }
   }
 

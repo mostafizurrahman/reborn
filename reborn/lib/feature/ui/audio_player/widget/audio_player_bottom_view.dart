@@ -348,6 +348,7 @@ class _AudioPlayerBottomState extends State<AudioPlayerBottomView> {
   @override
   void dispose() {
     _subscription.cancel();
+    _audioBloc.add(DisposeAudioEvent());
     _audioBloc.close();
     _updatePlayerInfo();
     super.dispose();

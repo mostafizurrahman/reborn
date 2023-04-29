@@ -6,11 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_purchase_platform_interface/src/errors/in_app_purchase_error.dart';
 import 'package:in_app_purchase_platform_interface/src/types/purchase_details.dart';
 import 'package:reborn/feature/data_model/static_data.dart';
+import 'package:reborn/feature/ui/home/home_widget.dart';
 import 'package:reborn/feature/ui/subscription/rx_susbscription/subscription_handler.dart';
 import 'package:reborn/feature/ui/subscription/rx_susbscription/subscription_states.dart';
 import 'package:reborn/feature/ui/subscription/rx_susbscription/subscription_bloc.dart';
 import 'package:reborn/feature/ui/subscription/rx_susbscription/subscription_events.dart';
 import 'package:reborn/utility/screen_data.dart';
+import 'package:reborn/utility/user_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/entities.dart';
 import '../dialogs/bottom_dialog_widget.dart';
 import '../widget/loader/loading_view.dart';
@@ -138,16 +141,21 @@ class _SubscriptionPageState extends State<SubscriptionPage>
   @override
   void deliverProduct(PurchaseDetails productDetails) {
     // TODO: implement deliverProduct
+    userInfo.isSubscribed = true;
+
   }
 
   @override
   void handleError(IAPError? error) {
     // TODO: implement handleError
+
+    _showBottomSheet(_getErrorDialogBody);
   }
 
   @override
   void handleInvalidPurchase(PurchaseDetails productDetails) {
     // TODO: implement handleInvalidPurchase
+    _showBottomSheet(_getInvalidPurchaseDialogBody);
   }
 
   @override
@@ -165,32 +173,45 @@ class _SubscriptionPageState extends State<SubscriptionPage>
   @override
   void onTapRestoreSubscription() {
     // TODO: implement onTapRestoreSubscription
+    subscriptionHandler?.restorePurchase();
   }
 
   @override
   void onTapSubscription() {
     // TODO: implement onTapSubscription
-    showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        isDismissible: false,
-        context: context,
-        builder:  _getDialogBody,
-    );
+    final state = product.state;
+    if (state is SubscribeProductState) {
+      final product = state.product.productDetails.first;
+      subscriptionHandler?.purchaseProductFrom(productDetails: product);
+    }
   }
 
-  Widget _getDialogBody(_) {
+  Widget _getErrorDialogBody(_) {
     final content = DialogContent(
       title: const LocalizedText(
         en: 'Something went wrong',
         ru: 'Something went wrong',
       ),
       description: const LocalizedText(
-        en: 'Yes you are right, I am done!',
-        ru: 'Yes you are right, I am done!',
+        en: 'We can not complete the subscription process right now! Please try again later.',
+        ru: 'Мы не можем завершить процесс подписки прямо сейчас! Пожалуйста, повторите попытку позже.',
       ),
     );
     return BottomDialogWidget(content: content, tapInterface: this);
+  }
 
+  Widget _getInvalidPurchaseDialogBody(_) {
+    final content = DialogContent(
+      title: const LocalizedText(
+        en: 'Invalid Purchase',
+        ru: 'Недействительная покупка',
+      ),
+      description: const LocalizedText(
+        en: 'We are unable to complete your purchase request. Something went wrong, please try again later!',
+        ru: 'Если можете, заполните заявку на покупку. Вместо этого что-то погнулось, повторите попытку позже!',
+      ),
+    );
+    return BottomDialogWidget(content: content, tapInterface: this);
   }
 
   @override
@@ -202,13 +223,29 @@ class _SubscriptionPageState extends State<SubscriptionPage>
   @override
   void onOtherOptionTapped() {
     // TODO: implement onOtherOptionTapped
+    Navigator.pop(context);
+
+  }
+
+  void _goToHome() {
+    isDialogOpened = false;
+    userInfo.isSubscribed = true;
+    SharedPreferences.getInstance().then((value) {
+      value.setBool( 'subscribed', true).then((value) => Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => const HomeWidget()),
+              (route) => false
+      ));
+    });
   }
 
   @override
   void onTapClose() {
     // TODO: implement onTapClose title_view cross button
     debugPrint('I am title cross tap');
+    isDialogOpened = false;
     Navigator.pop(context);
+    _goToHome();
   }
 
   @override
@@ -220,4 +257,41 @@ class _SubscriptionPageState extends State<SubscriptionPage>
   void onTapYes() {
     // TODO: implement onTapYes
   }
+
+  @override
+  void showEmptySubscription() {
+    // TODO: implement showEmptySubscription
+    _showBottomSheet(_getEmptyPurchaseDialogBody);
+  }
+
+  Widget _getEmptyPurchaseDialogBody(_) {
+    final content = DialogContent(
+      title: const LocalizedText(
+        en: 'No Subscription',
+        ru: 'Нет подписки',
+      ),
+      description: const LocalizedText(
+        en: 'You have subscription! Please subscribe to avail the exclusive meditation materials!',
+        ru: 'У вас есть подписка! Пожалуйста, подпишитесь, чтобы получить доступ к эксклюзивным материалам для медитации!',
+      ),
+    );
+    return BottomDialogWidget(content: content, tapInterface: this);
+  }
+
+  void _showBottomSheet(DialogBody dialogBody) {
+    if (!isDialogOpened) {
+      isDialogOpened = true;
+      showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        isDismissible: false,
+        context: context,
+        builder: dialogBody,
+      );
+    }
+  }
+
+  @override
+  bool isDialogOpened = false;
 }
+
+typedef DialogBody = Widget Function(BuildContext);
