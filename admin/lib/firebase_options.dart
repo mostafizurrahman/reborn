@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB2rgX7DsDarBbfZAlk8r2yGCBShtqPoco',
-    appId: '1:840943017720:android:69a472718594712cee650d',
+    appId: '1:840943017720:android:4a240b83d7e3fe30ee650d',
     messagingSenderId: '840943017720',
     projectId: 'reborn-1b03e',
     storageBucket: 'reborn-1b03e.appspot.com',
@@ -59,12 +59,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAT4S5vQDFyc6RZZs4JUICNLLSmkcjsP74',
-    appId: '1:840943017720:ios:90608f767715657dee650d',
+    appId: '1:840943017720:ios:9185133f8c3888beee650d',
     messagingSenderId: '840943017720',
     projectId: 'reborn-1b03e',
     storageBucket: 'reborn-1b03e.appspot.com',
     androidClientId: '840943017720-rfiapa870151qnkdm88vh9lbl47jl1ft.apps.googleusercontent.com',
-    iosClientId: '840943017720-8o8es85dpbo4ej73c1sr9ndp4cs8h12f.apps.googleusercontent.com',
-    iosBundleId: 'com.reborn.world',
+    iosClientId: '840943017720-jg87798nok2pjpip22jip0ail4npnh9v.apps.googleusercontent.com',
+    iosBundleId: 'com.reborn.admin.admin',
   );
 }
