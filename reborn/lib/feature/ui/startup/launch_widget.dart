@@ -14,7 +14,7 @@ import '../widget/base_widget/theme_state.dart';
 import '../widget/ink_widget.dart';
 import 'welcome_page.dart';
 
-import 'package:reborn/feature/ui/startup/rx_launch/launch_bloc.dart';
+
 class LaunchWidget extends StatefulWidget {
   const LaunchWidget({Key? key}) : super(key: key);
 
